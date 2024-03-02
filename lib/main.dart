@@ -1,3 +1,4 @@
+import 'package:chatboat/view/splash/splash.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,11 +11,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Chat Boat',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        useMaterial3: false,
       ),
+      home: const SplashView(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
