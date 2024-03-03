@@ -1,9 +1,22 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view_model/contant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 
-class SplashView extends StatelessWidget {
+class SplashView extends StatefulWidget {
   const SplashView({super.key});
+
+  @override
+  State<SplashView> createState() => _SplashViewState();
+}
+
+class _SplashViewState extends State<SplashView> {
+  @override
+  void initState() {
+    naviagateToHome();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,5 +56,10 @@ class SplashView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> naviagateToHome() async {
+    await Future.delayed(const Duration(seconds: 2))
+        .then((value) => Get.to(() => const HomeView()));
   }
 }

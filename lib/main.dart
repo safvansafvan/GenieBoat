@@ -1,5 +1,7 @@
 import 'package:chatboat/view/splash/splash.dart';
+import 'package:chatboat/view_model/globel_ctrl.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,7 +12,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    Get.put(GlobleController());
+    return GetMaterialApp(
       title: 'Chat Boat',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
