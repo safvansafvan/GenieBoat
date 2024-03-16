@@ -79,55 +79,119 @@ class ChatHelperWidget extends StatelessWidget {
             child: Divider(),
           ),
           Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              primary: true,
-              children: [
-                Container(
-                  height: 500,
-                  padding: const EdgeInsets.all(12),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    borderRadius: radius10,
-                    gradient: LinearGradient(colors: [
-                      Colors.blue.withOpacity(0.6),
-                      Colors.white.withAlpha(300),
-                      Colors.white
-                    ], begin: Alignment.topRight, end: Alignment.bottomLeft),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.blue.withAlpha(300),
-                          blurRadius: 1,
-                          spreadRadius: 0.7)
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 500,
-                  padding: const EdgeInsets.all(12),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    borderRadius: radius10,
-                    gradient: LinearGradient(colors: [
-                      Colors.blue.withOpacity(0.6),
-                      Colors.white.withAlpha(300),
-                      Colors.white
-                    ], begin: Alignment.topRight, end: Alignment.bottomLeft),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.blue.withAlpha(300),
-                          blurRadius: 1,
-                          spreadRadius: 0.7)
-                    ],
-                  ),
-                )
-              ],
-            ),
+            child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                primary: true,
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  return Container(
+                    height: 500,
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: whiteColor,
+                      borderRadius: radius10,
+                      gradient: LinearGradient(colors: [
+                        Colors.blue.withOpacity(0.6),
+                        Colors.white.withAlpha(300),
+                        Colors.white
+                      ], begin: Alignment.topRight, end: Alignment.bottomLeft),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.blue.withAlpha(300),
+                            blurRadius: 1,
+                            spreadRadius: 0.7)
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.copy,
+                              color: whiteColor,
+                              size: 15,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                'Copy Text',
+                                style: boatTextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    size: 12,
+                                    color: whiteColor),
+                              ),
+                            )
+                          ],
+                        ),
+                        const Divider(),
+                        const Spacer(),
+                        Row(
+                          children: [
+                            Container(
+                              width: context.width - 620,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              height: 35,
+                              decoration: BoxDecoration(
+                                  color: whiteColor,
+                                  borderRadius: radius10,
+                                  border: Border.all(
+                                      color: greyColor.withAlpha(300))),
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    width10,
+                                    Text(
+                                      'You should create a form widget using html and css',
+                                      style: boatTextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          size: 14,
+                                          color: blackColor),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 80,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              height: 35,
+                              decoration: BoxDecoration(
+                                  color: whiteColor,
+                                  borderRadius: radius10,
+                                  border: Border.all(
+                                      color: greyColor.withAlpha(300))),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.view_agenda_outlined,
+                                    size: 20,
+                                  ),
+                                  width5,
+                                  Text(
+                                    'View',
+                                    style: boatTextStyle(
+                                        fontWeight: FontWeight.w500, size: 14),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                }),
           ),
           const GenieMessageSender(),
         ],
