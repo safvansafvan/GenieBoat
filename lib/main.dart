@@ -1,3 +1,4 @@
+import 'package:chatboat/view/auth/login.dart';
 import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/splash/splash.dart';
 import 'package:chatboat/view_model/globel_ctrl.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: false,
       ),
       initialRoute: '/',
-      routes: {'/': (_) => const HomeView()},
+      routes: {'/': (_) => const LoginView()},
       debugShowCheckedModeBanner: false,
     );
   }
