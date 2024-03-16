@@ -1,4 +1,5 @@
-import 'package:chatboat/view_model/contant.dart';
+import 'package:chatboat/view/widgets/message_sender.dart';
+import 'package:chatboat/view_model/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -127,7 +128,8 @@ class ChatHelperWidget extends StatelessWidget {
                 )
               ],
             ),
-          )
+          ),
+          const GenieMessageSender(),
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/splash/splash.dart';
 import 'package:chatboat/view_model/globel_ctrl.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: false,
       ),
-      home: const SplashView(),
+      initialRoute: '/',
+      routes: {'/': (_) => const HomeView()},
       debugShowCheckedModeBanner: false,
     );
   }

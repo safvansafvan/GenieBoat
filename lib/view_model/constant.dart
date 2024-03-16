@@ -7,6 +7,7 @@ Color whiteColor = Colors.white;
 Color greyColor = Colors.grey;
 Color bttnBg = const Color.fromARGB(32, 255, 255, 255);
 Color bgColor = Colors.grey.withAlpha(300);
+Color blueColor = Colors.blue;
 
 //font style
 TextStyle boatTextStyle(

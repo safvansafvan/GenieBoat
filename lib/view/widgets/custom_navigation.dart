@@ -1,4 +1,4 @@
-import 'package:chatboat/view_model/contant.dart';
+import 'package:chatboat/view_model/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../view_model/globel_ctrl.dart';

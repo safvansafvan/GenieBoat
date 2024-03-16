@@ -1,6 +1,7 @@
 import 'package:chatboat/view/chat_helper/chat_helper.dart';
+import 'package:chatboat/view/history/genie_history.dart';
 import 'package:chatboat/view/widgets/custom_navigation.dart';
-import 'package:chatboat/view_model/contant.dart';
+import 'package:chatboat/view_model/constant.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
@@ -10,23 +11,13 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: blackColor,
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
+      body: const Padding(
+        padding: EdgeInsets.all(10.0),
         child: Row(
           children: [
-            const CustomLeftNavigation(),
-            const ChatHelperWidget(),
-            Container(
-              width: 210,
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(212, 255, 255, 255),
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(15),
-                    bottomRight: Radius.circular(15)),
-              ),
-              padding: const EdgeInsets.all(20),
-              margin: const EdgeInsets.symmetric(vertical: 12),
-            ),
+            CustomLeftNavigation(),
+            ChatHelperWidget(),
+            GenieHistory(),
             // Container(
             //   height: double.infinity,
             //   width: context.width - 260,
