@@ -2,6 +2,7 @@ import 'package:chatboat/view/auth/login.dart';
 import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/splash/splash.dart';
 import 'package:chatboat/view_model/globel_ctrl.dart';
+import 'package:chatboat/view_model/login_ctrl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(GlobleController());
+    Get.put(LoginController());
     return GetMaterialApp(
       title: 'Chat Boat',
       theme: ThemeData(
