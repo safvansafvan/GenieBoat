@@ -5,9 +5,22 @@ class LoginController extends GetxController {
   TextEditingController emailCtrl = TextEditingController();
   TextEditingController passworldCtrl = TextEditingController();
   TextEditingController userNameCtrl = TextEditingController();
-  RxBool obscurePassword = false.obs;
+  bool obscurePassword = true;
+  bool isSignUp = false;
 
   void obscureState() {
-    obscurePassword.value = !obscurePassword.value;
+    obscurePassword = !obscurePassword;
+    update();
+  }
+
+  void signUpState() {
+    isSignUp = !isSignUp;
+    update();
+  }
+
+  void clearControllers() {
+    emailCtrl.clear();
+    passworldCtrl.clear();
+    userNameCtrl.clear();
   }
 }

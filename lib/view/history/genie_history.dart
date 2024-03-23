@@ -1,7 +1,5 @@
 import 'package:chatboat/view_model/constant.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class GenieHistory extends StatelessWidget {
   const GenieHistory({super.key});
