@@ -9,11 +9,17 @@ class ChatHelperWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: const BoxConstraints(
+        minWidth: 0.0,
+        minHeight: 0.0,
+      ),
       width: context.width - 460,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
+        borderRadius: (context.width < 968)
+            ? BorderRadius.circular(15)
+            : const BorderRadius.only(
+                topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
       ),
       padding: const EdgeInsets.symmetric(vertical: 4),
       margin: const EdgeInsets.symmetric(vertical: 12),
@@ -22,36 +28,60 @@ class ChatHelperWidget extends StatelessWidget {
           SizedBox(
             height: 35,
             child: ListTile(
-              leading: Text(
-                'Ai Chat Helper',
-                style: boatTextStyle(fontWeight: FontWeight.w700, size: 20),
-              ),
+              leading: context.width < 747
+                  ? IconButton(
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                      icon: const Icon(Icons.menu))
+                  : null,
+              contentPadding: EdgeInsets.zero,
+              title: context.width < 747
+                  ? null
+                  : Text(
+                      'Ai Chat Helper',
+                      style:
+                          boatTextStyle(fontWeight: FontWeight.w700, size: 20),
+                    ),
               trailing: SizedBox(
                 width: 340,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    SizedBox(
-                      height: 40,
-                      width: 250,
-                      child: TextField(
-                        cursorColor: greyColor,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.only(left: 10),
-                          hintText: 'Search ...',
-                          hintStyle: TextStyle(
-                              color: greyColor, fontWeight: FontWeight.w500),
-                          prefixIcon: Icon(Icons.search, color: greyColor),
-                          fillColor: Colors.grey.withAlpha(300),
-                          filled: true,
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: radius5,
-                              borderSide: BorderSide.none),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: radius5,
-                              borderSide: BorderSide.none),
-                        ),
-                      ),
-                    ),
+                    context.width < 501
+                        ? Container(
+                            height: 34,
+                            width: 34,
+                            margin: const EdgeInsets.symmetric(horizontal: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: bgColor),
+                                borderRadius: radius5),
+                            child: const Icon(Icons.search),
+                          )
+                        : SizedBox(
+                            height: 40,
+                            width: 250,
+                            child: TextField(
+                              cursorColor: greyColor,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.only(left: 10),
+                                hintText: 'Search ...',
+                                hintStyle: TextStyle(
+                                    color: greyColor,
+                                    fontWeight: FontWeight.w500),
+                                prefixIcon:
+                                    Icon(Icons.search, color: greyColor),
+                                fillColor: Colors.grey.withAlpha(300),
+                                filled: true,
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: radius5,
+                                    borderSide: BorderSide.none),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: radius5,
+                                    borderSide: BorderSide.none),
+                              ),
+                            ),
+                          ),
                     Container(
                       height: 34,
                       width: 34,
@@ -133,7 +163,8 @@ class ChatHelperWidget extends StatelessWidget {
                         Row(
                           children: [
                             Container(
-                              width: context.width - 620,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 10),
                               height: 35,
@@ -146,7 +177,6 @@ class ChatHelperWidget extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    width10,
                                     Text(
                                       'You should create a form widget using html and css',
                                       style: boatTextStyle(
@@ -160,10 +190,11 @@ class ChatHelperWidget extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            const Spacer(),
                             Container(
-                              width: 80,
-                              margin:
+                              padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
+                              margin: const EdgeInsets.symmetric(horizontal: 8),
                               height: 35,
                               decoration: BoxDecoration(
                                   color: whiteColor,

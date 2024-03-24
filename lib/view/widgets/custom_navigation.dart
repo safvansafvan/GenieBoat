@@ -60,35 +60,6 @@ class CustomLeftNavigation extends StatelessWidget {
                 width: 160,
                 margin: const EdgeInsets.symmetric(vertical: 5),
                 decoration: BoxDecoration(
-                  color: globelCtrl.isTemblate ? bttnBg : blackColor,
-                  borderRadius: radius10,
-                ),
-                child: ListTile(
-                  shape: OutlineInputBorder(borderRadius: radius10),
-                  hoverColor: Colors.blue.withAlpha(300),
-                  onTap: () {
-                    globelCtrl.templateState();
-                  },
-                  minLeadingWidth: 0,
-                  horizontalTitleGap: 12,
-                  leading: Icon(Icons.telegram, color: greyColor),
-                  title: Text(
-                    'Template',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: boatTextStyle(
-                        fontWeight: FontWeight.w500,
-                        size: 14,
-                        color: whiteColor),
-                  ),
-                ),
-              ),
-              AnimatedContainer(
-                duration: boatDuration,
-                curve: Curves.decelerate,
-                width: 160,
-                margin: const EdgeInsets.symmetric(vertical: 5),
-                decoration: BoxDecoration(
                   color: globelCtrl.isSettings ? bttnBg : blackColor,
                   borderRadius: radius10,
                 ),

@@ -1,3 +1,4 @@
+import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/widgets/login_text_field.dart';
 import 'package:chatboat/view_model/constant.dart';
 import 'package:chatboat/view_model/login_ctrl.dart';
@@ -29,179 +30,188 @@ class LoginView extends StatelessWidget {
             alignment: Alignment.center,
             child: GetBuilder<LoginController>(
               builder: (loginCtrl) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AnimatedContainer(
-                      duration: minDuration,
-                      height: loginCtrl.isSignUp ? 480 : 420,
-                      width: 400,
-                      decoration: BoxDecoration(
-                        borderRadius: radius10,
-                        color: whiteColor,
-                        boxShadow: [
-                          BoxShadow(
-                              color: greyColor,
-                              blurRadius: 0.1,
-                              spreadRadius: 0.1,
-                              blurStyle: BlurStyle.outer)
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              loginCtrl.isSignUp ? 'SignUp' : 'Login',
-                              style: boatTextStyle(
-                                  fontWeight: FontWeight.w600, size: 23),
+                return SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AnimatedContainer(
+                        duration: minDuration,
+                        constraints: BoxConstraints(
+                            maxWidth: context.width < 502 ? 300 : 400,
+                            maxHeight: loginCtrl.isSignUp ? 480 : 420),
+                        decoration: BoxDecoration(
+                          borderRadius: radius10,
+                          color: whiteColor,
+                          boxShadow: [
+                            BoxShadow(
+                                color: greyColor,
+                                blurRadius: 0.1,
+                                spreadRadius: 0.1,
+                                blurStyle: BlurStyle.outer)
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                loginCtrl.isSignUp ? 'SignUp' : 'Login',
+                                style: boatTextStyle(
+                                    fontWeight: FontWeight.w600, size: 23),
+                              ),
                             ),
-                          ),
-                          Image.network(
-                            'assets/gif/boat.gif',
-                            fit: BoxFit.cover,
-                            width: 100,
-                            height: 60,
-                          ),
-                          loginCtrl.isSignUp
-                              ? BoatTextFormFieldLogin(
-                                  controller: loginCtrl.userNameCtrl,
-                                  label: 'Name',
-                                  inputType: TextInputType.text,
-                                )
-                              : const SizedBox(),
-                          loginCtrl.isSignUp ? minHeight : const SizedBox(),
-                          BoatTextFormFieldLogin(
-                            controller: loginCtrl.emailCtrl,
-                            label: 'Email',
-                            isUsername: true,
-                            inputType: TextInputType.emailAddress,
-                          ),
-                          minHeight,
-                          BoatTextFormFieldLogin(
-                            controller: loginCtrl.passworldCtrl,
-                            label: 'Password',
-                            isPassword: true,
-                          ),
-                          loginCtrl.isSignUp == false
-                              ? Align(
-                                  alignment: Alignment.topRight,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 22.0),
-                                    child: Text(
-                                      'Forgot Password?',
-                                      style: boatTextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          size: 13,
-                                          color: Colors.deepPurple),
-                                    ),
+                            context.isPhone
+                                ? const SizedBox()
+                                : Image.network(
+                                    'assets/gif/boat.gif',
+                                    fit: BoxFit.cover,
+                                    width: 100,
+                                    height: 60,
                                   ),
-                                )
-                              : const SizedBox(),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 10, left: 10, right: 10),
-                            child: SizedBox(
-                              width: 200,
-                              child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      shape: MaterialStatePropertyAll(
-                                          RoundedRectangleBorder(
-                                              borderRadius: radius10)),
-                                      animationDuration:
-                                          const Duration(seconds: 1)),
-                                  onPressed: () {},
-                                  child: Text(
-                                      loginCtrl.isSignUp ? 'SignUp' : 'Login')),
+                            loginCtrl.isSignUp
+                                ? BoatTextFormFieldLogin(
+                                    controller: loginCtrl.userNameCtrl,
+                                    label: 'Name',
+                                    inputType: TextInputType.text,
+                                  )
+                                : const SizedBox(),
+                            loginCtrl.isSignUp ? minHeight : const SizedBox(),
+                            BoatTextFormFieldLogin(
+                              controller: loginCtrl.emailCtrl,
+                              label: 'Email',
+                              isUsername: true,
+                              inputType: TextInputType.emailAddress,
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            child: Row(
+                            minHeight,
+                            BoatTextFormFieldLogin(
+                              controller: loginCtrl.passworldCtrl,
+                              label: 'Password',
+                              isPassword: true,
+                            ),
+                            loginCtrl.isSignUp == false
+                                ? Align(
+                                    alignment: Alignment.topRight,
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 22.0),
+                                      child: Text(
+                                        'Forgot Password?',
+                                        style: boatTextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            size: 13,
+                                            color: Colors.deepPurple),
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox(),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 10, left: 10, right: 10),
+                              child: SizedBox(
+                                width: 200,
+                                child: ElevatedButton(
+                                    style: ButtonStyle(
+                                        shape: MaterialStatePropertyAll(
+                                            RoundedRectangleBorder(
+                                                borderRadius: radius10)),
+                                        animationDuration:
+                                            const Duration(seconds: 1)),
+                                    onPressed: () {
+                                      Get.to(() => const HomeView());
+                                    },
+                                    child: Text(loginCtrl.isSignUp
+                                        ? 'SignUp'
+                                        : 'Login')),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              child: Row(
+                                children: [
+                                  const Expanded(child: Divider()),
+                                  Text(
+                                    'Or SignUp Using',
+                                    style: boatTextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        size: 13,
+                                        color: greyColor),
+                                  ),
+                                  const Expanded(child: Divider())
+                                ],
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Expanded(child: Divider()),
-                                Text(
-                                  'Or SignUp Using',
+                                FlutterSocialButton(
+                                  buttonType: ButtonType.google,
+                                  mini: true,
+                                  onTap: () {},
+                                ),
+                                FlutterSocialButton(
+                                  buttonType: ButtonType.facebook,
+                                  mini: true,
+                                  onTap: () {},
+                                ),
+                                FlutterSocialButton(
+                                  buttonType: ButtonType.phone,
+                                  mini: true,
+                                  onTap: () {},
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      loginCtrl.isSignUp
+                          ? GestureDetector(
+                              onTap: () {
+                                loginCtrl.signUpState();
+                              },
+                              child: RichText(
+                                text: TextSpan(
+                                  text: "Have An Account ? ",
                                   style: boatTextStyle(
                                       fontWeight: FontWeight.w500,
-                                      size: 13,
+                                      size: 14,
                                       color: greyColor),
+                                  children: [
+                                    TextSpan(
+                                      text: 'Login',
+                                      style: boatTextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          size: 14,
+                                          color: Colors.deepPurple),
+                                    )
+                                  ],
                                 ),
-                                const Expanded(child: Divider())
-                              ],
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              FlutterSocialButton(
-                                buttonType: ButtonType.google,
-                                mini: true,
-                                onTap: () {},
                               ),
-                              FlutterSocialButton(
-                                buttonType: ButtonType.facebook,
-                                mini: true,
-                                onTap: () {},
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                loginCtrl.signUpState();
+                              },
+                              child: RichText(
+                                text: TextSpan(
+                                  text: "Don't Have An Account ? ",
+                                  style: boatTextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      size: 14,
+                                      color: greyColor),
+                                  children: [
+                                    TextSpan(
+                                      text: 'SignUp',
+                                      style: boatTextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          size: 14,
+                                          color: Colors.deepPurple),
+                                    )
+                                  ],
+                                ),
                               ),
-                              FlutterSocialButton(
-                                buttonType: ButtonType.phone,
-                                mini: true,
-                                onTap: () {},
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                    loginCtrl.isSignUp
-                        ? GestureDetector(
-                            onTap: () {
-                              loginCtrl.signUpState();
-                            },
-                            child: RichText(
-                              text: TextSpan(
-                                text: "Have An Account ? ",
-                                style: boatTextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    size: 14,
-                                    color: greyColor),
-                                children: [
-                                  TextSpan(
-                                    text: 'Login',
-                                    style: boatTextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        size: 14,
-                                        color: Colors.deepPurple),
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                        : GestureDetector(
-                            onTap: () {
-                              loginCtrl.signUpState();
-                            },
-                            child: RichText(
-                              text: TextSpan(
-                                text: "Don't Have An Account ? ",
-                                style: boatTextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    size: 14,
-                                    color: greyColor),
-                                children: [
-                                  TextSpan(
-                                    text: 'SignUp',
-                                    style: boatTextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        size: 14,
-                                        color: Colors.deepPurple),
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                  ],
+                            )
+                    ],
+                  ),
                 );
               },
             ),
