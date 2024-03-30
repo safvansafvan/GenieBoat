@@ -1,4 +1,7 @@
+import 'package:chatboat/view/widgets/message_sender.dart';
+import 'package:chatboat/view_model/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class StartChatingView extends StatelessWidget {
@@ -23,16 +26,24 @@ class StartChatingView extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(vertical: 4),
       margin: const EdgeInsets.symmetric(vertical: 12),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
         children: [
-          Column(
-            children: [
-              Image.network('assets/gif/boat.gif',
-                  height: 200, width: 200, fit: BoxFit.cover),
-              Text('How Can I Help You Today'),
-            ],
-          )
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.network('assets/gif/boat.gif',
+                    height: 200, width: 200, fit: BoxFit.cover),
+                Text(
+                  'How Can I Help You Today',
+                  style: boatTextStyle(
+                      fontWeight: FontWeight.bold, size: 18, color: blackColor),
+                ),
+              ],
+            ),
+          ),
+          const Positioned(
+              bottom: 5, left: 10, right: 10, child: GenieMessageSender())
         ],
       ),
     );

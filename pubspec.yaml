@@ -18,6 +18,7 @@ dependencies:
   flutter_social_button: ^1.1.4+1
   email_validator: ^2.1.17
   flutter_animate: ^4.5.0
+  aligned_dialog: ^0.0.7
 
 dev_dependencies:
   flutter_test:

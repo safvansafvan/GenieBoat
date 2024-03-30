@@ -1,3 +1,4 @@
+import 'package:chatboat/view/settings/settings.dart';
 import 'package:chatboat/view/widgets/history_view.dart';
 import 'package:chatboat/view_model/constant.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +101,7 @@ class CustomLeftNavigation extends StatelessWidget {
                             hoverColor: Colors.blue.withAlpha(300),
                             onTap: () {
                               globelCtrl.settingState();
+                              settingsDialog(context);
                             },
                             minLeadingWidth: 0,
                             horizontalTitleGap: 12,
@@ -120,12 +122,35 @@ class CustomLeftNavigation extends StatelessWidget {
               context.width <= 968
                   ? HistoryView(color: whiteColor)
                   : const SizedBox(),
-              context.width > 968 ? Spacer() : SizedBox(),
+              context.width > 968 ? const Spacer() : const SizedBox(),
               Divider(
                 color: whiteColor.withAlpha(300),
                 thickness: 1,
                 indent: 10,
                 endIndent: 10,
+              ),
+              AnimatedContainer(
+                duration: boatDuration,
+                curve: Curves.decelerate,
+                width: 160,
+                margin: const EdgeInsets.symmetric(vertical: 5),
+                decoration: BoxDecoration(borderRadius: radius10),
+                child: ListTile(
+                  shape: OutlineInputBorder(borderRadius: radius10),
+                  minLeadingWidth: 0,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 2),
+                  horizontalTitleGap: 10,
+                  leading: const CircleAvatar(radius: 20),
+                  title: Text(
+                    'Muhammed Safvan',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: boatTextStyle(
+                        fontWeight: FontWeight.w500,
+                        size: 12,
+                        color: whiteColor),
+                  ),
+                ),
               ),
               AnimatedContainer(
                 duration: boatDuration,

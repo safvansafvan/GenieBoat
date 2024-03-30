@@ -1,6 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:chatboat/view/auth/login.dart';
-import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view_model/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
