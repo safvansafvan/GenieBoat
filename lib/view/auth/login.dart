@@ -1,5 +1,7 @@
 import 'package:chatboat/view/home/home.dart';
+import 'package:chatboat/view/widgets/button_loading.dart';
 import 'package:chatboat/view/widgets/login_text_field.dart';
+import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:chatboat/view_model/constant.dart';
 import 'package:chatboat/view_model/login_ctrl.dart';
 import 'package:flutter/material.dart';
@@ -109,19 +111,23 @@ class LoginView extends StatelessWidget {
                                   top: 10, left: 10, right: 10),
                               child: SizedBox(
                                 width: 200,
-                                child: ElevatedButton(
-                                    style: ButtonStyle(
-                                        shape: MaterialStatePropertyAll(
-                                            RoundedRectangleBorder(
-                                                borderRadius: radius10)),
-                                        animationDuration:
-                                            const Duration(seconds: 1)),
-                                    onPressed: () {
-                                      Get.to(() => const HomeView());
-                                    },
-                                    child: Text(loginCtrl.isSignUp
-                                        ? 'SignUp'
-                                        : 'Login')),
+                                child: loginCtrl.isSignInLoading ||
+                                        loginCtrl.isSignUpLoading
+                                    ? const ButtonClickLoading()
+                                    : ElevatedButton(
+                                        style: ButtonStyle(
+                                            shape: MaterialStatePropertyAll(
+                                                RoundedRectangleBorder(
+                                                    borderRadius: radius10)),
+                                            animationDuration:
+                                                const Duration(seconds: 1)),
+                                        onPressed: () async {
+                                          await handleAuth(loginCtrl);
+                                        },
+                                        child: Text(loginCtrl.isSignUp
+                                            ? 'SignUp'
+                                            : 'Login'),
+                                      ),
                               ),
                             ),
                             Padding(
@@ -219,5 +225,25 @@ class LoginView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> handleAuth(LoginController ctrl) async {
+    if (ctrl.isSignUp) {
+      ctrl.user = await ctrl.signUpWithEmailAndPassword();
+      if (ctrl.user != null) {
+        await Get.offAll(() => const HomeView())
+            ?.then((value) => ctrl.clearControllers());
+      } else {
+        showBoatToast(msg: 'Something Wrong');
+      }
+    } else {
+      ctrl.user = await ctrl.signInWithEmailAndPasswords();
+      if (ctrl.user != null) {
+        await Get.offAll(() => const HomeView())
+            ?.then((value) => ctrl.clearControllers());
+      } else {
+        showBoatToast(msg: 'Something Wrong');
+      }
+    }
   }
 }
