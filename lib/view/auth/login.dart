@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/widgets/login_text_field.dart';
 import 'package:chatboat/view_model/constant.dart';
@@ -116,8 +118,8 @@ class LoginView extends StatelessWidget {
                                                 borderRadius: radius10)),
                                         animationDuration:
                                             const Duration(seconds: 1)),
-                                    onPressed: () {
-                                      Get.to(() => const HomeView());
+                                    onPressed: () async {
+                                      await handleAuth(loginCtrl);
                                     },
                                     child: Text(loginCtrl.isSignUp
                                         ? 'SignUp'
@@ -219,5 +221,27 @@ class LoginView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> handleAuth(LoginController loginCtrl) async {
+    if (loginCtrl.isSignUp) {
+      loginCtrl.signUpWithEmailAndPassword(
+          loginCtrl.emailCtrl.text, loginCtrl.passworldCtrl.text);
+      if (loginCtrl.user != null) {
+        await Get.offAll(const HomeView())!
+            .then((v) => loginCtrl.clearController());
+      } else {
+        log('something went wrong');
+      }
+    } else {
+      loginCtrl.signInWithEmailAndPasswords(
+          loginCtrl.emailCtrl.text, loginCtrl.passworldCtrl.text);
+      if (loginCtrl.user != null) {
+        await Get.offAll(const HomeView())!
+            .then((v) => loginCtrl.clearController());
+      } else {
+        log('something went wrong');
+      }
+    }
   }
 }
