@@ -1,3 +1,4 @@
+import 'package:chatboat/view/auth/forgot_password.dart';
 import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/widgets/button_loading.dart';
 import 'package:chatboat/view/widgets/login_text_field.dart';
@@ -96,12 +97,16 @@ class LoginView extends StatelessWidget {
                                     child: Padding(
                                       padding:
                                           const EdgeInsets.only(right: 22.0),
-                                      child: Text(
-                                        'Forgot Password?',
-                                        style: boatTextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            size: 13,
-                                            color: Colors.deepPurple),
+                                      child: GestureDetector(
+                                        onTap: () =>
+                                            forgotPasswordDialog(context),
+                                        child: Text(
+                                          'Forgot Password?',
+                                          style: boatTextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              size: 13,
+                                              color: Colors.deepPurple),
+                                        ),
                                       ),
                                     ),
                                   )
@@ -234,15 +239,19 @@ class LoginView extends StatelessWidget {
         await Get.offAll(() => const HomeView())
             ?.then((value) => ctrl.clearControllers());
       } else {
-        showBoatToast(msg: 'Something Wrong');
+        boatSnackBar(message: 'Something Wrong', text: 'Failed');
       }
     } else {
-      ctrl.user = await ctrl.signInWithEmailAndPasswords();
-      if (ctrl.user != null) {
-        await Get.offAll(() => const HomeView())
-            ?.then((value) => ctrl.clearControllers());
+      if (ctrl.emailCtrl.text.isEmpty || ctrl.passworldCtrl.text.isEmpty) {
+        return boatSnackBar(message: 'Enter required fields', text: 'Required');
       } else {
-        showBoatToast(msg: 'Something Wrong');
+        ctrl.user = await ctrl.signInWithEmailAndPasswords();
+        if (ctrl.user != null) {
+          await Get.offAll(() => const HomeView())
+              ?.then((value) => ctrl.clearControllers());
+        } else {
+          boatSnackBar(message: 'Something Wrong', text: 'Failed');
+        }
       }
     }
   }

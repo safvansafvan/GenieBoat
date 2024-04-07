@@ -10,6 +10,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailCtrl = TextEditingController();
+  TextEditingController forgotEmailCtrl = TextEditingController();
   TextEditingController passworldCtrl = TextEditingController();
   TextEditingController userNameCtrl = TextEditingController();
   bool obscurePassword = true;
@@ -88,7 +89,7 @@ class LoginController extends GetxController {
               )).then((value) => clearController()));
     } catch (e) {
       log(e.toString());
-      return showBoatToast(msg: 'Invalid Otp');
+      return boatSnackBar(message: 'Invalid Otp', text: 'Failed');
     }
     isPhoneVloading = false;
     update();
@@ -150,7 +151,7 @@ class LoginController extends GetxController {
         MaterialPageRoute(builder: (context) => const LoginView()),
         (route) => false,
       );
-      showBoatToast(msg: 'Logout');
+      boatSnackBar(message: 'Logout', text: 'Succeed', isSuccess: true);
     } catch (e) {
       log('Error during logout: $e');
     }
@@ -166,7 +167,8 @@ class LoginController extends GetxController {
           email: emailCtrl.text, password: passworldCtrl.text);
       isSignUpLoading = false;
       update();
-      showBoatToast(msg: 'SignUP Success');
+      boatSnackBar(
+          message: 'SignUp SuccessFully', text: 'Succeed', isSuccess: true);
       return credential.user;
     } catch (e) {
       log(e.toString());
@@ -186,7 +188,8 @@ class LoginController extends GetxController {
           email: emailCtrl.text, password: passworldCtrl.text);
       isSignInLoading = false;
       update();
-      showBoatToast(msg: 'Login Success');
+      boatSnackBar(
+          message: 'Login SuccessFully', text: 'Succeed', isSuccess: true);
       return credential.user;
     } catch (e) {
       log(e.toString());
@@ -198,23 +201,25 @@ class LoginController extends GetxController {
 
   //*********************************************forgot password ***************************************
 
-  TextEditingController forgotPasswordCtrl = TextEditingController();
   bool isForgotLoading = false;
   Future<void> forgotPassword(context) async {
     isForgotLoading = true;
     update();
     try {
       await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: forgotPasswordCtrl.text.trim())
+          .sendPasswordResetEmail(email: forgotEmailCtrl.text.trim())
           .then((value) {
         Navigator.pop(context);
-        forgotPasswordCtrl.clear();
-        showBoatToast(msg: 'Check Email Inbox');
+        forgotEmailCtrl.clear();
+        isForgotLoading = false;
+        boatSnackBar(
+            message: 'Check Email Inbox', text: 'Succeed', isSuccess: true);
+        update();
       });
     } catch (e) {
       log(e.toString());
     }
-    isForgotLoading = true;
+    isForgotLoading = false;
     update();
   }
 }

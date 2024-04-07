@@ -1,7 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:chatboat/view/auth/login.dart';
 import 'package:chatboat/view_model/constant.dart';
+import 'package:chatboat/view_model/globel_ctrl.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 
 class SplashView extends StatefulWidget {
@@ -16,6 +18,13 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     naviagateToHome();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final ctrl = Get.find<GlobleController>();
+    ctrl.size = Size(context.width, context.height);
+    super.didChangeDependencies();
   }
 
   @override

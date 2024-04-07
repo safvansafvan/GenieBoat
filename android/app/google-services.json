@@ -6,11 +6,11 @@
     "storage_bucket": "boat-app-d5438.appspot.com"
   },
   "client": [
-    {
+    {/Users/credr/Downloads/google-services.json
       "client_info": {
-        "mobilesdk_app_id": "1:874085453445:android:83a5da00b7f80d00d623ec",
+        "mobilesdk_app_id": "1:874085453445:android:e636691860854c3ad623ec",
         "android_client_info": {
-          "package_name": "com.example.chatboat"
+          "package_name": "com.boat.chatboat"
         }
       },
       "oauth_client": [],
