@@ -86,7 +86,7 @@ class BoatTextFormFieldLogin extends StatelessWidget {
                   if (value == null || value.isEmpty) {
                     return 'Enter Email';
                   }
-                  if (EmailValidator.validate(value)) {
+                  if (!EmailValidator.validate(value)) {
                     return 'Enter Valid Email';
                   }
                 }
