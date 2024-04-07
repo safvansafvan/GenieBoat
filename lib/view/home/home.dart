@@ -55,7 +55,7 @@ class _HomeViewState extends State<HomeView> {
     final ctrl = Get.find<GlobleController>();
     switch (ctrl.bodyCurrentInd) {
       case 0:
-        return const Expanded(child: ChatHelperWidget());
+        return const Expanded(child: StartChatingView());
 
       case 1:
         return const Expanded(child: ChatHelperWidget());
