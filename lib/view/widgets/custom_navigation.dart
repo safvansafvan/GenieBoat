@@ -134,29 +134,6 @@ class CustomLeftNavigation extends StatelessWidget {
                 curve: Curves.decelerate,
                 width: 160,
                 margin: const EdgeInsets.symmetric(vertical: 5),
-                decoration: BoxDecoration(borderRadius: radius10),
-                child: ListTile(
-                  shape: OutlineInputBorder(borderRadius: radius10),
-                  minLeadingWidth: 0,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 2),
-                  horizontalTitleGap: 10,
-                  leading: const CircleAvatar(radius: 20),
-                  title: Text(
-                    'Muhammed Safvan',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: boatTextStyle(
-                        fontWeight: FontWeight.w500,
-                        size: 12,
-                        color: whiteColor),
-                  ),
-                ),
-              ),
-              AnimatedContainer(
-                duration: boatDuration,
-                curve: Curves.decelerate,
-                width: 160,
-                margin: const EdgeInsets.symmetric(vertical: 5),
                 decoration: BoxDecoration(
                   borderRadius: radius10,
                 ),

@@ -22,6 +22,7 @@ dependencies:
   firebase_core: ^2.27.2
   firebase_auth: ^4.18.0
   google_sign_in: ^6.2.1
+  dropdown_button2: ^2.3.9
 
 dev_dependencies:
   flutter_test:

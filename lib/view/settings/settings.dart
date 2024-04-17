@@ -1,3 +1,4 @@
+import 'package:chatboat/view/widgets/boat_drop_down.dart';
 import 'package:chatboat/view_model/constant.dart';
 
 import 'package:flutter/material.dart';
@@ -37,7 +38,42 @@ settingsDialog(BuildContext context) async {
                   ],
                 ),
               ),
-              const Divider()
+              const Divider(),
+              ListTile(
+                title: Text('Theme'),
+                trailing: SizedBox(
+                  width: 150,
+                  child: CredrDropDown(
+                    hintText: 'Theme',
+                  ),
+                ),
+              ),
+              Spacer(),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                child: ListTile(
+                  shape: OutlineInputBorder(
+                      borderRadius: radius10, borderSide: BorderSide.none),
+                  minLeadingWidth: 0,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 2),
+                  horizontalTitleGap: 10,
+                  leading: const CircleAvatar(radius: 20),
+                  title: Text(
+                    'Muhammed Safvan',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: boatTextStyle(
+                        fontWeight: FontWeight.w500,
+                        size: 12,
+                        color: blackColor),
+                  ),
+                  trailing: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.logout),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
