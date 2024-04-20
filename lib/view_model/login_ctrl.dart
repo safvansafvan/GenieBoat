@@ -150,7 +150,10 @@ class LoginController extends GetxController {
       await auth.signOut();
       final googleSignIn = GoogleSignIn();
       await googleSignIn.signOut();
-      await Get.off(() => const LoginView());
+      await Get.offAll(() => const LoginView(),
+          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 400),
+          transition: Transition.zoom);
       boatSnackBar(message: 'Logout', text: 'Succeed', isSuccess: true);
       update();
     } catch (e) {

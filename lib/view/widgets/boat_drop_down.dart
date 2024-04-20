@@ -3,14 +3,10 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 class CredrDropDown extends StatefulWidget {
-  const CredrDropDown(
-      {super.key, required this.hintText, this.width, this.isCheck1 = false});
+  const CredrDropDown({super.key, required this.hintText, this.width});
 
   final String hintText;
   final double? width;
-
-  final bool isCheck1;
-
   @override
   State<CredrDropDown> createState() => _CredrDropDownState();
 }
@@ -24,6 +20,8 @@ class _CredrDropDownState extends State<CredrDropDown> {
       child: DropdownButton2<String>(
         autofocus: true,
         isExpanded: true,
+        style: boatTextStyle(
+            fontWeight: FontWeight.w600, size: 15, color: blackColor),
         hint: Text(
           widget.hintText,
           style: boatTextStyle(
@@ -43,7 +41,11 @@ class _CredrDropDownState extends State<CredrDropDown> {
             )
             .toList(),
         value: selectedValue,
-        onChanged: (String? value) {},
+        onChanged: (String? value) {
+          setState(() {
+            selectedValue = value;
+          });
+        },
         buttonStyleData: ButtonStyleData(
           height: 47.5,
           width: widget.width,

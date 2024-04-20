@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: false,
       ),
       initialRoute: '/',
-      routes: {'/': (_) => const SplashView()},
+      routes: {
+        '/': (_) => const SplashView(),
+      },
       debugShowCheckedModeBanner: false,
     );
   }

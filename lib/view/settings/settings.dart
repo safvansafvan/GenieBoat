@@ -34,21 +34,66 @@ settingsDialog(BuildContext context) async {
                           size: 18,
                           color: blackColor),
                     ),
-                    const Icon(Icons.close, size: 30)
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.close))
                   ],
                 ),
               ),
               const Divider(),
               ListTile(
-                title: Text('Theme'),
-                trailing: SizedBox(
+                title: Text(
+                  'Theme',
+                  style: boatTextStyle(fontWeight: FontWeight.w500, size: 16),
+                ),
+                trailing: const SizedBox(
                   width: 150,
-                  child: CredrDropDown(
-                    hintText: 'Theme',
-                  ),
+                  child: CredrDropDown(hintText: 'Theme'),
                 ),
               ),
-              Spacer(),
+              ListTile(
+                onTap: () {},
+                title: Text(
+                  'Privacy & Policy',
+                  style: boatTextStyle(fontWeight: FontWeight.w500, size: 16),
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios),
+              ),
+              ListTile(
+                onTap: () {},
+                title: Text(
+                  'About',
+                  style: boatTextStyle(fontWeight: FontWeight.w500, size: 16),
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios),
+              ),
+              ListTile(
+                  title: Text(
+                    'Clear History',
+                    style: boatTextStyle(fontWeight: FontWeight.w500, size: 16),
+                  ),
+                  trailing: InkWell(
+                    onTap: () {},
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: redColor,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 6),
+                        child: Text(
+                          'Clear',
+                          style: boatTextStyle(
+                              fontWeight: FontWeight.w600,
+                              size: 14,
+                              color: whiteColor),
+                        ),
+                      ),
+                    ),
+                  )),
+              const Spacer(),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 5, horizontal: 10),

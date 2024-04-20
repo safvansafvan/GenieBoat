@@ -142,8 +142,8 @@ class CustomLeftNavigation extends StatelessWidget {
                 child: ListTile(
                   shape: OutlineInputBorder(borderRadius: radius10),
                   hoverColor: Colors.blue.withAlpha(300),
-                  onTap: () {
-                    lc.logout(context);
+                  onTap: () async {
+                    await lc.logout(context);
                   },
                   minLeadingWidth: 0,
                   horizontalTitleGap: 0,
