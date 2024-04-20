@@ -1,6 +1,6 @@
-//colors
-
 import 'package:flutter/material.dart';
+
+//colors
 
 Color blackColor = Colors.black;
 Color whiteColor = Colors.white;
@@ -23,6 +23,7 @@ TextStyle boatTextStyle(
 //height
 
 var height20 = const SizedBox(height: 20);
+var height10 = const SizedBox(height: 20);
 var minHeight = const SizedBox(height: 3);
 
 //width
@@ -37,3 +38,7 @@ BorderRadius radius10 = BorderRadius.circular(10);
 
 Duration boatDuration = const Duration(milliseconds: 1000);
 Duration minDuration = const Duration(milliseconds: 400);
+
+/// Navigation
+
+

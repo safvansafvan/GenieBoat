@@ -1,6 +1,7 @@
 import 'package:chatboat/view/settings/settings.dart';
 import 'package:chatboat/view/widgets/history_view.dart';
 import 'package:chatboat/view_model/constant.dart';
+import 'package:chatboat/view_model/login_ctrl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../view_model/globel_ctrl.dart';
@@ -10,6 +11,7 @@ class CustomLeftNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lc = Get.find<LoginController>();
     return GetBuilder<GlobleController>(
       builder: (globelCtrl) {
         return Container(
@@ -140,7 +142,9 @@ class CustomLeftNavigation extends StatelessWidget {
                 child: ListTile(
                   shape: OutlineInputBorder(borderRadius: radius10),
                   hoverColor: Colors.blue.withAlpha(300),
-                  onTap: () {},
+                  onTap: () {
+                    lc.logout(context);
+                  },
                   minLeadingWidth: 0,
                   horizontalTitleGap: 0,
                   trailing: Icon(Icons.logout, color: greyColor),

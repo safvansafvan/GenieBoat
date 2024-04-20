@@ -1,4 +1,5 @@
 import 'package:chatboat/view/auth/forgot_password.dart';
+import 'package:chatboat/view/auth/phone_auth.dart';
 import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/widgets/button_loading.dart';
 import 'package:chatboat/view/widgets/login_text_field.dart';
@@ -157,17 +158,28 @@ class LoginView extends StatelessWidget {
                                 FlutterSocialButton(
                                   buttonType: ButtonType.google,
                                   mini: true,
-                                  onTap: () {},
+                                  onTap: () async {
+                                    await loginCtrl.signInWithGoogle(
+                                        context: context);
+                                  },
                                 ),
-                                FlutterSocialButton(
-                                  buttonType: ButtonType.facebook,
-                                  mini: true,
-                                  onTap: () {},
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: context.isPhone ? 6 : 0),
+                                  child: FlutterSocialButton(
+                                    buttonType: ButtonType.facebook,
+                                    mini: true,
+                                    onTap: () async {
+                                      await loginCtrl.facebookAuth();
+                                    },
+                                  ),
                                 ),
                                 FlutterSocialButton(
                                   buttonType: ButtonType.phone,
                                   mini: true,
-                                  onTap: () {},
+                                  onTap: () {
+                                    phoneAuth(context);
+                                  },
                                 ),
                               ],
                             )

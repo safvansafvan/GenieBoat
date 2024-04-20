@@ -7,27 +7,27 @@ import 'package:chatboat/view_model/login_ctrl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void forgotPasswordDialog(BuildContext context) {
+void phoneAuth(BuildContext context) {
   final ctrl = Get.find<LoginController>();
 
   showAlignedDialog(
     barrierColor: Colors.transparent,
     barrierDismissible: false,
     duration: minDuration,
+    context: context,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return FadeTransition(
         opacity: animation,
         child: child,
       );
     },
-    context: context,
     builder: (context) {
       return AlertDialog(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Forgot Password',
+              'Number Verification',
               style: boatTextStyle(fontWeight: FontWeight.w600, size: 17),
             ),
             IconButton(
@@ -42,23 +42,30 @@ void forgotPasswordDialog(BuildContext context) {
             mainAxisSize: MainAxisSize.min,
             children: [
               BoatTextFormFieldLogin(
-                label: 'Email',
-                controller: ctrl.forgotEmailCtrl,
-                isUsername: true,
+                label: 'Number',
+                controller: ctrl.numberCtrl,
+                isNumber: true,
+                inputType: TextInputType.number,
+              ),
+              BoatTextFormFieldLogin(
+                label: 'Otp',
+                isOtp: true,
+                controller: ctrl.otpCtrl,
+                inputType: TextInputType.number,
               ),
               height20,
-              loginC.isForgotLoading
+              loginC.isOtpVerification
                   ? const ButtonClickLoading()
                   : ElevatedButton(
                       onPressed: () async {
-                        if (ctrl.forgotEmailCtrl.text.isEmpty) {
+                        if (ctrl.otpCtrl.text.isEmpty) {
                           boatSnackBar(
-                              text: 'Failed', message: 'Enter Required Field');
+                              text: 'Failed', message: 'Enter Otp Field');
                         } else {
-                          await ctrl.forgotPassword(context);
+                          await ctrl.handlePhoneOtpVerification(context);
                         }
                       },
-                      child: const Text('   Reset  ')),
+                      child: const Text('   Verify  ')),
               height20
             ],
           );

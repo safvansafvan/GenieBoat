@@ -1,10 +1,11 @@
 import 'dart:developer';
-
 import 'package:chatboat/view/auth/login.dart';
 import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -13,6 +14,9 @@ class LoginController extends GetxController {
   TextEditingController forgotEmailCtrl = TextEditingController();
   TextEditingController passworldCtrl = TextEditingController();
   TextEditingController userNameCtrl = TextEditingController();
+  TextEditingController numberCtrl = TextEditingController();
+  TextEditingController otpCtrl = TextEditingController();
+  FocusNode? numberFocus;
   bool obscurePassword = true;
   bool isSignUp = false;
   User? user;
@@ -35,74 +39,65 @@ class LoginController extends GetxController {
 
 //*************************** phone auth view ********************************************************************
   String countryCode = '+91';
-  TextEditingController phoneNumberCtrl = TextEditingController();
   String verifyId = '';
-  bool isPhoneLoading = false;
+  bool isVerifyLoading = false;
 
-  Future<void> handlePhoneAuth(context) async {
-    isPhoneLoading = true;
-    log(phoneNumberCtrl.text);
+  Future<void> verifyPhoneNum(context) async {
+    isVerifyLoading = true;
+    update();
+    log(numberCtrl.text, name: isVerifyLoading.toString());
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: countryCode + phoneNumberCtrl.text,
-        verificationCompleted: (PhoneAuthCredential credential) {},
-        verificationFailed: (FirebaseAuthException e) {
-          log(e.toString());
-        },
+        phoneNumber: countryCode + numberCtrl.text,
         codeSent: (String verificationId, int? resendToken) {
           verifyId = verificationId;
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) => PhoneOtpView(),
-          //     ));
+          update();
+        },
+        verificationCompleted: (PhoneAuthCredential credential) {},
+        verificationFailed: (FirebaseAuthException e) {
+          log(e.toString(), name: 'Failed');
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
+      isVerifyLoading = false;
+      update();
     } catch (e) {
       log(e.toString());
     }
-    isPhoneLoading = false;
+    isVerifyLoading = false;
     update();
   }
 
-  //*************************** phoneotp authentication view  *********************************************************
-
-  final TextEditingController otpController = TextEditingController();
-  bool isPhoneVloading = false;
+  bool isOtpVerification = false;
   FirebaseAuth auth = FirebaseAuth.instance;
   Future<void> handlePhoneOtpVerification(context) async {
-    isPhoneVloading = true;
-
-    String code = otpController.text;
-    log(verifyId);
-    log(code);
+    isOtpVerification = true;
+    update();
+    String code = otpCtrl.text;
+    log(verifyId, name: 'verification id');
+    log(code, name: 'code');
     try {
       PhoneAuthCredential credential =
           PhoneAuthProvider.credential(verificationId: verifyId, smsCode: code);
-      await auth
-          .signInWithCredential(credential)
-          .then((value) => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const HomeView(),
-              )).then((value) => clearController()));
+      await auth.signInWithCredential(credential).then((value) async =>
+          await Get.off(() => const HomeView())!
+              .then((value) => clearController()));
     } catch (e) {
       log(e.toString());
       return boatSnackBar(message: 'Invalid Otp', text: 'Failed');
     }
-    isPhoneVloading = false;
+    isOtpVerification = false;
     update();
   }
 
   void clearController() {
-    phoneNumberCtrl.clear();
-    otpController.clear();
+    numberCtrl.clear();
+    otpCtrl.clear();
     passworldCtrl.clear();
     emailCtrl.clear();
   }
 
-  Future<User?> signInWithGoogle({required BuildContext context}) async {
+  Future<void> signInWithGoogle({required BuildContext context}) async {
     User? user;
     final GoogleSignIn googleSignIn = GoogleSignIn();
     final GoogleSignInAccount? googleSignInAccount =
@@ -120,22 +115,31 @@ class LoginController extends GetxController {
             await auth.signInWithCredential(credential);
 
         user = userCredential.user;
+        if (user != null) {
+          await Get.off(() => const HomeView());
+        } else {
+          boatSnackBar(text: 'Error', message: 'Something Wrong');
+        }
       } on FirebaseAuthException catch (e) {
         log(e.toString());
       }
     } else {
       log("account is doesn't exist");
     }
-
-    return user;
   }
 
   handleScreens(context) {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      return Get.off(() => const HomeView());
+      return Get.off(() => const HomeView(),
+          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 400),
+          transition: Transition.zoom);
     } else {
-      return Get.off(() => const LoginView());
+      return Get.off(() => const LoginView(),
+          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 400),
+          transition: Transition.zoom);
     }
   }
 
@@ -146,12 +150,9 @@ class LoginController extends GetxController {
       await auth.signOut();
       final googleSignIn = GoogleSignIn();
       await googleSignIn.signOut();
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginView()),
-        (route) => false,
-      );
+      await Get.off(() => const LoginView());
       boatSnackBar(message: 'Logout', text: 'Succeed', isSuccess: true);
+      update();
     } catch (e) {
       log('Error during logout: $e');
     }
@@ -207,7 +208,7 @@ class LoginController extends GetxController {
     update();
     try {
       await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: forgotEmailCtrl.text.trim())
+          .sendPasswordResetEmail(email: forgotEmailCtrl.text)
           .then((value) {
         Navigator.pop(context);
         forgotEmailCtrl.clear();
@@ -221,5 +222,17 @@ class LoginController extends GetxController {
     }
     isForgotLoading = false;
     update();
+  }
+
+  Future<void> facebookAuth() async {
+    try {
+      final LoginResult result = await FacebookAuth.instance.login();
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(result.accessToken!.token);
+      FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+      await Get.off(() => const HomeView());
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }
