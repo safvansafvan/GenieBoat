@@ -1,3 +1,4 @@
+import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:chatboat/view_model/constant.dart';
 import 'package:chatboat/view_model/login_ctrl.dart';
 import 'package:email_validator/email_validator.dart';
@@ -6,21 +7,22 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class BoatTextFormFieldLogin extends StatelessWidget {
-  const BoatTextFormFieldLogin({
-    super.key,
-    required this.label,
-    required this.controller,
-    this.suffixIcon,
-    this.inputType,
-    this.isUsername = false,
-    this.isPassword = false,
-  });
+  const BoatTextFormFieldLogin(
+      {super.key,
+      required this.label,
+      required this.controller,
+      this.inputType,
+      this.isUsername = false,
+      this.isPassword = false,
+      this.isOtp = false,
+      this.isNumber = false});
 
   final TextEditingController controller;
   final String label;
-  final IconData? suffixIcon;
   final bool isPassword;
   final bool isUsername;
+  final bool isNumber;
+  final bool isOtp;
   final TextInputType? inputType;
 
   @override
@@ -32,6 +34,9 @@ class BoatTextFormFieldLogin extends StatelessWidget {
           constraints: const BoxConstraints(maxHeight: 68),
           child: Center(
             child: TextFormField(
+              inputFormatters:
+                  isNumber ? [LengthLimitingTextInputFormatter(10)] : [],
+              focusNode: isNumber ? loginCtrl.numberFocus : null,
               keyboardType: inputType,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: controller,
@@ -41,20 +46,7 @@ class BoatTextFormFieldLogin extends StatelessWidget {
               decoration: InputDecoration(
                 errorStyle: boatTextStyle(
                     fontWeight: FontWeight.w500, size: 14, color: redColor),
-                suffixIcon: isPassword == true
-                    ? Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: IconButton(
-                            onPressed: () {
-                              loginCtrl.obscureState();
-                            },
-                            icon: Icon(
-                                loginCtrl.obscurePassword
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: greyColor)),
-                      )
-                    : null,
+                suffixIcon: suffixWidget(loginCtrl, context),
                 label: Text(label),
                 labelStyle: boatTextStyle(
                     fontWeight: FontWeight.w500, size: 18, color: greyColor),
@@ -86,8 +78,31 @@ class BoatTextFormFieldLogin extends StatelessWidget {
                   if (value == null || value.isEmpty) {
                     return 'Enter Email';
                   }
-                  if (EmailValidator.validate(value)) {
+                  if (!EmailValidator.validate(value)) {
                     return 'Enter Valid Email';
+                  }
+                }
+                if (isNumber) {
+                  if (value == null || value.isEmpty) {
+                    return 'Enter Number';
+                  }
+                  if (value.length < 10) {
+                    return 'Enter Valid Number';
+                  }
+                  if (loginCtrl.numberCtrl.text.length >= 10) {
+                    // loginCtrl.numberFocus?.unfocus();
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  }
+                }
+                if (isOtp) {
+                  if (value == null || value.isEmpty) {
+                    return 'Enter Otp';
+                  }
+                  if (value.length < 5) {
+                    return 'Enter Valid Otp';
+                  }
+                  if (loginCtrl.otpCtrl.text.length == 6) {
+                    FocusManager.instance.primaryFocus?.unfocus();
                   }
                 }
 
@@ -98,5 +113,40 @@ class BoatTextFormFieldLogin extends StatelessWidget {
         ),
       );
     });
+  }
+
+  suffixWidget(LoginController loginCtrl, ctx) {
+    if (isPassword) {
+      return IconButton(
+        onPressed: () {
+          loginCtrl.obscureState();
+        },
+        icon: Icon(
+            loginCtrl.obscurePassword ? Icons.visibility_off : Icons.visibility,
+            color: greyColor),
+      );
+    } else if (isNumber == true && loginCtrl.isVerifyLoading == false) {
+      return TextButton(
+        onPressed: () async {
+          if (loginCtrl.numberCtrl.text.isEmpty) {
+            return boatSnackBar(text: 'Error', message: 'Enter Phone Number');
+          }
+          await loginCtrl.verifyPhoneNum(ctx);
+        },
+        child: Text(
+          'Verify',
+          style: boatTextStyle(
+              fontWeight: FontWeight.w500, size: 14, color: redColor),
+        ),
+      );
+    } else if (loginCtrl.isVerifyLoading == true && isNumber == true) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+        child: SizedBox(
+            width: 30,
+            height: 30,
+            child: CircularProgressIndicator(strokeWidth: 1.5)),
+      );
+    }
   }
 }

@@ -1,8 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:chatboat/view/auth/login.dart';
 import 'package:chatboat/view_model/constant.dart';
+import 'package:chatboat/view_model/globel_ctrl.dart';
+import 'package:chatboat/view_model/login_ctrl.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -16,6 +17,13 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     naviagateToHome();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final ctrl = Get.find<GlobleController>();
+    ctrl.size = Size(context.width, context.height);
+    super.didChangeDependencies();
   }
 
   @override
@@ -59,7 +67,8 @@ class _SplashViewState extends State<SplashView> {
   }
 
   Future<void> naviagateToHome() async {
+    final lc = Get.find<LoginController>();
     await Future.delayed(const Duration(seconds: 2))
-        .then((value) => Get.to(() => const LoginView()));
+        .then((value) => lc.handleScreens(context));
   }
 }

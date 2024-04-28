@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class GlobleController extends GetxController {
   bool isChatHelper = true;
   bool isSettings = false;
   int bodyCurrentInd = 0;
+  Size size = const Size(0, 0);
 
   void chatHelperState() {
     isSettings = false;

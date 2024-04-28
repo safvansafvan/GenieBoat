@@ -1,5 +1,9 @@
+import 'package:chatboat/view/auth/forgot_password.dart';
+import 'package:chatboat/view/auth/phone_auth.dart';
 import 'package:chatboat/view/home/home.dart';
+import 'package:chatboat/view/widgets/button_loading.dart';
 import 'package:chatboat/view/widgets/login_text_field.dart';
+import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:chatboat/view_model/constant.dart';
 import 'package:chatboat/view_model/login_ctrl.dart';
 import 'package:flutter/material.dart';
@@ -94,12 +98,16 @@ class LoginView extends StatelessWidget {
                                     child: Padding(
                                       padding:
                                           const EdgeInsets.only(right: 22.0),
-                                      child: Text(
-                                        'Forgot Password?',
-                                        style: boatTextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            size: 13,
-                                            color: Colors.deepPurple),
+                                      child: GestureDetector(
+                                        onTap: () =>
+                                            forgotPasswordDialog(context),
+                                        child: Text(
+                                          'Forgot Password?',
+                                          style: boatTextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              size: 13,
+                                              color: Colors.deepPurple),
+                                        ),
                                       ),
                                     ),
                                   )
@@ -109,19 +117,23 @@ class LoginView extends StatelessWidget {
                                   top: 10, left: 10, right: 10),
                               child: SizedBox(
                                 width: 200,
-                                child: ElevatedButton(
-                                    style: ButtonStyle(
-                                        shape: MaterialStatePropertyAll(
-                                            RoundedRectangleBorder(
-                                                borderRadius: radius10)),
-                                        animationDuration:
-                                            const Duration(seconds: 1)),
-                                    onPressed: () {
-                                      Get.to(() => const HomeView());
-                                    },
-                                    child: Text(loginCtrl.isSignUp
-                                        ? 'SignUp'
-                                        : 'Login')),
+                                child: loginCtrl.isSignInLoading ||
+                                        loginCtrl.isSignUpLoading
+                                    ? const ButtonClickLoading()
+                                    : ElevatedButton(
+                                        style: ButtonStyle(
+                                            shape: MaterialStatePropertyAll(
+                                                RoundedRectangleBorder(
+                                                    borderRadius: radius10)),
+                                            animationDuration:
+                                                const Duration(seconds: 1)),
+                                        onPressed: () async {
+                                          await handleAuth(loginCtrl);
+                                        },
+                                        child: Text(loginCtrl.isSignUp
+                                            ? 'SignUp'
+                                            : 'Login'),
+                                      ),
                               ),
                             ),
                             Padding(
@@ -146,17 +158,28 @@ class LoginView extends StatelessWidget {
                                 FlutterSocialButton(
                                   buttonType: ButtonType.google,
                                   mini: true,
-                                  onTap: () {},
+                                  onTap: () async {
+                                    await loginCtrl.signInWithGoogle(
+                                        context: context);
+                                  },
                                 ),
-                                FlutterSocialButton(
-                                  buttonType: ButtonType.facebook,
-                                  mini: true,
-                                  onTap: () {},
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: context.isPhone ? 6 : 0),
+                                  child: FlutterSocialButton(
+                                    buttonType: ButtonType.facebook,
+                                    mini: true,
+                                    onTap: () async {
+                                      await loginCtrl.facebookAuth();
+                                    },
+                                  ),
                                 ),
                                 FlutterSocialButton(
                                   buttonType: ButtonType.phone,
                                   mini: true,
-                                  onTap: () {},
+                                  onTap: () {
+                                    phoneAuth(context);
+                                  },
                                 ),
                               ],
                             )
@@ -219,5 +242,29 @@ class LoginView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> handleAuth(LoginController ctrl) async {
+    if (ctrl.isSignUp) {
+      ctrl.user = await ctrl.signUpWithEmailAndPassword();
+      if (ctrl.user != null) {
+        await Get.offAll(() => const HomeView())
+            ?.then((value) => ctrl.clearControllers());
+      } else {
+        boatSnackBar(message: 'Something Wrong', text: 'Failed');
+      }
+    } else {
+      if (ctrl.emailCtrl.text.isEmpty || ctrl.passworldCtrl.text.isEmpty) {
+        return boatSnackBar(message: 'Enter required fields', text: 'Required');
+      } else {
+        ctrl.user = await ctrl.signInWithEmailAndPasswords();
+        if (ctrl.user != null) {
+          await Get.offAll(() => const HomeView())
+              ?.then((value) => ctrl.clearControllers());
+        } else {
+          boatSnackBar(message: 'Something Wrong', text: 'Failed');
+        }
+      }
+    }
   }
 }

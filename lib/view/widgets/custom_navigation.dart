@@ -1,6 +1,7 @@
 import 'package:chatboat/view/settings/settings.dart';
 import 'package:chatboat/view/widgets/history_view.dart';
 import 'package:chatboat/view_model/constant.dart';
+import 'package:chatboat/view_model/login_ctrl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../view_model/globel_ctrl.dart';
@@ -10,6 +11,7 @@ class CustomLeftNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lc = Get.find<LoginController>();
     return GetBuilder<GlobleController>(
       builder: (globelCtrl) {
         return Container(
@@ -134,36 +136,15 @@ class CustomLeftNavigation extends StatelessWidget {
                 curve: Curves.decelerate,
                 width: 160,
                 margin: const EdgeInsets.symmetric(vertical: 5),
-                decoration: BoxDecoration(borderRadius: radius10),
-                child: ListTile(
-                  shape: OutlineInputBorder(borderRadius: radius10),
-                  minLeadingWidth: 0,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 2),
-                  horizontalTitleGap: 10,
-                  leading: const CircleAvatar(radius: 20),
-                  title: Text(
-                    'Muhammed Safvan',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: boatTextStyle(
-                        fontWeight: FontWeight.w500,
-                        size: 12,
-                        color: whiteColor),
-                  ),
-                ),
-              ),
-              AnimatedContainer(
-                duration: boatDuration,
-                curve: Curves.decelerate,
-                width: 160,
-                margin: const EdgeInsets.symmetric(vertical: 5),
                 decoration: BoxDecoration(
                   borderRadius: radius10,
                 ),
                 child: ListTile(
                   shape: OutlineInputBorder(borderRadius: radius10),
                   hoverColor: Colors.blue.withAlpha(300),
-                  onTap: () {},
+                  onTap: () async {
+                    await lc.logout(context);
+                  },
                   minLeadingWidth: 0,
                   horizontalTitleGap: 0,
                   trailing: Icon(Icons.logout, color: greyColor),
