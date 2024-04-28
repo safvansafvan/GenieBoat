@@ -57,14 +57,22 @@ void phoneAuth(BuildContext context) {
               loginC.isOtpVerification
                   ? const ButtonClickLoading()
                   : ElevatedButton(
-                      onPressed: () async {
-                        if (ctrl.otpCtrl.text.isEmpty) {
-                          boatSnackBar(
-                              text: 'Failed', message: 'Enter Otp Field');
-                        } else {
-                          await ctrl.handlePhoneOtpVerification(context);
-                        }
-                      },
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll(
+                              loginC.isVerifyLoading == false &&
+                                      loginC.otpCtrl.text.length > 5
+                                  ? Colors.deepPurple
+                                  : greyColor)),
+                      onPressed: loginC.isVerifyLoading
+                          ? () async {
+                              if (ctrl.otpCtrl.text.isEmpty) {
+                                boatSnackBar(
+                                    text: 'Failed', message: 'Enter Otp Field');
+                              } else {
+                                await ctrl.handlePhoneOtpVerification(context);
+                              }
+                            }
+                          : () {},
                       child: const Text('   Verify  ')),
               height20
             ],

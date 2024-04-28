@@ -1,12 +1,15 @@
 import 'package:chatboat/view/widgets/boat_drop_down.dart';
 import 'package:chatboat/view_model/constant.dart';
+import 'package:chatboat/view_model/globel_ctrl.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 settingsDialog(BuildContext context) async {
+  final gc = Get.find<GlobleController>();
   return await showDialog(
     barrierColor: Colors.transparent,
-    barrierDismissible: true,
+    barrierDismissible: false,
     context: context,
     builder: (context) {
       return Dialog(
@@ -36,6 +39,7 @@ settingsDialog(BuildContext context) async {
                     ),
                     IconButton(
                         onPressed: () {
+                          gc.chatHelperState();
                           Navigator.pop(context);
                         },
                         icon: const Icon(Icons.close))

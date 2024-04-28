@@ -148,14 +148,13 @@ class LoginController extends GetxController {
     try {
       await FirebaseAuth.instance.signOut();
       await auth.signOut();
-      final googleSignIn = GoogleSignIn();
-      await googleSignIn.signOut();
+      // final googleSignIn = GoogleSignIn();
+      // await googleSignIn.signOut();
       await Get.offAll(() => const LoginView(),
           curve: Curves.easeInOut,
           duration: const Duration(milliseconds: 400),
           transition: Transition.zoom);
       boatSnackBar(message: 'Logout', text: 'Succeed', isSuccess: true);
-      update();
     } catch (e) {
       log('Error during logout: $e');
     }
