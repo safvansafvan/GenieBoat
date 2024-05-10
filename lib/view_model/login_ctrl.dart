@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'package:chatboat/view/auth/login.dart';
 import 'package:chatboat/view/home/home.dart';
@@ -84,7 +86,7 @@ class LoginController extends GetxController {
               .then((value) => clearController()));
     } catch (e) {
       log(e.toString());
-      return boatSnackBar(message: 'Invalid Otp', text: 'Failed');
+      return boatSnackBar(message: 'Invalid Otp', text: 'Failed', ctx: context);
     }
     isOtpVerification = false;
     update();
@@ -93,8 +95,6 @@ class LoginController extends GetxController {
   void clearController() {
     numberCtrl.clear();
     otpCtrl.clear();
-    passworldCtrl.clear();
-    emailCtrl.clear();
   }
 
   Future<void> signInWithGoogle({required BuildContext context}) async {
@@ -118,7 +118,7 @@ class LoginController extends GetxController {
         if (user != null) {
           await Get.off(() => const HomeView());
         } else {
-          boatSnackBar(text: 'Error', message: 'Something Wrong');
+          boatSnackBar(text: 'Error', message: 'Something Wrong', ctx: context);
         }
       } on FirebaseAuthException catch (e) {
         log(e.toString());
@@ -154,7 +154,8 @@ class LoginController extends GetxController {
           curve: Curves.easeInOut,
           duration: const Duration(milliseconds: 400),
           transition: Transition.zoom);
-      boatSnackBar(message: 'Logout', text: 'Succeed', isSuccess: true);
+      boatSnackBar(
+          message: 'Logout', text: 'Succeed', isSuccess: true, ctx: context);
     } catch (e) {
       log('Error during logout: $e');
     }
@@ -162,7 +163,7 @@ class LoginController extends GetxController {
 
   ///*************************** singup with email and password *********************************
   bool isSignUpLoading = false;
-  Future<User?> signUpWithEmailAndPassword() async {
+  Future<User?> signUpWithEmailAndPassword(BuildContext ctx) async {
     isSignUpLoading = true;
     update();
     try {
@@ -170,8 +171,14 @@ class LoginController extends GetxController {
           email: emailCtrl.text, password: passworldCtrl.text);
       isSignUpLoading = false;
       update();
+      passworldCtrl.clear();
+      emailCtrl.clear();
+      userNameCtrl.clear();
       boatSnackBar(
-          message: 'SignUp SuccessFully', text: 'Succeed', isSuccess: true);
+          message: 'SignUp SuccessFully',
+          text: 'Succeed',
+          isSuccess: true,
+          ctx: ctx);
       return credential.user;
     } catch (e) {
       log(e.toString());
@@ -183,7 +190,7 @@ class LoginController extends GetxController {
 
 //*********************************************signin with email and password *******************************************
   bool isSignInLoading = false;
-  Future<User?> signInWithEmailAndPasswords() async {
+  Future<User?> signInWithEmailAndPasswords(BuildContext ctx) async {
     isSignInLoading = true;
     update();
     try {
@@ -191,8 +198,13 @@ class LoginController extends GetxController {
           email: emailCtrl.text, password: passworldCtrl.text);
       isSignInLoading = false;
       update();
+      passworldCtrl.clear();
+      emailCtrl.clear();
       boatSnackBar(
-          message: 'Login SuccessFully', text: 'Succeed', isSuccess: true);
+          message: 'Login SuccessFully',
+          text: 'Succeed',
+          isSuccess: true,
+          ctx: ctx);
       return credential.user;
     } catch (e) {
       log(e.toString());
@@ -216,7 +228,10 @@ class LoginController extends GetxController {
         forgotEmailCtrl.clear();
         isForgotLoading = false;
         boatSnackBar(
-            message: 'Check Email Inbox', text: 'Succeed', isSuccess: true);
+            message: 'Check Email Inbox',
+            text: 'Succeed',
+            isSuccess: true,
+            ctx: context);
         update();
       });
     } catch (e) {

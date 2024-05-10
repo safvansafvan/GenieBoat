@@ -23,6 +23,8 @@ dependencies:
   google_sign_in: ^6.2.1
   dropdown_button2: ^2.3.9
   flutter_facebook_auth: ^6.2.0
+  google_generative_ai: ^0.3.2
+  awesome_snackbar_content: ^0.1.3
 
 dev_dependencies:
   flutter_test:

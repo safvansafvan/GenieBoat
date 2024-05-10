@@ -128,7 +128,7 @@ class LoginView extends StatelessWidget {
                                             animationDuration:
                                                 const Duration(seconds: 1)),
                                         onPressed: () async {
-                                          await handleAuth(loginCtrl);
+                                          await handleAuth(loginCtrl, context);
                                         },
                                         child: Text(loginCtrl.isSignUp
                                             ? 'SignUp'
@@ -165,7 +165,7 @@ class LoginView extends StatelessWidget {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: context.isPhone ? 6 : 0),
+                                      horizontal: context.isPhone ? 10 : 0),
                                   child: FlutterSocialButton(
                                     buttonType: ButtonType.facebook,
                                     mini: true,
@@ -244,25 +244,27 @@ class LoginView extends StatelessWidget {
     );
   }
 
-  Future<void> handleAuth(LoginController ctrl) async {
+  Future<void> handleAuth(LoginController ctrl, context) async {
     if (ctrl.isSignUp) {
-      ctrl.user = await ctrl.signUpWithEmailAndPassword();
+      ctrl.user = await ctrl.signUpWithEmailAndPassword(context);
       if (ctrl.user != null) {
         await Get.offAll(() => const HomeView())
             ?.then((value) => ctrl.clearControllers());
       } else {
-        boatSnackBar(message: 'Something Wrong', text: 'Failed');
+        boatSnackBar(message: 'Something Wrong', text: 'Failed', ctx: context);
       }
     } else {
       if (ctrl.emailCtrl.text.isEmpty || ctrl.passworldCtrl.text.isEmpty) {
-        return boatSnackBar(message: 'Enter required fields', text: 'Required');
+        return boatSnackBar(
+            message: 'Enter required fields', text: 'Required', ctx: context);
       } else {
-        ctrl.user = await ctrl.signInWithEmailAndPasswords();
+        ctrl.user = await ctrl.signInWithEmailAndPasswords(context);
         if (ctrl.user != null) {
           await Get.offAll(() => const HomeView())
               ?.then((value) => ctrl.clearControllers());
         } else {
-          boatSnackBar(message: 'Something Wrong', text: 'Failed');
+          boatSnackBar(
+              message: 'Something Wrong', text: 'Failed', ctx: context);
         }
       }
     }

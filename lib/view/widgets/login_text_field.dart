@@ -129,7 +129,8 @@ class BoatTextFormFieldLogin extends StatelessWidget {
       return TextButton(
         onPressed: () async {
           if (loginCtrl.numberCtrl.text.isEmpty) {
-            return boatSnackBar(text: 'Error', message: 'Enter Phone Number');
+            return boatSnackBar(
+                text: 'Error', message: 'Enter Phone Number', ctx: ctx);
           }
           await loginCtrl.verifyPhoneNum(ctx);
         },

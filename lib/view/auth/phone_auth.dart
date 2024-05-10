@@ -67,7 +67,9 @@ void phoneAuth(BuildContext context) {
                           ? () async {
                               if (ctrl.otpCtrl.text.isEmpty) {
                                 boatSnackBar(
-                                    text: 'Failed', message: 'Enter Otp Field');
+                                    text: 'Failed',
+                                    message: 'Enter Otp Field',
+                                    ctx: context);
                               } else {
                                 await ctrl.handlePhoneOtpVerification(context);
                               }

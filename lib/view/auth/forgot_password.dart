@@ -53,7 +53,9 @@ void forgotPasswordDialog(BuildContext context) {
                       onPressed: () async {
                         if (ctrl.forgotEmailCtrl.text.isEmpty) {
                           boatSnackBar(
-                              text: 'Failed', message: 'Enter Required Field');
+                              text: 'Failed',
+                              message: 'Enter Required Field',
+                              ctx: context);
                         } else {
                           await ctrl.forgotPassword(context);
                         }

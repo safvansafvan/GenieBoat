@@ -21,7 +21,9 @@ class StartChatingView extends StatelessWidget {
                 ? null
                 : BorderRadius.circular(15)
             : const BorderRadius.only(
-                topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
+                topLeft: Radius.circular(15),
+                bottomLeft: Radius.circular(15),
+              ),
       ),
       padding: const EdgeInsets.symmetric(vertical: 4),
       margin: const EdgeInsets.symmetric(vertical: 12),
@@ -31,7 +33,7 @@ class StartChatingView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.network('assets/gif/boat.gif',
+                Image.asset('assets/gif/boat.gif',
                     height: 200, width: 200, fit: BoxFit.cover),
                 Text(
                   'How Can I Help You Today',
@@ -42,7 +44,11 @@ class StartChatingView extends StatelessWidget {
             ),
           ),
           const Positioned(
-              bottom: 5, left: 10, right: 10, child: GenieMessageSender())
+            bottom: 5,
+            left: 10,
+            right: 10,
+            child: GenieMessageSender(),
+          )
         ],
       ),
     );
