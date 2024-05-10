@@ -1,7 +1,6 @@
 import 'package:chatboat/view/widgets/message_sender.dart';
 import 'package:chatboat/view_model/boat_controller.dart';
 import 'package:chatboat/view_model/constant.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -85,11 +84,13 @@ class ChatHelperWidget extends StatelessWidget {
                             ],
                           ),
                           const Divider(),
-                          Text(bCtrl.textAnswer,
-                              style: TextStyle(
-                                  color: blackColor,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16)),
+                          Text(
+                            bCtrl.textAnswer,
+                            style: TextStyle(
+                                color: blackColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16),
+                          ),
                           const Spacer(),
                           Row(
                             children: [

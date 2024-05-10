@@ -68,7 +68,8 @@ class _SplashViewState extends State<SplashView> {
 
   Future<void> naviagateToHome() async {
     final lc = Get.find<LoginController>();
-    await Future.delayed(const Duration(seconds: 2))
-        .then((value) => lc.handleScreens(context));
+    await Future.delayed(const Duration(seconds: 2)).then(
+      (value) => lc.handleScreens(context),
+    );
   }
 }

@@ -62,13 +62,14 @@ class GenieHistory extends StatelessWidget {
                   border: Border.all(color: bgColor),
                   boxShadow: [BoxShadow(color: greyColor)]),
               child: const Center(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.delete_outline),
-                  Text('Clear History'),
-                ],
-              )),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.delete_outline),
+                    Text('Clear History'),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

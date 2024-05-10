@@ -37,49 +37,53 @@ void phoneAuth(BuildContext context) {
                 icon: const Icon(Icons.close))
           ],
         ),
-        content: GetBuilder<LoginController>(builder: (loginC) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              BoatTextFormFieldLogin(
-                label: 'Number',
-                controller: ctrl.numberCtrl,
-                isNumber: true,
-                inputType: TextInputType.number,
-              ),
-              BoatTextFormFieldLogin(
-                label: 'Otp',
-                isOtp: true,
-                controller: ctrl.otpCtrl,
-                inputType: TextInputType.number,
-              ),
-              height20,
-              loginC.isOtpVerification
-                  ? const ButtonClickLoading()
-                  : ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(
-                              loginC.isVerifyLoading == false &&
-                                      loginC.otpCtrl.text.length > 5
-                                  ? Colors.deepPurple
-                                  : greyColor)),
-                      onPressed: loginC.isVerifyLoading
-                          ? () async {
-                              if (ctrl.otpCtrl.text.isEmpty) {
-                                boatSnackBar(
-                                    text: 'Failed',
-                                    message: 'Enter Otp Field',
-                                    ctx: context);
-                              } else {
-                                await ctrl.handlePhoneOtpVerification(context);
+        content: GetBuilder<LoginController>(
+          builder: (loginC) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BoatTextFormFieldLogin(
+                  label: 'Number',
+                  controller: ctrl.numberCtrl,
+                  isNumber: true,
+                  inputType: TextInputType.number,
+                ),
+                BoatTextFormFieldLogin(
+                  label: 'Otp',
+                  isOtp: true,
+                  controller: ctrl.otpCtrl,
+                  inputType: TextInputType.number,
+                ),
+                height20,
+                loginC.isOtpVerification
+                    ? const ButtonClickLoading()
+                    : ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(
+                                loginC.isVerifyLoading == false &&
+                                        loginC.otpCtrl.text.length > 5
+                                    ? Colors.deepPurple
+                                    : greyColor)),
+                        onPressed: loginC.isVerifyLoading
+                            ? () async {
+                                if (ctrl.otpCtrl.text.isEmpty) {
+                                  boatSnackBar(
+                                      text: 'Failed',
+                                      message: 'Enter Otp Field',
+                                      ctx: context);
+                                } else {
+                                  await ctrl
+                                      .handlePhoneOtpVerification(context);
+                                }
                               }
-                            }
-                          : () {},
-                      child: const Text('   Verify  ')),
-              height20
-            ],
-          );
-        }),
+                            : () {},
+                        child: const Text('   Verify  '),
+                      ),
+                height20
+              ],
+            );
+          },
+        ),
         shape: RoundedRectangleBorder(borderRadius: radius10),
         contentPadding: const EdgeInsets.symmetric(horizontal: 2),
       );

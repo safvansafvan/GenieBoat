@@ -12,7 +12,9 @@ class MenuDrawer extends StatelessWidget {
       backgroundColor: blackColor,
       child: const Column(
         children: [
-          Expanded(child: CustomLeftNavigation()),
+          Expanded(
+            child: CustomLeftNavigation(),
+          ),
         ],
       ),
     );

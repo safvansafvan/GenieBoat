@@ -74,29 +74,31 @@ settingsDialog(BuildContext context) async {
                 trailing: const Icon(Icons.arrow_forward_ios),
               ),
               ListTile(
-                  title: Text(
-                    'Clear History',
-                    style: boatTextStyle(fontWeight: FontWeight.w500, size: 16),
-                  ),
-                  trailing: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: redColor,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 6),
-                        child: Text(
-                          'Clear',
-                          style: boatTextStyle(
-                              fontWeight: FontWeight.w600,
-                              size: 14,
-                              color: whiteColor),
-                        ),
+                title: Text(
+                  'Clear History',
+                  style: boatTextStyle(fontWeight: FontWeight.w500, size: 16),
+                ),
+                trailing: InkWell(
+                  onTap: () {},
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: redColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 6),
+                      child: Text(
+                        'Clear',
+                        style: boatTextStyle(
+                            fontWeight: FontWeight.w600,
+                            size: 14,
+                            color: whiteColor),
                       ),
                     ),
-                  )),
+                  ),
+                ),
+              ),
               const Spacer(),
               Padding(
                 padding:

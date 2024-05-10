@@ -51,17 +51,21 @@ class BoatTextFormFieldLogin extends StatelessWidget {
                 labelStyle: boatTextStyle(
                     fontWeight: FontWeight.w500, size: 18, color: greyColor),
                 enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: greyColor)),
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: greyColor),
+                ),
                 focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: greyColor)),
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: greyColor),
+                ),
                 errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: redColor)),
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: redColor),
+                ),
                 focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: redColor)),
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: redColor),
+                ),
               ),
               obscureText:
                   isPassword == true ? loginCtrl.obscurePassword : false,
@@ -144,9 +148,10 @@ class BoatTextFormFieldLogin extends StatelessWidget {
       return const Padding(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
         child: SizedBox(
-            width: 30,
-            height: 30,
-            child: CircularProgressIndicator(strokeWidth: 1.5)),
+          width: 30,
+          height: 30,
+          child: CircularProgressIndicator(strokeWidth: 1.5),
+        ),
       );
     }
   }

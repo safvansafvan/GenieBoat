@@ -31,40 +31,43 @@ void forgotPasswordDialog(BuildContext context) {
               style: boatTextStyle(fontWeight: FontWeight.w600, size: 17),
             ),
             IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.close))
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.close),
+            )
           ],
         ),
-        content: GetBuilder<LoginController>(builder: (loginC) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              BoatTextFormFieldLogin(
-                label: 'Email',
-                controller: ctrl.forgotEmailCtrl,
-                isUsername: true,
-              ),
-              height20,
-              loginC.isForgotLoading
-                  ? const ButtonClickLoading()
-                  : ElevatedButton(
-                      onPressed: () async {
-                        if (ctrl.forgotEmailCtrl.text.isEmpty) {
-                          boatSnackBar(
-                              text: 'Failed',
-                              message: 'Enter Required Field',
-                              ctx: context);
-                        } else {
-                          await ctrl.forgotPassword(context);
-                        }
-                      },
-                      child: const Text('   Reset  ')),
-              height20
-            ],
-          );
-        }),
+        content: GetBuilder<LoginController>(
+          builder: (loginC) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BoatTextFormFieldLogin(
+                  label: 'Email',
+                  controller: ctrl.forgotEmailCtrl,
+                  isUsername: true,
+                ),
+                height20,
+                loginC.isForgotLoading
+                    ? const ButtonClickLoading()
+                    : ElevatedButton(
+                        onPressed: () async {
+                          if (ctrl.forgotEmailCtrl.text.isEmpty) {
+                            boatSnackBar(
+                                text: 'Failed',
+                                message: 'Enter Required Field',
+                                ctx: context);
+                          } else {
+                            await ctrl.forgotPassword(context);
+                          }
+                        },
+                        child: const Text('   Reset  ')),
+                height20
+              ],
+            );
+          },
+        ),
         shape: RoundedRectangleBorder(borderRadius: radius10),
         contentPadding: const EdgeInsets.symmetric(horizontal: 2),
       );
