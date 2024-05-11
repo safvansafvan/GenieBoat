@@ -1,4 +1,3 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:chatboat/view_model/constant.dart';
 import 'package:chatboat/view_model/globel_ctrl.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ void boatSnackBar(
     {required String text,
     required String message,
     required BuildContext ctx,
-    ContentType? type,
     bool isSuccess = false,
     String? path}) {
   if (ctx.isPhone) {

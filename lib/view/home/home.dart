@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math' as m;
 import 'package:chatboat/view/chat_helper/chat_helper.dart';
 import 'package:chatboat/view/history/genie_history.dart';
 import 'package:chatboat/view/start_chat/start_chat.dart';
@@ -7,6 +8,7 @@ import 'package:chatboat/view/widgets/menu_drawer.dart';
 import 'package:chatboat/view_model/boat_controller.dart';
 import 'package:chatboat/view_model/constant.dart';
 import 'package:chatboat/view_model/globel_ctrl.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,9 +19,21 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView>
+    with SingleTickerProviderStateMixin {
   final gctrl = Get.find<GlobleController>();
-  final bctrl = Get.find<BoatChatCtrl>();
+
+  @override
+  void initState() {
+    gctrl.animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    gctrl.controllerTopCenter =
+        ConfettiController(duration: const Duration(seconds: 4));
+    super.initState();
+  }
+
   @override
   void didChangeDependencies() {
     gctrl.size = Size(context.width, context.height);
@@ -39,6 +53,17 @@ class _HomeViewState extends State<HomeView> {
             padding: EdgeInsets.all(context.isPhone ? 0.0 : 10.0),
             child: Column(
               children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: ConfettiWidget(
+                    confettiController: gctrl.controllerTopCenter,
+                    blastDirection: m.pi / 1,
+                    maxBlastForce: 3,
+                    minBlastForce: 2,
+                    emissionFrequency: 0.03,
+                    numberOfParticles: 15,
+                  ),
+                ),
                 SafeArea(
                   child: SizedBox(
                     height: 45,
