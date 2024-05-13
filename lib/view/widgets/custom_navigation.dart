@@ -1,5 +1,6 @@
 import 'package:chatboat/view/settings/settings.dart';
 import 'package:chatboat/view/widgets/history_view.dart';
+import 'package:chatboat/view_model/boat_controller.dart';
 import 'package:chatboat/view_model/constant.dart';
 import 'package:chatboat/view_model/login_ctrl.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class CustomLeftNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lc = Get.find<LoginController>();
+    final bc = Get.find<BoatChatCtrl>();
     return GetBuilder<GlobleController>(
       builder: (globelCtrl) {
         return SafeArea(
@@ -41,6 +43,8 @@ class CustomLeftNavigation extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                 globelCtrl.chatHelperState();
+                                bc.bodyCurrentIndState(0);
+                                Get.back();
                               },
                               child: AnimatedContainer(
                                 duration: minDuration,

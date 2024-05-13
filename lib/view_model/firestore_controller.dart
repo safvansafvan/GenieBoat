@@ -22,7 +22,7 @@ class FireStoreCtrl extends GetxController {
     }
   }
 
-  Future<void> getHistoryFromApp() async {
+  Future<void> getHistoryFromFireStore() async {
     isLoadingGet = true;
     update();
     try {
@@ -44,8 +44,8 @@ class FireStoreCtrl extends GetxController {
       log(e.toString());
     } finally {
       isLoadingGet = false;
+      update();
     }
-    update();
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> historys() async {

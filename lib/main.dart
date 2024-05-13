@@ -1,6 +1,7 @@
 import 'package:chatboat/firebase_options.dart';
 import 'package:chatboat/view/auth/login.dart';
 import 'package:chatboat/view/home/home.dart';
+import 'package:chatboat/view/splash/splash.dart';
 import 'package:chatboat/view_model/constant.dart';
 import 'package:chatboat/view_model/init_controllers.dart';
 import 'package:firebase_core/firebase_core.dart';

@@ -1,7 +1,7 @@
-import 'dart:developer';
 import 'package:chatboat/view/chat_helper/chat_helper.dart';
 import 'package:chatboat/view/history/genie_history.dart';
 import 'package:chatboat/view/start_chat/start_chat.dart';
+import 'package:chatboat/view/widgets/boat_appbar.dart';
 import 'package:chatboat/view/widgets/celebration.dart';
 import 'package:chatboat/view/widgets/custom_navigation.dart';
 import 'package:chatboat/view/widgets/menu_drawer.dart';
@@ -33,7 +33,7 @@ class _HomeViewState extends State<HomeView>
     );
     gctrl.controllerTopCenter =
         ConfettiController(duration: const Duration(seconds: 4));
-    fc.getHistoryFromApp();
+    fc.getHistoryFromFireStore();
     super.initState();
   }
 
@@ -46,7 +46,6 @@ class _HomeViewState extends State<HomeView>
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-    log(context.width.toString());
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: context.isPhone ? whiteColor : blackColor,
@@ -58,103 +57,7 @@ class _HomeViewState extends State<HomeView>
               children: [
                 if (context.isPhone) celebrationKit(),
                 if (context.isPhone)
-                  SafeArea(
-                    child: SizedBox(
-                      height: 45,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: ListTile(
-                          leading: context.width < 747
-                              ? IconButton(
-                                  onPressed: () {
-                                    scaffoldKey.currentState?.openDrawer();
-                                  },
-                                  icon: const Icon(Icons.menu),
-                                )
-                              : null,
-                          contentPadding: EdgeInsets.zero,
-                          title: context.width < 747
-                              ? null
-                              : Text(
-                                  'Ai Chat Helper',
-                                  style: boatTextStyle(
-                                      fontWeight: FontWeight.w700, size: 20),
-                                ),
-                          trailing: SizedBox(
-                            width: 340,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                context.width < 501
-                                    ? Container(
-                                        height: 34,
-                                        width: 34,
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 5),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: bgColor),
-                                            borderRadius: radius5),
-                                        child: const Icon(Icons.search),
-                                      )
-                                    : SizedBox(
-                                        height: 40,
-                                        width: 250,
-                                        child: TextField(
-                                          cursorColor: greyColor,
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.only(left: 10),
-                                            hintText: 'Search ...',
-                                            hintStyle: TextStyle(
-                                                color: greyColor,
-                                                fontWeight: FontWeight.w500),
-                                            prefixIcon: Icon(Icons.search,
-                                                color: greyColor),
-                                            fillColor:
-                                                Colors.grey.withAlpha(300),
-                                            filled: true,
-                                            focusedBorder: OutlineInputBorder(
-                                                borderRadius: radius5,
-                                                borderSide: BorderSide.none),
-                                            enabledBorder: OutlineInputBorder(
-                                                borderRadius: radius5,
-                                                borderSide: BorderSide.none),
-                                          ),
-                                        ),
-                                      ),
-                                if (ctrl.bodyCurrentInd == 1)
-                                  Container(
-                                    height: 34,
-                                    width: 34,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 5),
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: bgColor),
-                                        borderRadius: radius5),
-                                    child: const Icon(
-                                        Icons.notifications_outlined),
-                                  ),
-                                if (ctrl.bodyCurrentInd == 1)
-                                  Container(
-                                    height: 34,
-                                    width: 34,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: bgColor),
-                                        borderRadius: radius5),
-                                    child: const Icon(Icons.info_outline),
-                                  )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                if (context.isPhone)
-                  const Padding(
-                    padding: EdgeInsets.only(top: 5),
-                    child: Divider(),
-                  ),
+                  BoatAppBar(scaffoldKey: scaffoldKey, chatCtrl: ctrl),
                 Expanded(
                   child: Row(
                     children: [
@@ -174,6 +77,11 @@ class _HomeViewState extends State<HomeView>
   }
 
   Widget centerViewHandling(BoatChatCtrl ctrl) {
+    final fc = Get.find<FireStoreCtrl>();
+    bool value = fc.allHistory.isEmpty;
+    if (value == true) {
+      ctrl.bodyCurrentIndState(1);
+    }
     switch (ctrl.bodyCurrentInd) {
       case 0:
         return const Expanded(child: StartChatingView());

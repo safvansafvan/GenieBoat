@@ -1,23 +1,30 @@
 import 'dart:developer';
-
+import 'dart:io';
 import 'package:chatboat/model/firestore_model.dart';
 import 'package:chatboat/view_model/firestore_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 class BoatChatCtrl extends GetxController {
-  TextEditingController questionCtrl =
-      TextEditingController(text: 'What is flutter');
+  TextEditingController questionCtrl = TextEditingController();
+  FocusNode questionFocous = FocusNode();
   bool isLoadingAns = false;
   static const String key = 'AIzaSyDr9OuXdV4zMasHUHS3OxWxOh8iocF8_Vk';
-  String textAnswer = '';
   int bodyCurrentInd = 0;
   String currentDate = '';
   String currentTime = '';
   var uuid = const Uuid();
+  File? selectedImage;
+
+  void bodyCurrentIndState(int ind) {
+    bodyCurrentInd = ind;
+    update();
+  }
 
   Future<void> boatChatHandling(context) async {
     final fc = Get.find<FireStoreCtrl>();
@@ -31,7 +38,7 @@ class BoatChatCtrl extends GetxController {
       final content = [Content.text(questionCtrl.text)];
       final response = await model.generateContent(content);
       log(response.text ?? '');
-      log('${questionCtrl.text} $currentDate  $currentTime  $id');
+      log('$currentDate  $currentTime  $id');
       await fc.addHistoryToFirestore(
         context: context,
         model: FirestoreModel(
@@ -42,7 +49,7 @@ class BoatChatCtrl extends GetxController {
           time: currentTime,
         ),
       );
-      await fc.getHistoryFromApp();
+      await fc.getHistoryFromFireStore();
     } catch (e) {
       log(e.toString());
       isLoadingAns = false;
@@ -53,7 +60,32 @@ class BoatChatCtrl extends GetxController {
   }
 
   void formateDate(DateTime dateTime) {
-    currentTime = DateFormat('hh:mm:ss').format(dateTime);
+    currentTime = DateFormat('hh:mm').format(dateTime);
     currentDate = DateFormat.MMMMEEEEd().format(dateTime);
+  }
+
+  Future<void> imageFromGalleryOrCamera({bool isCamera = false}) async {
+    final ImagePicker picker = ImagePicker();
+    if (isCamera) {
+      final XFile? cameraFile =
+          await picker.pickImage(source: ImageSource.camera, imageQuality: 100);
+      if (cameraFile != null) {
+        selectedImage = File(cameraFile.path);
+        Get.back();
+        update();
+      }
+    } else {
+      final XFile? gfile = await picker.pickImage(source: ImageSource.gallery);
+      if (gfile != null) {
+        selectedImage = File(gfile.path);
+        Get.back();
+        update();
+      }
+    }
+  }
+
+  void clearSelectedImage() {
+    selectedImage = null;
+    update();
   }
 }

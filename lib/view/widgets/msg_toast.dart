@@ -7,12 +7,13 @@ void boatSnackBar(
     {required String text,
     required String message,
     required BuildContext ctx,
-    bool isSuccess = false,
-    String? path}) {
+    bool isSuccess = false}) {
   if (ctx.isPhone) {
     Get.showSnackbar(
       GetSnackBar(
-        boxShadows: [BoxShadow(color: greyColor)],
+        boxShadows: [
+          BoxShadow(color: greyColor, blurRadius: 0.2, spreadRadius: 0.5)
+        ],
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         backgroundColor: whiteColor,
         borderWidth: 0.5,
