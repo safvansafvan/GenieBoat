@@ -1,12 +1,13 @@
 import 'dart:developer';
-import 'dart:math' as m;
 import 'package:chatboat/view/chat_helper/chat_helper.dart';
 import 'package:chatboat/view/history/genie_history.dart';
 import 'package:chatboat/view/start_chat/start_chat.dart';
+import 'package:chatboat/view/widgets/celebration.dart';
 import 'package:chatboat/view/widgets/custom_navigation.dart';
 import 'package:chatboat/view/widgets/menu_drawer.dart';
 import 'package:chatboat/view_model/boat_controller.dart';
 import 'package:chatboat/view_model/constant.dart';
+import 'package:chatboat/view_model/firestore_controller.dart';
 import 'package:chatboat/view_model/globel_ctrl.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView>
     with SingleTickerProviderStateMixin {
   final gctrl = Get.find<GlobleController>();
+  final fc = Get.find<FireStoreCtrl>();
 
   @override
   void initState() {
@@ -31,6 +33,7 @@ class _HomeViewState extends State<HomeView>
     );
     gctrl.controllerTopCenter =
         ConfettiController(duration: const Duration(seconds: 4));
+    fc.getHistoryFromApp();
     super.initState();
   }
 
@@ -46,119 +49,112 @@ class _HomeViewState extends State<HomeView>
     log(context.width.toString());
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: whiteColor,
+      backgroundColor: context.isPhone ? whiteColor : blackColor,
       body: GetBuilder<BoatChatCtrl>(
         builder: (ctrl) {
           return Padding(
             padding: EdgeInsets.all(context.isPhone ? 0.0 : 10.0),
             child: Column(
               children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: ConfettiWidget(
-                    confettiController: gctrl.controllerTopCenter,
-                    blastDirection: m.pi / 1,
-                    maxBlastForce: 3,
-                    minBlastForce: 2,
-                    emissionFrequency: 0.03,
-                    numberOfParticles: 15,
-                  ),
-                ),
-                SafeArea(
-                  child: SizedBox(
-                    height: 45,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: ListTile(
-                        leading: context.width < 747
-                            ? IconButton(
-                                onPressed: () {
-                                  scaffoldKey.currentState?.openDrawer();
-                                },
-                                icon: const Icon(Icons.menu),
-                              )
-                            : null,
-                        contentPadding: EdgeInsets.zero,
-                        title: context.width < 747
-                            ? null
-                            : Text(
-                                'Ai Chat Helper',
-                                style: boatTextStyle(
-                                    fontWeight: FontWeight.w700, size: 20),
-                              ),
-                        trailing: SizedBox(
-                          width: 340,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              context.width < 501
-                                  ? Container(
-                                      height: 34,
-                                      width: 34,
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 5),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(color: bgColor),
-                                          borderRadius: radius5),
-                                      child: const Icon(Icons.search),
-                                    )
-                                  : SizedBox(
-                                      height: 40,
-                                      width: 250,
-                                      child: TextField(
-                                        cursorColor: greyColor,
-                                        decoration: InputDecoration(
-                                          contentPadding:
-                                              const EdgeInsets.only(left: 10),
-                                          hintText: 'Search ...',
-                                          hintStyle: TextStyle(
-                                              color: greyColor,
-                                              fontWeight: FontWeight.w500),
-                                          prefixIcon: Icon(Icons.search,
-                                              color: greyColor),
-                                          fillColor: Colors.grey.withAlpha(300),
-                                          filled: true,
-                                          focusedBorder: OutlineInputBorder(
-                                              borderRadius: radius5,
-                                              borderSide: BorderSide.none),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius: radius5,
-                                              borderSide: BorderSide.none),
+                if (context.isPhone) celebrationKit(),
+                if (context.isPhone)
+                  SafeArea(
+                    child: SizedBox(
+                      height: 45,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: ListTile(
+                          leading: context.width < 747
+                              ? IconButton(
+                                  onPressed: () {
+                                    scaffoldKey.currentState?.openDrawer();
+                                  },
+                                  icon: const Icon(Icons.menu),
+                                )
+                              : null,
+                          contentPadding: EdgeInsets.zero,
+                          title: context.width < 747
+                              ? null
+                              : Text(
+                                  'Ai Chat Helper',
+                                  style: boatTextStyle(
+                                      fontWeight: FontWeight.w700, size: 20),
+                                ),
+                          trailing: SizedBox(
+                            width: 340,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                context.width < 501
+                                    ? Container(
+                                        height: 34,
+                                        width: 34,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(color: bgColor),
+                                            borderRadius: radius5),
+                                        child: const Icon(Icons.search),
+                                      )
+                                    : SizedBox(
+                                        height: 40,
+                                        width: 250,
+                                        child: TextField(
+                                          cursorColor: greyColor,
+                                          decoration: InputDecoration(
+                                            contentPadding:
+                                                const EdgeInsets.only(left: 10),
+                                            hintText: 'Search ...',
+                                            hintStyle: TextStyle(
+                                                color: greyColor,
+                                                fontWeight: FontWeight.w500),
+                                            prefixIcon: Icon(Icons.search,
+                                                color: greyColor),
+                                            fillColor:
+                                                Colors.grey.withAlpha(300),
+                                            filled: true,
+                                            focusedBorder: OutlineInputBorder(
+                                                borderRadius: radius5,
+                                                borderSide: BorderSide.none),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: radius5,
+                                                borderSide: BorderSide.none),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                              if (ctrl.bodyCurrentInd == 1)
-                                Container(
-                                  height: 34,
-                                  width: 34,
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 5),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: bgColor),
-                                      borderRadius: radius5),
-                                  child:
-                                      const Icon(Icons.notifications_outlined),
-                                ),
-                              if (ctrl.bodyCurrentInd == 1)
-                                Container(
-                                  height: 34,
-                                  width: 34,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: bgColor),
-                                      borderRadius: radius5),
-                                  child: const Icon(Icons.info_outline),
-                                )
-                            ],
+                                if (ctrl.bodyCurrentInd == 1)
+                                  Container(
+                                    height: 34,
+                                    width: 34,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: bgColor),
+                                        borderRadius: radius5),
+                                    child: const Icon(
+                                        Icons.notifications_outlined),
+                                  ),
+                                if (ctrl.bodyCurrentInd == 1)
+                                  Container(
+                                    height: 34,
+                                    width: 34,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: bgColor),
+                                        borderRadius: radius5),
+                                    child: const Icon(Icons.info_outline),
+                                  )
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 5),
-                  child: Divider(),
-                ),
+                if (context.isPhone)
+                  const Padding(
+                    padding: EdgeInsets.only(top: 5),
+                    child: Divider(),
+                  ),
                 Expanded(
                   child: Row(
                     children: [

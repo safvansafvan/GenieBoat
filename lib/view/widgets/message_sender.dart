@@ -60,7 +60,7 @@ class GenieMessageSender extends StatelessWidget {
                 return boatSnackBar(
                     text: 'Error', message: 'Enter Messages', ctx: context);
               }
-              await chatCtrl.boatChatHandling();
+              await chatCtrl.boatChatHandling(context);
             },
             child: Padding(
               padding: EdgeInsets.only(left: context.isPhone ? 5 : 20.0),
