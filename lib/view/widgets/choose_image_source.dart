@@ -4,7 +4,7 @@ import 'package:chatboat/view_model/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-chooseImageSource(BuildContext context) {
+chooseImageSource(BuildContext context) async {
   final bCtrl = Get.find<BoatChatCtrl>();
   if (context.isPhone) {
     return showAlignedDialog(
@@ -78,5 +78,7 @@ chooseImageSource(BuildContext context) {
         );
       },
     );
+  } else {
+    await bCtrl.imageFromGalleryOrCamera();
   }
 }

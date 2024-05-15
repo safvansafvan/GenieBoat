@@ -216,7 +216,7 @@ class ChatHelperWidget extends StatelessWidget {
             },
           ),
           const Padding(
-            padding: EdgeInsets.only(bottom: 5),
+            padding: EdgeInsets.only(bottom: 0),
             child: GenieMessageSender(),
           ),
         ],
