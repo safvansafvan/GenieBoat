@@ -8,8 +8,12 @@ class BoatAnimate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Animate(
       effects: const [
-        FadeEffect(duration: Duration(milliseconds: 400)),
-        ScaleEffect(duration: Duration(milliseconds: 400))
+        FadeEffect(
+          duration: Duration(milliseconds: 400),
+        ),
+        ScaleEffect(
+          duration: Duration(milliseconds: 400),
+        )
       ],
       child: child,
     );

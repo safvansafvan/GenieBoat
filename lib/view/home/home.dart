@@ -1,11 +1,15 @@
-import 'dart:developer';
-
 import 'package:chatboat/view/chat_helper/chat_helper.dart';
 import 'package:chatboat/view/history/genie_history.dart';
 import 'package:chatboat/view/start_chat/start_chat.dart';
+import 'package:chatboat/view/widgets/boat_appbar.dart';
+import 'package:chatboat/view/widgets/celebration.dart';
 import 'package:chatboat/view/widgets/custom_navigation.dart';
+import 'package:chatboat/view/widgets/menu_drawer.dart';
+import 'package:chatboat/view_model/boat_controller.dart';
 import 'package:chatboat/view_model/constant.dart';
+import 'package:chatboat/view_model/firestore_controller.dart';
 import 'package:chatboat/view_model/globel_ctrl.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,50 +20,73 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView>
+    with SingleTickerProviderStateMixin {
+  final gctrl = Get.find<GlobleController>();
+  final fc = Get.find<FireStoreCtrl>();
+
+  @override
+  void initState() {
+    gctrl.animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    gctrl.controllerTopCenter =
+        ConfettiController(duration: const Duration(seconds: 4));
+    fc.getHistoryFromFireStore();
+    super.initState();
+  }
+
   @override
   void didChangeDependencies() {
-    final ctrl = Get.find<GlobleController>();
-    ctrl.size = Size(context.width, context.height);
+    gctrl.size = Size(context.width, context.height);
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    log(context.width.toString());
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
-      backgroundColor: blackColor,
-      body: Padding(
-        padding: EdgeInsets.all(context.isPhone ? 0.0 : 10.0),
-        child: Row(
-          children: [
-            if (context.width > 748) const CustomLeftNavigation(),
-            centerViewHandling(),
-            if (context.width > 968) const GenieHistory(),
-          ],
-        ),
+      key: scaffoldKey,
+      backgroundColor: context.isPhone ? whiteColor : blackColor,
+      body: GetBuilder<BoatChatCtrl>(
+        builder: (ctrl) {
+          return Padding(
+            padding: EdgeInsets.all(context.isPhone ? 0.0 : 10.0),
+            child: Column(
+              children: [
+                if (context.isPhone) celebrationKit(),
+                if (context.isPhone)
+                  BoatAppBar(scaffoldKey: scaffoldKey, chatCtrl: ctrl),
+                Expanded(
+                  child: Row(
+                    children: [
+                      if (context.width > 748) const CustomLeftNavigation(),
+                      centerViewHandling(ctrl),
+                      if (context.width > 968) const GenieHistory(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
-      drawer: Drawer(
-        width: 250,
-        backgroundColor: blackColor,
-        child: const Column(
-          children: [
-            Expanded(child: CustomLeftNavigation()),
-          ],
-        ),
-      ),
+      drawer: const MenuDrawer(),
     );
   }
 
-  Widget centerViewHandling() {
-    final ctrl = Get.find<GlobleController>();
+  Widget centerViewHandling(BoatChatCtrl ctrl) {
+    final fc = Get.find<FireStoreCtrl>();
+    bool value = fc.allHistory.isEmpty;
+    if (value == true) {
+      ctrl.bodyCurrentIndState(1);
+    }
     switch (ctrl.bodyCurrentInd) {
       case 0:
         return const Expanded(child: StartChatingView());
-
       case 1:
         return const Expanded(child: ChatHelperWidget());
-
       default:
         return const SizedBox();
     }

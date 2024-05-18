@@ -11,6 +11,12 @@
     </array>
   </dict>
 </array>
+<key>NSCameraUsageDescription</key>
+<string>We need access to your camera to take photos for profile pictures.</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>We need access to your photo library to select images for posting.</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>Some message to describe why you need this permission</string>
 <key>FacebookAppID</key>
 <string>{your-app-id}</string>
 <key>FacebookClientToken</key>
