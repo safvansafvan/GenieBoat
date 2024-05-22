@@ -1,6 +1,7 @@
 import 'package:chatboat/view/widgets/msg_toast.dart';
-import 'package:chatboat/view_model/constant.dart';
-import 'package:chatboat/view_model/login_ctrl.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/controller/login_ctrl.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,31 +41,36 @@ class BoatTextFormFieldLogin extends StatelessWidget {
               keyboardType: inputType,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: controller,
-              cursorColor: blackColor,
-              style: boatTextStyle(fontWeight: FontWeight.w500, size: 16),
+              cursorColor: AppColors.blackColor,
+              style:
+                  CustomFunctions.style(fontWeight: FontWeight.w500, size: 16),
               maxLengthEnforcement: MaxLengthEnforcement.none,
               decoration: InputDecoration(
-                errorStyle: boatTextStyle(
-                    fontWeight: FontWeight.w500, size: 14, color: redColor),
+                errorStyle: CustomFunctions.style(
+                    fontWeight: FontWeight.w500,
+                    size: 14,
+                    color: AppColors.redColor),
                 suffixIcon: suffixWidget(loginCtrl, context),
                 label: Text(label),
-                labelStyle: boatTextStyle(
-                    fontWeight: FontWeight.w500, size: 18, color: greyColor),
+                labelStyle: CustomFunctions.style(
+                    fontWeight: FontWeight.w500,
+                    size: 18,
+                    color: AppColors.greyColor),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: greyColor),
+                  borderSide: BorderSide(color: AppColors.greyColor),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: greyColor),
+                  borderSide: BorderSide(color: AppColors.greyColor),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: redColor),
+                  borderSide: BorderSide(color: AppColors.redColor),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: redColor),
+                  borderSide: BorderSide(color: AppColors.redColor),
                 ),
               ),
               obscureText:
@@ -127,7 +133,7 @@ class BoatTextFormFieldLogin extends StatelessWidget {
         },
         icon: Icon(
             loginCtrl.obscurePassword ? Icons.visibility_off : Icons.visibility,
-            color: greyColor),
+            color: AppColors.greyColor),
       );
     } else if (isNumber == true && loginCtrl.isVerifyLoading == false) {
       return TextButton(
@@ -140,8 +146,8 @@ class BoatTextFormFieldLogin extends StatelessWidget {
         },
         child: Text(
           'Verify',
-          style: boatTextStyle(
-              fontWeight: FontWeight.w500, size: 14, color: redColor),
+          style: CustomFunctions.style(
+              fontWeight: FontWeight.w500, size: 14, color: AppColors.redColor),
         ),
       );
     } else if (loginCtrl.isVerifyLoading == true && isNumber == true) {

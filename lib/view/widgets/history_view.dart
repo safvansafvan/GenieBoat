@@ -1,5 +1,5 @@
-import 'package:chatboat/view_model/constant.dart';
-import 'package:chatboat/view_model/firestore_controller.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/controller/firestore_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,7 +24,7 @@ class HistoryView extends StatelessWidget {
                 horizontalTitleGap: 0,
                 title: Text(
                   dataSet.qus ?? '',
-                  style: boatTextStyle(
+                  style: CustomFunctions.style(
                       fontWeight: FontWeight.w600, size: 13, color: color),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -35,7 +35,7 @@ class HistoryView extends StatelessWidget {
                     dataSet.ans ?? '',
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
-                    style: boatTextStyle(
+                    style: CustomFunctions.style(
                         fontWeight: FontWeight.w500, size: 12, color: color),
                   ),
                 ),

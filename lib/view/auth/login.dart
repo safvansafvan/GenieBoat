@@ -4,8 +4,11 @@ import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/widgets/button_loading.dart';
 import 'package:chatboat/view/widgets/login_text_field.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
-import 'package:chatboat/view_model/constant.dart';
-import 'package:chatboat/view_model/login_ctrl.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/core/durations.dart';
+import 'package:chatboat/view_model/controller/login_ctrl.dart';
+import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:get/get.dart';
@@ -39,16 +42,16 @@ class LoginView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       AnimatedContainer(
-                        duration: minDuration,
+                        duration: AppDurations.minDuration,
                         constraints: BoxConstraints(
                             maxWidth: context.width < 502 ? 300 : 400,
                             maxHeight: loginCtrl.isSignUp ? 480 : 420),
                         decoration: BoxDecoration(
-                          borderRadius: radius10,
-                          color: whiteColor,
+                          borderRadius: AppSizes.radius10,
+                          color: AppColors.whiteColor,
                           boxShadow: [
                             BoxShadow(
-                                color: greyColor,
+                                color: AppColors.greyColor,
                                 blurRadius: 0.1,
                                 spreadRadius: 0.1,
                                 blurStyle: BlurStyle.outer)
@@ -60,7 +63,7 @@ class LoginView extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               child: Text(
                                 loginCtrl.isSignUp ? 'SignUp' : 'Login',
-                                style: boatTextStyle(
+                                style: CustomFunctions.style(
                                     fontWeight: FontWeight.w600, size: 23),
                               ),
                             ),
@@ -79,14 +82,16 @@ class LoginView extends StatelessWidget {
                                     inputType: TextInputType.text,
                                   )
                                 : const SizedBox(),
-                            loginCtrl.isSignUp ? minHeight : const SizedBox(),
+                            loginCtrl.isSignUp
+                                ? AppSizes.minHeight
+                                : const SizedBox(),
                             BoatTextFormFieldLogin(
                               controller: loginCtrl.emailCtrl,
                               label: 'Email',
                               isUsername: true,
                               inputType: TextInputType.emailAddress,
                             ),
-                            minHeight,
+                            AppSizes.minHeight,
                             BoatTextFormFieldLogin(
                               controller: loginCtrl.passworldCtrl,
                               label: 'Password',
@@ -103,7 +108,7 @@ class LoginView extends StatelessWidget {
                                             forgotPasswordDialog(context),
                                         child: Text(
                                           'Forgot Password?',
-                                          style: boatTextStyle(
+                                          style: CustomFunctions.style(
                                               fontWeight: FontWeight.w600,
                                               size: 13,
                                               color: Colors.deepPurple),
@@ -124,7 +129,8 @@ class LoginView extends StatelessWidget {
                                         style: ButtonStyle(
                                             shape: MaterialStatePropertyAll(
                                                 RoundedRectangleBorder(
-                                                    borderRadius: radius10)),
+                                                    borderRadius:
+                                                        AppSizes.radius10)),
                                             animationDuration:
                                                 const Duration(seconds: 1)),
                                         onPressed: () async {
@@ -143,10 +149,10 @@ class LoginView extends StatelessWidget {
                                   const Expanded(child: Divider()),
                                   Text(
                                     'Or SignUp Using',
-                                    style: boatTextStyle(
+                                    style: CustomFunctions.style(
                                         fontWeight: FontWeight.w500,
                                         size: 13,
-                                        color: greyColor),
+                                        color: AppColors.greyColor),
                                   ),
                                   const Expanded(child: Divider())
                                 ],
@@ -194,14 +200,14 @@ class LoginView extends StatelessWidget {
                               child: RichText(
                                 text: TextSpan(
                                   text: "Have An Account ? ",
-                                  style: boatTextStyle(
+                                  style: CustomFunctions.style(
                                       fontWeight: FontWeight.w500,
                                       size: 14,
-                                      color: greyColor),
+                                      color: AppColors.greyColor),
                                   children: [
                                     TextSpan(
                                       text: 'Login',
-                                      style: boatTextStyle(
+                                      style: CustomFunctions.style(
                                           fontWeight: FontWeight.w600,
                                           size: 14,
                                           color: Colors.deepPurple),
@@ -217,14 +223,14 @@ class LoginView extends StatelessWidget {
                               child: RichText(
                                 text: TextSpan(
                                   text: "Don't Have An Account ? ",
-                                  style: boatTextStyle(
+                                  style: CustomFunctions.style(
                                       fontWeight: FontWeight.w500,
                                       size: 14,
-                                      color: greyColor),
+                                      color: AppColors.greyColor),
                                   children: [
                                     TextSpan(
                                       text: 'SignUp',
-                                      style: boatTextStyle(
+                                      style: CustomFunctions.style(
                                           fontWeight: FontWeight.w600,
                                           size: 14,
                                           color: Colors.deepPurple),

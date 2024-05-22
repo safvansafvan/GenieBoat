@@ -1,6 +1,8 @@
 import 'package:chatboat/view/widgets/boat_animate.dart';
 import 'package:chatboat/view/widgets/history_view.dart';
-import 'package:chatboat/view_model/constant.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
 
 class GenieHistory extends StatelessWidget {
@@ -27,14 +29,15 @@ class GenieHistory extends StatelessWidget {
                 children: [
                   Text(
                     'History',
-                    style: boatTextStyle(fontWeight: FontWeight.w700, size: 20),
+                    style: CustomFunctions.style(
+                        fontWeight: FontWeight.w700, size: 20),
                   ),
                   Container(
                     height: 30,
                     width: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: bgColor),
+                        color: AppColors.bgColor),
                     child: Center(
                       child: RichText(
                         text: const TextSpan(
@@ -51,16 +54,16 @@ class GenieHistory extends StatelessWidget {
               padding: EdgeInsets.only(top: 5),
               child: Divider(),
             ),
-            HistoryView(color: blackColor, paddingLeft: 5),
+            HistoryView(color: AppColors.blackColor, paddingLeft: 5),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
               height: 35,
               width: double.infinity,
               decoration: BoxDecoration(
-                  borderRadius: radius10,
-                  color: whiteColor,
-                  border: Border.all(color: bgColor),
-                  boxShadow: [BoxShadow(color: greyColor)]),
+                  borderRadius: AppSizes.radius10,
+                  color: AppColors.whiteColor,
+                  border: Border.all(color: AppColors.bgColor),
+                  boxShadow: [BoxShadow(color: AppColors.greyColor)]),
               child: const Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

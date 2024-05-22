@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:chatboat/view_model/constant.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
 
 class ButtonClickLoading extends StatelessWidget {
@@ -13,12 +14,12 @@ class ButtonClickLoading extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircularProgressIndicator(color: color, strokeWidth: 2),
-          width10,
+          AppSizes.width10,
           AnimatedTextKit(
             animatedTexts: [
               TypewriterAnimatedText(
                 'Loading.....',
-                textStyle: boatTextStyle(
+                textStyle: CustomFunctions.style(
                     fontWeight: FontWeight.w500, size: 18, color: color),
                 speed: const Duration(milliseconds: 100),
               ),

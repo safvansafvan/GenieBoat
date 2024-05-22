@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:chatboat/model/firestore_model.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
-import 'package:chatboat/view_model/firestore_controller.dart';
+import 'package:chatboat/view_model/controller/firestore_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

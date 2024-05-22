@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:chatboat/view/widgets/msg_toast.dart';
-import 'package:chatboat/view_model/constant.dart';
-import 'package:chatboat/view_model/globel_ctrl.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -21,17 +21,17 @@ ratingBottomSheet(
             RatingBar.builder(
               initialRating: 2,
               minRating: 1,
-              unratedColor: blackColor.withAlpha(300),
+              unratedColor: AppColors.blackColor.withAlpha(300),
               direction: Axis.horizontal,
               allowHalfRating: false,
               itemCount: 5,
               glow: true,
-              glowColor: redColor,
+              glowColor: AppColors.redColor,
               glowRadius: 1.5,
               itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
               itemBuilder: (context, _) => Icon(
                 Icons.star,
-                color: blueColor,
+                color: AppColors.blueColor,
               ),
               onRatingUpdate: (rating) {
                 log(rating);
@@ -41,7 +41,7 @@ ratingBottomSheet(
               padding: const EdgeInsets.only(top: 10),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: blackColor,
+                  backgroundColor: AppColors.blackColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),

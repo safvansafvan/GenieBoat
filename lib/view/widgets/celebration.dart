@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:chatboat/view_model/globel_ctrl.dart';
+import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,5 +1,7 @@
-import 'package:chatboat/view_model/boat_controller.dart';
-import 'package:chatboat/view_model/constant.dart';
+import 'package:chatboat/view_model/controller/boat_controller.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,7 +32,8 @@ class BoatAppBar extends StatelessWidget {
                 ? null
                 : Text(
                     'Ai Chat Helper',
-                    style: boatTextStyle(fontWeight: FontWeight.w700, size: 20),
+                    style: CustomFunctions.style(
+                        fontWeight: FontWeight.w700, size: 20),
                   ),
             trailing: SizedBox(
               width: 340,
@@ -43,29 +46,30 @@ class BoatAppBar extends StatelessWidget {
                           width: 34,
                           margin: const EdgeInsets.symmetric(horizontal: 5),
                           decoration: BoxDecoration(
-                              border: Border.all(color: bgColor),
-                              borderRadius: radius5),
+                              border: Border.all(color: AppColors.bgColor),
+                              borderRadius: AppSizes.radius5),
                           child: const Icon(Icons.search),
                         )
                       : SizedBox(
                           height: 40,
                           width: 250,
                           child: TextField(
-                            cursorColor: greyColor,
+                            cursorColor: AppColors.greyColor,
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.only(left: 10),
                               hintText: 'Search ...',
                               hintStyle: TextStyle(
-                                  color: greyColor,
+                                  color: AppColors.greyColor,
                                   fontWeight: FontWeight.w500),
-                              prefixIcon: Icon(Icons.search, color: greyColor),
+                              prefixIcon: Icon(Icons.search,
+                                  color: AppColors.greyColor),
                               fillColor: Colors.grey.withAlpha(300),
                               filled: true,
                               focusedBorder: OutlineInputBorder(
-                                  borderRadius: radius5,
+                                  borderRadius: AppSizes.radius5,
                                   borderSide: BorderSide.none),
                               enabledBorder: OutlineInputBorder(
-                                  borderRadius: radius5,
+                                  borderRadius: AppSizes.radius5,
                                   borderSide: BorderSide.none),
                             ),
                           ),
@@ -76,8 +80,8 @@ class BoatAppBar extends StatelessWidget {
                       width: 34,
                       margin: const EdgeInsets.symmetric(horizontal: 5),
                       decoration: BoxDecoration(
-                          border: Border.all(color: bgColor),
-                          borderRadius: radius5),
+                          border: Border.all(color: AppColors.bgColor),
+                          borderRadius: AppSizes.radius5),
                       child: const Icon(Icons.notifications_outlined),
                     ),
                   if (chatCtrl.bodyCurrentInd == 1)
@@ -85,8 +89,8 @@ class BoatAppBar extends StatelessWidget {
                       height: 34,
                       width: 34,
                       decoration: BoxDecoration(
-                          border: Border.all(color: bgColor),
-                          borderRadius: radius5),
+                          border: Border.all(color: AppColors.bgColor),
+                          borderRadius: AppSizes.radius5),
                       child: const Icon(Icons.info_outline),
                     )
                 ],

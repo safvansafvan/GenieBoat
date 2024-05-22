@@ -5,10 +5,10 @@ import 'package:chatboat/view/widgets/boat_appbar.dart';
 import 'package:chatboat/view/widgets/celebration.dart';
 import 'package:chatboat/view/widgets/custom_navigation.dart';
 import 'package:chatboat/view/widgets/menu_drawer.dart';
-import 'package:chatboat/view_model/boat_controller.dart';
-import 'package:chatboat/view_model/constant.dart';
-import 'package:chatboat/view_model/firestore_controller.dart';
-import 'package:chatboat/view_model/globel_ctrl.dart';
+import 'package:chatboat/view_model/controller/boat_controller.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/controller/firestore_controller.dart';
+import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,7 +49,8 @@ class _HomeViewState extends State<HomeView>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: scaffoldKey,
-      backgroundColor: context.isPhone ? whiteColor : blackColor,
+      backgroundColor:
+          context.isPhone ? AppColors.whiteColor : AppColors.blackColor,
       body: GetBuilder<BoatChatCtrl>(
         builder: (ctrl) {
           return Padding(

@@ -1,5 +1,7 @@
-import 'package:chatboat/view_model/constant.dart';
-import 'package:chatboat/view_model/globel_ctrl.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/controller/globel_ctrl.dart';
+import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,10 +14,11 @@ void boatSnackBar(
     Get.showSnackbar(
       GetSnackBar(
         boxShadows: [
-          BoxShadow(color: greyColor, blurRadius: 0.2, spreadRadius: 0.5)
+          BoxShadow(
+              color: AppColors.greyColor, blurRadius: 0.2, spreadRadius: 0.5)
         ],
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        backgroundColor: whiteColor,
+        backgroundColor: AppColors.whiteColor,
         borderWidth: 0.5,
         barBlur: 1,
         snackPosition: SnackPosition.TOP,
@@ -29,16 +32,18 @@ void boatSnackBar(
                     : 'assets/images/close.png',
                 width: 20,
                 height: 20),
-            width10,
+            AppSizes.width10,
             Text(
               message,
-              style: boatTextStyle(
-                  fontWeight: FontWeight.w600, size: 14, color: blackColor),
+              style: CustomFunctions.style(
+                  fontWeight: FontWeight.w600,
+                  size: 14,
+                  color: AppColors.blackColor),
             )
           ],
         ),
         duration: const Duration(milliseconds: 1300),
-        borderColor: greyColor.withAlpha(300),
+        borderColor: AppColors.greyColor.withAlpha(300),
         borderRadius: 10,
         isDismissible: false,
       ),
@@ -47,7 +52,7 @@ void boatSnackBar(
     final ctrl = Get.find<GlobleController>();
     Get.showSnackbar(
       GetSnackBar(
-        backgroundColor: whiteColor,
+        backgroundColor: AppColors.whiteColor,
         borderWidth: 1,
         barBlur: 1,
         margin: EdgeInsets.only(
@@ -63,21 +68,25 @@ void boatSnackBar(
                     : 'assets/images/close.png',
                 width: 20,
                 height: 20),
-            width10,
+            AppSizes.width10,
             Text(
               text,
-              style: boatTextStyle(
-                  fontWeight: FontWeight.w600, size: 14, color: blackColor),
+              style: CustomFunctions.style(
+                  fontWeight: FontWeight.w600,
+                  size: 14,
+                  color: AppColors.blackColor),
             )
           ],
         ),
         messageText: Text(
           message,
-          style: boatTextStyle(
-              fontWeight: FontWeight.w600, size: 13, color: blackColor),
+          style: CustomFunctions.style(
+              fontWeight: FontWeight.w600,
+              size: 13,
+              color: AppColors.blackColor),
         ),
         duration: const Duration(milliseconds: 1300),
-        borderColor: blackColor,
+        borderColor: AppColors.blackColor,
         borderRadius: 6,
         isDismissible: false,
       ),

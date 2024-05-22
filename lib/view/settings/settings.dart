@@ -1,15 +1,18 @@
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:chatboat/view/widgets/boat_drop_down.dart';
 import 'package:chatboat/view/widgets/bottom_sheet.dart';
-import 'package:chatboat/view_model/constant.dart';
-import 'package:chatboat/view_model/globel_ctrl.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/core/durations.dart';
+import 'package:chatboat/view_model/controller/globel_ctrl.dart';
+import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 settingsDialog(BuildContext context) {
   final gc = Get.find<GlobleController>();
   showAlignedDialog(
-    duration: minDuration,
+    duration: AppDurations.minDuration,
     followerAnchor: Alignment.topLeft,
     targetAnchor: Alignment.topLeft,
     barrierColor: Colors.transparent,
@@ -24,13 +27,13 @@ settingsDialog(BuildContext context) {
           surfaceTintColor: const Color(0xffF9F9F9),
           shadowColor: const Color(0xffF9F9F9),
           backgroundColor: const Color(0xffF9F9F9),
-          shape: RoundedRectangleBorder(borderRadius: radius10),
+          shape: RoundedRectangleBorder(borderRadius: AppSizes.radius10),
           child: SizedBox(
             width: 600,
             height: 500,
             child: Column(
               children: [
-                minHeight,
+                AppSizes.minHeight,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
@@ -38,10 +41,10 @@ settingsDialog(BuildContext context) {
                     children: [
                       Text(
                         'Settings',
-                        style: boatTextStyle(
+                        style: CustomFunctions.style(
                             fontWeight: FontWeight.w700,
                             size: 18,
-                            color: blackColor),
+                            color: AppColors.blackColor),
                       ),
                       IconButton(
                         onPressed: () {
@@ -57,7 +60,8 @@ settingsDialog(BuildContext context) {
                 ListTile(
                   title: Text(
                     'Theme',
-                    style: boatTextStyle(fontWeight: FontWeight.w500, size: 16),
+                    style: CustomFunctions.style(
+                        fontWeight: FontWeight.w500, size: 16),
                   ),
                   trailing: const SizedBox(
                     width: 150,
@@ -68,7 +72,8 @@ settingsDialog(BuildContext context) {
                   onTap: () {},
                   title: Text(
                     'Privacy & Policy',
-                    style: boatTextStyle(fontWeight: FontWeight.w500, size: 16),
+                    style: CustomFunctions.style(
+                        fontWeight: FontWeight.w500, size: 16),
                   ),
                   trailing: const Icon(Icons.arrow_forward_ios),
                 ),
@@ -76,7 +81,8 @@ settingsDialog(BuildContext context) {
                   onTap: () {},
                   title: Text(
                     'About',
-                    style: boatTextStyle(fontWeight: FontWeight.w500, size: 16),
+                    style: CustomFunctions.style(
+                        fontWeight: FontWeight.w500, size: 16),
                   ),
                   trailing: const Icon(Icons.arrow_forward_ios),
                 ),
@@ -86,7 +92,8 @@ settingsDialog(BuildContext context) {
                   },
                   title: Text(
                     'Rating',
-                    style: boatTextStyle(fontWeight: FontWeight.w500, size: 16),
+                    style: CustomFunctions.style(
+                        fontWeight: FontWeight.w500, size: 16),
                   ),
                   trailing: const Icon(Icons.arrow_forward_ios),
                 ),
@@ -94,21 +101,25 @@ settingsDialog(BuildContext context) {
                   onTap: () {},
                   title: Text(
                     'Delete Account',
-                    style: boatTextStyle(
-                        fontWeight: FontWeight.w500, size: 16, color: redColor),
+                    style: CustomFunctions.style(
+                        fontWeight: FontWeight.w500,
+                        size: 16,
+                        color: AppColors.redColor),
                   ),
-                  trailing: Icon(Icons.arrow_forward_ios, color: redColor),
+                  trailing:
+                      Icon(Icons.arrow_forward_ios, color: AppColors.redColor),
                 ),
                 ListTile(
                   title: Text(
                     'Clear History',
-                    style: boatTextStyle(fontWeight: FontWeight.w500, size: 16),
+                    style: CustomFunctions.style(
+                        fontWeight: FontWeight.w500, size: 16),
                   ),
                   trailing: InkWell(
                     onTap: () {},
                     child: Container(
                       decoration: BoxDecoration(
-                        color: redColor,
+                        color: AppColors.redColor,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
@@ -116,10 +127,10 @@ settingsDialog(BuildContext context) {
                             horizontal: 15, vertical: 6),
                         child: Text(
                           'Clear',
-                          style: boatTextStyle(
+                          style: CustomFunctions.style(
                               fontWeight: FontWeight.w600,
                               size: 14,
-                              color: whiteColor),
+                              color: AppColors.whiteColor),
                         ),
                       ),
                     ),
@@ -132,7 +143,8 @@ settingsDialog(BuildContext context) {
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: ListTile(
                       shape: OutlineInputBorder(
-                          borderRadius: radius10, borderSide: BorderSide.none),
+                          borderRadius: AppSizes.radius10,
+                          borderSide: BorderSide.none),
                       minLeadingWidth: 0,
                       contentPadding: const EdgeInsets.symmetric(horizontal: 2),
                       horizontalTitleGap: 10,
@@ -141,10 +153,10 @@ settingsDialog(BuildContext context) {
                         'Muhammed Safvan',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: boatTextStyle(
+                        style: CustomFunctions.style(
                             fontWeight: FontWeight.w500,
                             size: 12,
-                            color: blackColor),
+                            color: AppColors.blackColor),
                       ),
                       trailing: IconButton(
                         onPressed: () {},

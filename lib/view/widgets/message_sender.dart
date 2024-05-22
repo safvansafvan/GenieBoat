@@ -2,8 +2,10 @@
 import 'package:chatboat/view/widgets/choose_image_source.dart';
 import 'package:chatboat/view/widgets/lottie_view.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
-import 'package:chatboat/view_model/boat_controller.dart';
-import 'package:chatboat/view_model/constant.dart';
+import 'package:chatboat/view_model/controller/boat_controller.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -50,11 +52,11 @@ class GenieMessageSender extends StatelessWidget {
                       fit: BoxFit.cover,
                     )
                   : null,
-              borderRadius: radius10,
-              color: bgColor,
+              borderRadius: AppSizes.radius10,
+              color: AppColors.bgColor,
             ),
             child: chatCtrl.selectedImage == null
-                ? Icon(Icons.upload_file, color: blackColor)
+                ? Icon(Icons.upload_file, color: AppColors.blackColor)
                 : null,
           ),
           if (chatCtrl.selectedImage != null)
@@ -63,7 +65,7 @@ class GenieMessageSender extends StatelessWidget {
               right: -5,
               child: CircleAvatar(
                 radius: 10,
-                backgroundColor: whiteColor,
+                backgroundColor: AppColors.whiteColor,
                 child: Center(
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
@@ -103,8 +105,9 @@ class GenieMessageSender extends StatelessWidget {
         child: Container(
           height: 40,
           width: 40,
-          decoration: BoxDecoration(borderRadius: radius10, color: bgColor),
-          child: Icon(icon(chatCtrl), color: blackColor),
+          decoration: BoxDecoration(
+              borderRadius: AppSizes.radius10, color: AppColors.bgColor),
+          child: Icon(icon(chatCtrl), color: AppColors.blackColor),
         ),
       ),
     );
@@ -122,22 +125,24 @@ class GenieMessageSender extends StatelessWidget {
           },
           focusNode: focusNode,
           keyboardType: TextInputType.name,
-          cursorColor: blackColor,
+          cursorColor: AppColors.blackColor,
           controller: chatCtrl.questionCtrl,
           maxLength: null,
           maxLines: null,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(left: 20),
-            hintStyle: boatTextStyle(
-                fontWeight: FontWeight.w500, size: 14, color: blackColor),
+            hintStyle: CustomFunctions.style(
+                fontWeight: FontWeight.w500,
+                size: 14,
+                color: AppColors.blackColor),
             hintText: 'Message ChatGenie....',
-            fillColor: bgColor,
+            fillColor: AppColors.bgColor,
             enabled: true,
             filled: true,
             enabledBorder: OutlineInputBorder(
-                borderRadius: radius10, borderSide: BorderSide.none),
+                borderRadius: AppSizes.radius10, borderSide: BorderSide.none),
             focusedBorder: OutlineInputBorder(
-                borderRadius: radius10, borderSide: BorderSide.none),
+                borderRadius: AppSizes.radius10, borderSide: BorderSide.none),
           ),
         ),
       ),
@@ -158,13 +163,13 @@ class GenieMessageSender extends StatelessWidget {
         child: Container(
           height: 40,
           width: 40,
-          decoration:
-              BoxDecoration(borderRadius: radius10, color: Colors.orange),
+          decoration: BoxDecoration(
+              borderRadius: AppSizes.radius10, color: Colors.orange),
           child: Padding(
             padding: const EdgeInsets.all(11.0),
             child: Image.asset(
               'assets/images/send.png',
-              color: whiteColor,
+              color: AppColors.whiteColor,
             ),
           ),
         ),

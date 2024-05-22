@@ -1,7 +1,9 @@
 import 'package:chatboat/model/firestore_model.dart';
 import 'package:chatboat/view/widgets/animated_text_kit.dart';
-import 'package:chatboat/view_model/constant.dart';
-import 'package:chatboat/view_model/firestore_controller.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/controller/firestore_controller.dart';
+import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
 
 class BoatChatDataWidget extends StatelessWidget {
@@ -21,8 +23,8 @@ class BoatChatDataWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       decoration: BoxDecoration(
-        color: whiteColor,
-        borderRadius: radius10,
+        color: AppColors.whiteColor,
+        borderRadius: AppSizes.radius10,
         gradient: LinearGradient(colors: [
           Colors.blue.withOpacity(0.6),
           Colors.white.withAlpha(300),
@@ -49,12 +51,12 @@ class BoatChatDataWidget extends StatelessWidget {
                     RichText(
                       text: TextSpan(
                         text: 'Date : ',
-                        style: boatTextStyle(
+                        style: CustomFunctions.style(
                             fontWeight: FontWeight.w600, size: 14),
                         children: [
                           TextSpan(
                             text: dataSet.date ?? "",
-                            style: boatTextStyle(
+                            style: CustomFunctions.style(
                                 fontWeight: FontWeight.w500, size: 13),
                           )
                         ],
@@ -64,12 +66,12 @@ class BoatChatDataWidget extends StatelessWidget {
                     RichText(
                       text: TextSpan(
                         text: 'Time : ',
-                        style: boatTextStyle(
+                        style: CustomFunctions.style(
                             fontWeight: FontWeight.w600, size: 14),
                         children: [
                           TextSpan(
                             text: dataSet.time ?? "",
-                            style: boatTextStyle(
+                            style: CustomFunctions.style(
                                 fontWeight: FontWeight.w500, size: 13),
                           )
                         ],
@@ -83,15 +85,15 @@ class BoatChatDataWidget extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.copy,
-                        color: whiteColor,
+                        color: AppColors.whiteColor,
                         size: 15,
                       ),
                       Text(
                         'Copy Text',
-                        style: boatTextStyle(
+                        style: CustomFunctions.style(
                             fontWeight: FontWeight.w400,
                             size: 12,
-                            color: whiteColor),
+                            color: AppColors.whiteColor),
                       )
                     ],
                   ),
@@ -105,11 +107,11 @@ class BoatChatDataWidget extends StatelessWidget {
               : Text(
                   dataSet.ans ?? "",
                   style: TextStyle(
-                      color: blackColor,
+                      color: AppColors.blackColor,
                       fontWeight: FontWeight.w500,
                       fontSize: 15),
                 ),
-          height10,
+          AppSizes.height10,
           Row(
             children: [
               Container(
@@ -118,10 +120,10 @@ class BoatChatDataWidget extends StatelessWidget {
                 margin:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 decoration: BoxDecoration(
-                  color: whiteColor,
-                  borderRadius: radius10,
+                  color: AppColors.whiteColor,
+                  borderRadius: AppSizes.radius10,
                   border: Border.all(
-                    color: greyColor.withAlpha(300),
+                    color: AppColors.greyColor.withAlpha(300),
                   ),
                 ),
                 child: Center(
@@ -130,10 +132,10 @@ class BoatChatDataWidget extends StatelessWidget {
                     children: [
                       Text(
                         dataSet.qus ?? '',
-                        style: boatTextStyle(
+                        style: CustomFunctions.style(
                             fontWeight: FontWeight.w400,
                             size: 14,
-                            color: blackColor),
+                            color: AppColors.blackColor),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),

@@ -2,8 +2,8 @@ import 'package:chatboat/firebase_options.dart';
 import 'package:chatboat/view/auth/login.dart';
 import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/splash/splash.dart';
-import 'package:chatboat/view_model/constant.dart';
-import 'package:chatboat/view_model/init_controllers.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/core/init_controllers.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
       title: 'Chat Boat',
       theme: ThemeData(
         appBarTheme: AppBarTheme(
-            centerTitle: true, backgroundColor: whiteColor, elevation: 0),
+            centerTitle: true,
+            backgroundColor: AppColors.whiteColor,
+            elevation: 0),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: false,
       ),

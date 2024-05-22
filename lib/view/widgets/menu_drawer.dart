@@ -1,5 +1,5 @@
 import 'package:chatboat/view/widgets/custom_navigation.dart';
-import 'package:chatboat/view_model/constant.dart';
+import 'package:chatboat/view_model/core/colors.dart';
 import 'package:flutter/material.dart';
 
 class MenuDrawer extends StatelessWidget {
@@ -9,7 +9,7 @@ class MenuDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       width: 250,
-      backgroundColor: blackColor,
+      backgroundColor: AppColors.blackColor,
       child: const Column(
         children: [
           Expanded(

@@ -2,8 +2,11 @@ import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:chatboat/view/widgets/button_loading.dart';
 import 'package:chatboat/view/widgets/login_text_field.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
-import 'package:chatboat/view_model/constant.dart';
-import 'package:chatboat/view_model/login_ctrl.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/core/durations.dart';
+import 'package:chatboat/view_model/controller/login_ctrl.dart';
+import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +16,7 @@ void phoneAuth(BuildContext context) {
   showAlignedDialog(
     barrierColor: Colors.transparent,
     barrierDismissible: false,
-    duration: minDuration,
+    duration: AppDurations.minDuration,
     context: context,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return FadeTransition(
@@ -28,7 +31,8 @@ void phoneAuth(BuildContext context) {
           children: [
             Text(
               'Number Verification',
-              style: boatTextStyle(fontWeight: FontWeight.w600, size: 17),
+              style:
+                  CustomFunctions.style(fontWeight: FontWeight.w600, size: 17),
             ),
             IconButton(
                 onPressed: () {
@@ -54,7 +58,7 @@ void phoneAuth(BuildContext context) {
                   controller: ctrl.otpCtrl,
                   inputType: TextInputType.number,
                 ),
-                height20,
+                AppSizes.height20,
                 loginC.isOtpVerification
                     ? const ButtonClickLoading()
                     : ElevatedButton(
@@ -63,7 +67,7 @@ void phoneAuth(BuildContext context) {
                                 loginC.isVerifyLoading == false &&
                                         loginC.otpCtrl.text.length > 5
                                     ? Colors.deepPurple
-                                    : greyColor)),
+                                    : AppColors.greyColor)),
                         onPressed: loginC.isVerifyLoading
                             ? () async {
                                 if (ctrl.otpCtrl.text.isEmpty) {
@@ -79,12 +83,12 @@ void phoneAuth(BuildContext context) {
                             : () {},
                         child: const Text('   Verify  '),
                       ),
-                height20
+                AppSizes.height20
               ],
             );
           },
         ),
-        shape: RoundedRectangleBorder(borderRadius: radius10),
+        shape: RoundedRectangleBorder(borderRadius: AppSizes.radius10),
         contentPadding: const EdgeInsets.symmetric(horizontal: 2),
       );
     },

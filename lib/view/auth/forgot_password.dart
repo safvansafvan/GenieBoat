@@ -2,8 +2,10 @@ import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:chatboat/view/widgets/button_loading.dart';
 import 'package:chatboat/view/widgets/login_text_field.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
-import 'package:chatboat/view_model/constant.dart';
-import 'package:chatboat/view_model/login_ctrl.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/core/durations.dart';
+import 'package:chatboat/view_model/controller/login_ctrl.dart';
+import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +15,7 @@ void forgotPasswordDialog(BuildContext context) {
   showAlignedDialog(
     barrierColor: Colors.transparent,
     barrierDismissible: false,
-    duration: minDuration,
+    duration: AppDurations.minDuration,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return FadeTransition(
         opacity: animation,
@@ -28,7 +30,8 @@ void forgotPasswordDialog(BuildContext context) {
           children: [
             Text(
               'Forgot Password',
-              style: boatTextStyle(fontWeight: FontWeight.w600, size: 17),
+              style:
+                  CustomFunctions.style(fontWeight: FontWeight.w600, size: 17),
             ),
             IconButton(
               onPressed: () {
@@ -48,7 +51,7 @@ void forgotPasswordDialog(BuildContext context) {
                   controller: ctrl.forgotEmailCtrl,
                   isUsername: true,
                 ),
-                height20,
+                AppSizes.height20,
                 loginC.isForgotLoading
                     ? const ButtonClickLoading()
                     : ElevatedButton(
@@ -63,12 +66,12 @@ void forgotPasswordDialog(BuildContext context) {
                           }
                         },
                         child: const Text('   Reset  ')),
-                height20
+                AppSizes.height20
               ],
             );
           },
         ),
-        shape: RoundedRectangleBorder(borderRadius: radius10),
+        shape: RoundedRectangleBorder(borderRadius: AppSizes.radius10),
         contentPadding: const EdgeInsets.symmetric(horizontal: 2),
       );
     },

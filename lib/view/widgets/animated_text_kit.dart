@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:chatboat/view_model/constant.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedTextKitWidget extends StatelessWidget {
@@ -11,8 +12,10 @@ class AnimatedTextKitWidget extends StatelessWidget {
     return AnimatedTextKit(
       animatedTexts: [
         TypewriterAnimatedText(textV,
-            textStyle: boatTextStyle(
-                color: blackColor, fontWeight: FontWeight.w500, size: 15),
+            textStyle: CustomFunctions.style(
+                color: AppColors.blackColor,
+                fontWeight: FontWeight.w500,
+                size: 15),
             speed: const Duration(milliseconds: 10),
             cursor: "",
             curve: Easing.emphasizedAccelerate),

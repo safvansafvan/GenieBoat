@@ -1,11 +1,14 @@
 import 'package:chatboat/view/settings/settings.dart';
 import 'package:chatboat/view/widgets/history_view.dart';
-import 'package:chatboat/view_model/boat_controller.dart';
-import 'package:chatboat/view_model/constant.dart';
-import 'package:chatboat/view_model/login_ctrl.dart';
+import 'package:chatboat/view_model/controller/boat_controller.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/controller/login_ctrl.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/core/durations.dart';
+import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../view_model/globel_ctrl.dart';
+import '../../view_model/controller/globel_ctrl.dart';
 
 class CustomLeftNavigation extends StatelessWidget {
   const CustomLeftNavigation({super.key});
@@ -27,13 +30,13 @@ class CustomLeftNavigation extends StatelessWidget {
                       width: 50, height: 50),
                   title: Text(
                     'ChatGenie',
-                    style: boatTextStyle(
+                    style: CustomFunctions.style(
                         fontWeight: FontWeight.w500,
                         size: 18,
-                        color: whiteColor),
+                        color: AppColors.whiteColor),
                   ),
                 ),
-                height20,
+                AppSizes.height20,
                 context.isPhone
                     ? Padding(
                         padding: const EdgeInsets.only(bottom: 10),
@@ -47,18 +50,20 @@ class CustomLeftNavigation extends StatelessWidget {
                                 Get.back();
                               },
                               child: AnimatedContainer(
-                                duration: minDuration,
+                                duration: AppDurations.minDuration,
                                 height: 50,
                                 width: 50,
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 5),
                                 decoration: BoxDecoration(
                                     color: globelCtrl.isChatHelper
-                                        ? whiteColor.withAlpha(300)
+                                        ? AppColors.whiteColor.withAlpha(300)
                                         : Colors.transparent,
-                                    border: Border.all(color: bgColor),
-                                    borderRadius: radius5),
-                                child: Icon(Icons.home, color: whiteColor),
+                                    border:
+                                        Border.all(color: AppColors.bgColor),
+                                    borderRadius: AppSizes.radius5),
+                                child: Icon(Icons.home,
+                                    color: AppColors.whiteColor),
                               ),
                             ),
                             GestureDetector(
@@ -67,18 +72,20 @@ class CustomLeftNavigation extends StatelessWidget {
                                 settingsDialog(context);
                               },
                               child: AnimatedContainer(
-                                duration: minDuration,
+                                duration: AppDurations.minDuration,
                                 height: 50,
                                 width: 50,
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 5),
                                 decoration: BoxDecoration(
                                     color: globelCtrl.isSettings
-                                        ? whiteColor.withAlpha(300)
+                                        ? AppColors.whiteColor.withAlpha(300)
                                         : Colors.transparent,
-                                    border: Border.all(color: bgColor),
-                                    borderRadius: radius5),
-                                child: Icon(Icons.settings, color: whiteColor),
+                                    border:
+                                        Border.all(color: AppColors.bgColor),
+                                    borderRadius: AppSizes.radius5),
+                                child: Icon(Icons.settings,
+                                    color: AppColors.whiteColor),
                               ),
                             )
                           ],
@@ -88,47 +95,51 @@ class CustomLeftNavigation extends StatelessWidget {
                         children: [
                           AnimatedContainer(
                             curve: Curves.decelerate,
-                            duration: boatDuration,
+                            duration: AppDurations.minDuration,
                             width: 160,
                             margin: const EdgeInsets.symmetric(vertical: 5),
                             decoration: BoxDecoration(
-                              color:
-                                  globelCtrl.isChatHelper ? bttnBg : blackColor,
-                              borderRadius: radius10,
+                              color: globelCtrl.isChatHelper
+                                  ? AppColors.bttnBg
+                                  : AppColors.blackColor,
+                              borderRadius: AppSizes.radius10,
                             ),
                             child: ListTile(
-                              shape: OutlineInputBorder(borderRadius: radius10),
+                              shape: OutlineInputBorder(
+                                  borderRadius: AppSizes.radius10),
                               hoverColor: Colors.blue.withAlpha(300),
                               onTap: () {
                                 globelCtrl.chatHelperState();
                               },
                               minLeadingWidth: 0,
                               horizontalTitleGap: 12,
-                              leading:
-                                  Icon(Icons.message_rounded, color: greyColor),
+                              leading: Icon(Icons.message_rounded,
+                                  color: AppColors.greyColor),
                               title: Text(
                                 'Ai Chat Helper',
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
-                                style: boatTextStyle(
+                                style: CustomFunctions.style(
                                     fontWeight: FontWeight.w500,
                                     size: 14,
-                                    color: whiteColor),
+                                    color: AppColors.whiteColor),
                               ),
                             ),
                           ),
                           AnimatedContainer(
-                            duration: boatDuration,
+                            duration: AppDurations.minDuration,
                             curve: Curves.decelerate,
                             width: 160,
                             margin: const EdgeInsets.symmetric(vertical: 5),
                             decoration: BoxDecoration(
-                              color:
-                                  globelCtrl.isSettings ? bttnBg : blackColor,
-                              borderRadius: radius10,
+                              color: globelCtrl.isSettings
+                                  ? AppColors.bttnBg
+                                  : AppColors.blackColor,
+                              borderRadius: AppSizes.radius10,
                             ),
                             child: ListTile(
-                              shape: OutlineInputBorder(borderRadius: radius10),
+                              shape: OutlineInputBorder(
+                                  borderRadius: AppSizes.radius10),
                               hoverColor: Colors.blue.withAlpha(300),
                               onTap: () async {
                                 globelCtrl.settingState();
@@ -136,53 +147,54 @@ class CustomLeftNavigation extends StatelessWidget {
                               },
                               minLeadingWidth: 0,
                               horizontalTitleGap: 12,
-                              leading: Icon(Icons.settings, color: greyColor),
+                              leading: Icon(Icons.settings,
+                                  color: AppColors.greyColor),
                               title: Text(
                                 'Settings',
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
-                                style: boatTextStyle(
+                                style: CustomFunctions.style(
                                     fontWeight: FontWeight.w500,
                                     size: 14,
-                                    color: whiteColor),
+                                    color: AppColors.whiteColor),
                               ),
                             ),
                           ),
                         ],
                       ),
                 context.width <= 968
-                    ? HistoryView(color: whiteColor)
+                    ? HistoryView(color: AppColors.whiteColor)
                     : const SizedBox(),
                 context.width > 968 ? const Spacer() : const SizedBox(),
                 Divider(
-                  color: whiteColor.withAlpha(300),
+                  color: AppColors.whiteColor.withAlpha(300),
                   thickness: 1,
                   indent: 10,
                   endIndent: 10,
                 ),
                 AnimatedContainer(
-                  duration: boatDuration,
+                  duration: AppDurations.minDuration,
                   curve: Curves.decelerate,
                   width: 160,
                   margin: const EdgeInsets.symmetric(vertical: 5),
-                  decoration: BoxDecoration(borderRadius: radius10),
+                  decoration: BoxDecoration(borderRadius: AppSizes.radius10),
                   child: ListTile(
-                    shape: OutlineInputBorder(borderRadius: radius10),
+                    shape: OutlineInputBorder(borderRadius: AppSizes.radius10),
                     hoverColor: Colors.blue.withAlpha(300),
                     onTap: () async {
                       await lc.logout(context);
                     },
                     minLeadingWidth: 0,
                     horizontalTitleGap: 0,
-                    trailing: Icon(Icons.logout, color: greyColor),
+                    trailing: Icon(Icons.logout, color: AppColors.greyColor),
                     title: Text(
                       'Logout',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
-                      style: boatTextStyle(
+                      style: CustomFunctions.style(
                           fontWeight: FontWeight.w500,
                           size: 14,
-                          color: whiteColor),
+                          color: AppColors.whiteColor),
                     ),
                   ),
                 ),

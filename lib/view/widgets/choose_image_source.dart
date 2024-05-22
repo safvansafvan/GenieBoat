@@ -1,6 +1,8 @@
 import 'package:aligned_dialog/aligned_dialog.dart';
-import 'package:chatboat/view_model/boat_controller.dart';
-import 'package:chatboat/view_model/constant.dart';
+import 'package:chatboat/view_model/controller/boat_controller.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/core/durations.dart';
+import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +11,7 @@ chooseImageSource(BuildContext context) async {
   if (context.isPhone) {
     return showAlignedDialog(
       barrierColor: Colors.transparent,
-      duration: minDuration,
+      duration: AppDurations.minDuration,
       context: context,
       builder: (context) {
         return Padding(
@@ -22,7 +24,8 @@ chooseImageSource(BuildContext context) async {
                 children: [
                   Text(
                     'Select Source',
-                    style: boatTextStyle(fontWeight: FontWeight.w500, size: 14),
+                    style: CustomFunctions.style(
+                        fontWeight: FontWeight.w500, size: 14),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -39,10 +42,10 @@ chooseImageSource(BuildContext context) async {
                               width: 50,
                               fit: BoxFit.cover,
                             ),
-                            minHeight,
+                            AppSizes.minHeight,
                             Text(
                               'Camera',
-                              style: boatTextStyle(
+                              style: CustomFunctions.style(
                                   fontWeight: FontWeight.w600, size: 14),
                             )
                           ],
@@ -60,10 +63,10 @@ chooseImageSource(BuildContext context) async {
                               width: 50,
                               fit: BoxFit.cover,
                             ),
-                            minHeight,
+                            AppSizes.minHeight,
                             Text(
                               'Gallery',
-                              style: boatTextStyle(
+                              style: CustomFunctions.style(
                                   fontWeight: FontWeight.w600, size: 14),
                             )
                           ],

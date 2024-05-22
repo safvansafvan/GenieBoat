@@ -1,7 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:chatboat/view_model/constant.dart';
-import 'package:chatboat/view_model/globel_ctrl.dart';
-import 'package:chatboat/view_model/login_ctrl.dart';
+import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
+import 'package:chatboat/view_model/core/durations.dart';
+import 'package:chatboat/view_model/controller/globel_ctrl.dart';
+import 'package:chatboat/view_model/controller/login_ctrl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,7 +32,7 @@ class _SplashViewState extends State<SplashView> {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: blackColor,
+      backgroundColor: AppColors.blackColor,
       body: Center(
         child: Column(
           children: [
@@ -47,10 +49,10 @@ class _SplashViewState extends State<SplashView> {
                       animatedTexts: [
                         WavyAnimatedText(
                           'Chat Boat',
-                          textStyle: boatTextStyle(
+                          textStyle: CustomFunctions.style(
                               fontWeight: FontWeight.w600,
                               size: 28,
-                              color: whiteColor),
+                              color: AppColors.whiteColor),
                         ),
                       ],
                       isRepeatingAnimation: true,
