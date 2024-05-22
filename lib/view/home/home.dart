@@ -47,6 +47,7 @@ class _HomeViewState extends State<HomeView>
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: scaffoldKey,
       backgroundColor: context.isPhone ? whiteColor : blackColor,
       body: GetBuilder<BoatChatCtrl>(

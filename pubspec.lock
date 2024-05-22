@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.2"
+  animated_text_lerp:
+    dependency: "direct main"
+    description:
+      name: animated_text_lerp
+      sha256: "2504fed52d21973aecf2836fcb008e8f95e2eaddbcaf0afc37b8c8749f52d9c6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   archive:
     dependency: transitive
     description:

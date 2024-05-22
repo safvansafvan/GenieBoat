@@ -32,11 +32,12 @@ class BoatChatCtrl extends GetxController {
   }
 
   Future<void> boatChatHandling(context) async {
+    isLoadingAns = true;
+    update();
     final fc = Get.find<FireStoreCtrl>();
     String id = uuid.v1();
     formateDate(DateTime.now());
     try {
-      isLoadingAns = true;
       bodyCurrentInd = 1;
       update();
       final model = GenerativeModel(model: 'gemini-pro', apiKey: key);
@@ -57,11 +58,10 @@ class BoatChatCtrl extends GetxController {
       await fc.getHistoryFromFireStore();
     } catch (e) {
       log(e.toString());
+    } finally {
       isLoadingAns = false;
       update();
     }
-    isLoadingAns = false;
-    update();
   }
 
   void formateDate(DateTime dateTime) {
