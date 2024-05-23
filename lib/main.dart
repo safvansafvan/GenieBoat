@@ -1,6 +1,4 @@
 import 'package:chatboat/firebase_options.dart';
-import 'package:chatboat/view/auth/login.dart';
-import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/splash/splash.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/init_controllers.dart';
@@ -42,7 +40,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (_) => const HomeView(),
+        '/': (_) => const SplashView(),
       },
       debugShowCheckedModeBanner: false,
     );

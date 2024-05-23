@@ -13,14 +13,6 @@ class FirestoreModel {
     this.time,
   });
 
-  factory FirestoreModel.fromJson(Map<String, dynamic> json) => FirestoreModel(
-        id: json["id"],
-        qus: json["qus"],
-        ans: json["ans"],
-        date: json["date"],
-        time: json["time"],
-      );
-
   Map<String, dynamic> toJson() => {
         "id": id,
         "qus": qus,

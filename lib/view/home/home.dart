@@ -7,7 +7,6 @@ import 'package:chatboat/view/widgets/custom_navigation.dart';
 import 'package:chatboat/view/widgets/menu_drawer.dart';
 import 'package:chatboat/view_model/controller/boat_controller.dart';
 import 'package:chatboat/view_model/core/colors.dart';
-import 'package:chatboat/view_model/controller/firestore_controller.dart';
 import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView>
     with SingleTickerProviderStateMixin {
   final gctrl = Get.find<GlobleController>();
-  final fc = Get.find<FireStoreCtrl>();
+  final bc = Get.find<BoatChatCtrl>();
 
   @override
   void initState() {
@@ -33,7 +32,7 @@ class _HomeViewState extends State<HomeView>
     );
     gctrl.controllerTopCenter =
         ConfettiController(duration: const Duration(seconds: 4));
-    fc.getHistoryFromFireStore();
+    bc.getHistoryFirestore();
     super.initState();
   }
 
@@ -65,7 +64,8 @@ class _HomeViewState extends State<HomeView>
                     children: [
                       if (context.width > 748) const CustomLeftNavigation(),
                       centerViewHandling(ctrl),
-                      if (context.width > 968) const GenieHistory(),
+                      if (context.width > 968 && ctrl.allHistory.isNotEmpty)
+                        const GenieHistory(),
                     ],
                   ),
                 ),
@@ -79,11 +79,10 @@ class _HomeViewState extends State<HomeView>
   }
 
   Widget centerViewHandling(BoatChatCtrl ctrl) {
-    final fc = Get.find<FireStoreCtrl>();
-    bool value = fc.allHistory.isEmpty;
-    if (value == true) {
-      ctrl.bodyCurrentIndState(1);
-    }
+    // bool value = bc.allHistory.isEmpty;
+    // if (value == true) {
+    //   ctrl.bodyCurrentIndState(1);
+    // }
     switch (ctrl.bodyCurrentInd) {
       case 0:
         return const Expanded(child: StartChatingView());

@@ -70,7 +70,7 @@ class LoginView extends StatelessWidget {
                             context.isPhone
                                 ? const SizedBox()
                                 : Image.network(
-                                    'assets/gif/boat.gif',
+                                    'assets/gif/boat-unscreen.gif',
                                     fit: BoxFit.cover,
                                     width: 100,
                                     height: 60,

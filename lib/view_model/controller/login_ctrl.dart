@@ -1,15 +1,18 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:developer';
+import 'package:chatboat/model/user_model.dart';
 import 'package:chatboat/view/auth/login.dart';
 import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
+import 'package:chatboat/view_model/firebase_service/firestore_user_res.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:uuid/uuid.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailCtrl = TextEditingController();
@@ -22,6 +25,7 @@ class LoginController extends GetxController {
   bool obscurePassword = true;
   bool isSignUp = false;
   User? user;
+  var uuid = const Uuid();
 
   void obscureState() {
     obscurePassword = !obscurePassword;
@@ -169,6 +173,11 @@ class LoginController extends GetxController {
     try {
       UserCredential credential = await auth.createUserWithEmailAndPassword(
           email: emailCtrl.text, password: passworldCtrl.text);
+      await UserFirestoreRes().addUserToFirestore(
+        model: UserModel(emailCtrl.text, userNameCtrl.text,
+            credential.user?.uid, DateTime.now().toString(), null),
+      );
+
       isSignUpLoading = false;
       update();
       passworldCtrl.clear();

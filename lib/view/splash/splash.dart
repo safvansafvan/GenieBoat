@@ -1,7 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
-import 'package:chatboat/view_model/core/durations.dart';
 import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:chatboat/view_model/controller/login_ctrl.dart';
 import 'package:flutter/material.dart';

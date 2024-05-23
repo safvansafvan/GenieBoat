@@ -1,5 +1,5 @@
+import 'package:chatboat/view_model/controller/boat_controller.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
-import 'package:chatboat/view_model/controller/firestore_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +11,7 @@ class HistoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<FireStoreCtrl>(builder: (fctrl) {
+    return GetBuilder<BoatChatCtrl>(builder: (fctrl) {
       return Expanded(
         child: ListView.builder(
           itemCount: fctrl.allHistory.length,

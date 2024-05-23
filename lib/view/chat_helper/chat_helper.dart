@@ -1,11 +1,9 @@
-import 'package:chatboat/model/firestore_model.dart';
 import 'package:chatboat/view/chat_helper/widget/chat_data_widget.dart';
 import 'package:chatboat/view/widgets/boat_animate.dart';
 import 'package:chatboat/view/widgets/lottie_view.dart';
 import 'package:chatboat/view/widgets/message_sender.dart';
 import 'package:chatboat/view_model/controller/boat_controller.dart';
 import 'package:chatboat/view_model/core/colors.dart';
-import 'package:chatboat/view_model/controller/firestore_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,7 +38,7 @@ class ChatHelperWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
-              child: GetBuilder<FireStoreCtrl>(
+              child: GetBuilder<BoatChatCtrl>(
                 builder: (fCtrl) {
                   return ListView.builder(
                     shrinkWrap: true,
@@ -48,10 +46,8 @@ class ChatHelperWidget extends StatelessWidget {
                     primary: true,
                     itemCount: fCtrl.allHistory.length,
                     itemBuilder: (context, index) {
-                      List<FirestoreModel> f =
-                          fCtrl.allHistory.reversed.toList();
-                      final dataSet = f[index];
-                      if (index == f.length - 1) {
+                      final dataSet = fCtrl.allHistory[index];
+                      if (index == fCtrl.allHistory.length - 1) {
                         return BoatChatDataWidget(
                           dataSet: dataSet,
                           isLastIndex: true,

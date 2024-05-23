@@ -1,8 +1,8 @@
 import 'package:chatboat/model/firestore_model.dart';
 import 'package:chatboat/view/widgets/animated_text_kit.dart';
+import 'package:chatboat/view_model/controller/boat_controller.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
-import 'package:chatboat/view_model/controller/firestore_controller.dart';
 import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +15,7 @@ class BoatChatDataWidget extends StatelessWidget {
 
   final FirestoreModel dataSet;
   final bool isLastIndex;
-  final FireStoreCtrl ctrl;
+  final BoatChatCtrl ctrl;
 
   @override
   Widget build(BuildContext context) {

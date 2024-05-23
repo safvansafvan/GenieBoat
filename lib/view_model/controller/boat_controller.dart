@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:chatboat/model/firestore_model.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
-import 'package:chatboat/view_model/controller/firestore_controller.dart';
+import 'package:chatboat/view_model/firebase_service/firestore_chat_res.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -19,10 +19,12 @@ class BoatChatCtrl extends GetxController {
   TextEditingController questionCtrl = TextEditingController();
   FocusNode questionFocous = FocusNode();
   bool isLoadingAns = false;
+  List<FirestoreModel> allHistory = [];
   static const String key = 'AIzaSyDr9OuXdV4zMasHUHS3OxWxOh8iocF8_Vk';
   int bodyCurrentInd = 0;
   String currentDate = '';
   String currentTime = '';
+  bool isLoadingNew = false;
   var uuid = const Uuid();
   Uint8List? selectedImage;
 
@@ -33,20 +35,18 @@ class BoatChatCtrl extends GetxController {
 
   Future<void> boatChatHandling(context) async {
     isLoadingAns = true;
+    isLoadingNew = false;
+    bodyCurrentInd = 1;
     update();
-    final fc = Get.find<FireStoreCtrl>();
     String id = uuid.v1();
     formateDate(DateTime.now());
     try {
-      bodyCurrentInd = 1;
-      update();
       final model = GenerativeModel(model: 'gemini-pro', apiKey: key);
       final content = [Content.text(questionCtrl.text)];
       final response = await model.generateContent(content);
       log(response.text ?? '');
       log('$currentDate  $currentTime  $id');
-      await fc.addHistoryToFirestore(
-        context: context,
+      await FireStoreRes().addHistoryToFirestore(
         model: FirestoreModel(
           id: id,
           ans: response.text,
@@ -55,12 +55,22 @@ class BoatChatCtrl extends GetxController {
           time: currentTime,
         ),
       );
-      await fc.getHistoryFromFireStore();
+      await getHistoryFirestore();
     } catch (e) {
       log(e.toString());
     } finally {
       isLoadingAns = false;
+      isLoadingNew = true;
       update();
+    }
+  }
+
+  Future<void> getHistoryFirestore() async {
+    try {
+      allHistory = await FireStoreRes().getHistoryFromFireStore();
+      update();
+    } catch (e) {
+      log(e.toString());
     }
   }
 
