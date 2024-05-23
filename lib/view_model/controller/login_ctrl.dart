@@ -2,7 +2,7 @@
 
 import 'dart:developer';
 import 'package:chatboat/model/user_model.dart';
-import 'package:chatboat/view/auth/login.dart';
+import 'package:chatboat/view/auth/auth.dart';
 import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:chatboat/view_model/firebase_service/firestore_user_res.dart';

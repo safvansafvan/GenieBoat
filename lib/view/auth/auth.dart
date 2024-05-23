@@ -25,13 +25,20 @@ class LoginView extends StatelessWidget {
             width: context.width,
             height: context.height / 2,
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(231, 33, 149, 243),
-                  Color.fromARGB(231, 104, 58, 183)
-                ],
+                image: DecorationImage(
+              image: AssetImage(
+                'assets/images/login_header.png',
               ),
-            ),
+              fit: BoxFit.cover,
+              filterQuality: FilterQuality.high,
+            )
+                // gradient: LinearGradient(
+                //   colors: [
+                //     Color.fromARGB(231, 33, 149, 243),
+                //     Color.fromARGB(231, 104, 58, 183)
+                //   ],
+                // ),
+                ),
           ),
           Align(
             alignment: Alignment.center,
