@@ -1,8 +1,5 @@
 import 'dart:developer';
-import 'dart:io';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:chatboat/model/firestore_model.dart';
-import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:chatboat/view_model/firebase_service/firestore_chat_res.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +8,6 @@ import 'package:get/get.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:record/record.dart';
 import 'package:uuid/uuid.dart';
 
 class BoatChatCtrl extends GetxController {
@@ -34,6 +29,8 @@ class BoatChatCtrl extends GetxController {
   }
 
   Future<void> boatChatHandling(context) async {
+    String valueText = questionCtrl.text;
+    questionCtrl.clear();
     isLoadingAns = true;
     isLoadingNew = false;
     bodyCurrentInd = 1;
@@ -42,7 +39,7 @@ class BoatChatCtrl extends GetxController {
     formateDate(DateTime.now());
     try {
       final model = GenerativeModel(model: 'gemini-pro', apiKey: key);
-      final content = [Content.text(questionCtrl.text)];
+      final content = [Content.text(valueText)];
       final response = await model.generateContent(content);
       log(response.text ?? '');
       log('$currentDate  $currentTime  $id');
@@ -50,7 +47,7 @@ class BoatChatCtrl extends GetxController {
         model: FirestoreModel(
           id: id,
           ans: response.text,
-          qus: questionCtrl.text,
+          qus: valueText,
           date: currentDate,
           time: currentTime,
         ),
@@ -114,64 +111,5 @@ class BoatChatCtrl extends GetxController {
     selectedImage = null;
 
     update();
-  }
-
-  String? recordedAudio;
-  bool isRecoreding = false;
-  bool? permission;
-  Future<void> recordAudio() async {
-    final record = AudioRecorder();
-    try {
-      permission = await record.hasPermission();
-      if (permission == true) {
-        isRecoreding = true;
-
-        update();
-        Directory directory = await getApplicationDocumentsDirectory();
-        String filepath = '${directory.path}/recording.m4a';
-        await record.start(
-            const RecordConfig(
-              encoder: AudioEncoder.aacLc,
-              bitRate: 128000,
-            ),
-            path: filepath);
-        recordedAudio = filepath;
-      }
-    } catch (e) {
-      log(e.toString());
-    } finally {
-      update();
-    }
-  }
-
-  Future<void> stopRecord(context) async {
-    final record = AudioRecorder();
-    log('Stop audio');
-    try {
-      String? path = await record.stop();
-      if (path == null || path.isEmpty) {
-        return boatSnackBar(
-            text: 'Error', message: 'Audio Is Not Recorded', ctx: context);
-      }
-      recordedAudio = path;
-      log(recordedAudio.toString());
-      isRecoreding = false;
-      update();
-    } catch (e) {
-      log(e.toString());
-    } finally {
-      update();
-    }
-  }
-
-  Future<void> playRecordedAudio(BuildContext ctx) async {
-    AudioPlayer audioPlayer = AudioPlayer();
-    try {
-      Source urlSource = UrlSource(recordedAudio ?? "");
-      audioPlayer.play(urlSource);
-    } catch (e) {
-      log(e.toString());
-      boatSnackBar(text: 'Error', message: 'Something Went Wrong', ctx: ctx);
-    }
   }
 }

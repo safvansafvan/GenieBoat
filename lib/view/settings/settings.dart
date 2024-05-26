@@ -137,33 +137,32 @@ settingsDialog(BuildContext context) {
                   ),
                 ),
                 const Spacer(),
-                if (!context.isPhone)
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    child: ListTile(
-                      shape: OutlineInputBorder(
-                          borderRadius: AppSizes.radius10,
-                          borderSide: BorderSide.none),
-                      minLeadingWidth: 0,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 2),
-                      horizontalTitleGap: 10,
-                      leading: const CircleAvatar(radius: 20),
-                      title: Text(
-                        'Muhammed Safvan',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: CustomFunctions.style(
-                            fontWeight: FontWeight.w500,
-                            size: 12,
-                            color: AppColors.blackColor),
-                      ),
-                      trailing: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.logout),
-                      ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: ListTile(
+                    shape: OutlineInputBorder(
+                        borderRadius: AppSizes.radius10,
+                        borderSide: BorderSide.none),
+                    minLeadingWidth: 0,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 2),
+                    horizontalTitleGap: 10,
+                    leading: const CircleAvatar(radius: 20),
+                    title: Text(
+                      'Muhammed Safvan',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: CustomFunctions.style(
+                          fontWeight: FontWeight.w500,
+                          size: 12,
+                          color: AppColors.blackColor),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.logout),
                     ),
                   ),
+                ),
               ],
             ),
           ),

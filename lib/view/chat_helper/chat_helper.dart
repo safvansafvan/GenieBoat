@@ -41,6 +41,7 @@ class ChatHelperWidget extends StatelessWidget {
               child: GetBuilder<BoatChatCtrl>(
                 builder: (fCtrl) {
                   return ListView.builder(
+                    padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     primary: true,

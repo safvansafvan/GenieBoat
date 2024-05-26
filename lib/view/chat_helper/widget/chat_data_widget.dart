@@ -112,38 +112,26 @@ class BoatChatDataWidget extends StatelessWidget {
                       fontSize: 15),
                 ),
           AppSizes.height10,
-          Row(
-            children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                decoration: BoxDecoration(
-                  color: AppColors.whiteColor,
-                  borderRadius: AppSizes.radius10,
-                  border: Border.all(
-                    color: AppColors.greyColor.withAlpha(300),
-                  ),
-                ),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        dataSet.qus ?? '',
-                        style: CustomFunctions.style(
-                            fontWeight: FontWeight.w400,
-                            size: 14,
-                            color: AppColors.blackColor),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            decoration: BoxDecoration(
+              color: AppColors.whiteColor,
+              borderRadius: AppSizes.radius10,
+              border: Border.all(
+                color: AppColors.greyColor.withAlpha(300),
               ),
-            ],
+            ),
+            child: Center(
+              child: Text(
+                dataSet.qus ?? '',
+                style: CustomFunctions.style(
+                    fontWeight: FontWeight.w400,
+                    size: 14,
+                    color: AppColors.blackColor),
+                maxLines: null,
+              ),
+            ),
           )
         ],
       ),

@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
+
 import 'package:chatboat/view/widgets/choose_image_source.dart';
-import 'package:chatboat/view/widgets/lottie_view.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:chatboat/view_model/controller/boat_controller.dart';
 import 'package:chatboat/view_model/core/colors.dart';
@@ -21,11 +21,7 @@ class GenieMessageSender extends StatelessWidget {
           return Row(
             children: [
               _buildImageSelector(context, chatCtrl),
-              _buildAudioButton(chatCtrl, context),
-              if (chatCtrl.isRecoreding)
-                lottieView(path: 'assets/lotties/recording.json'),
-              if (!chatCtrl.isRecoreding) _buildMessageInput(chatCtrl, context),
-              if (chatCtrl.isRecoreding) const Spacer(),
+              _buildMessageInput(chatCtrl, context),
               _buildSendButton(context, chatCtrl),
             ],
           );
@@ -87,38 +83,13 @@ class GenieMessageSender extends StatelessWidget {
     );
   }
 
-  Widget _buildAudioButton(BoatChatCtrl chatCtrl, BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: context.isPhone ? 5 : 20.0),
-      child: InkWell(
-        onTap: () async {
-          if (chatCtrl.recordedAudio == null) {
-            if (chatCtrl.isRecoreding && chatCtrl.recordedAudio == null) {
-              await chatCtrl.stopRecord(context);
-            } else {
-              await chatCtrl.recordAudio();
-            }
-          } else {
-            await chatCtrl.playRecordedAudio(context);
-          }
-        },
-        child: Container(
-          height: 40,
-          width: 40,
-          decoration: BoxDecoration(
-              borderRadius: AppSizes.radius10, color: AppColors.bgColor),
-          child: Icon(icon(chatCtrl), color: AppColors.blackColor),
-        ),
-      ),
-    );
-  }
-
   Widget _buildMessageInput(BoatChatCtrl chatCtrl, BuildContext context) {
     final FocusNode focusNode = FocusNode();
 
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
+        padding: EdgeInsets.symmetric(
+            vertical: 5, horizontal: context.isPhone ? 5 : 10),
         child: TextField(
           onTap: () {
             FocusScope.of(context).requestFocus(focusNode);
@@ -158,32 +129,19 @@ class GenieMessageSender extends StatelessWidget {
         }
         await chatCtrl.boatChatHandling(context);
       },
-      child: Padding(
-        padding: EdgeInsets.only(left: context.isPhone ? 5 : 20.0),
-        child: Container(
-          height: 40,
-          width: 40,
-          decoration: BoxDecoration(
-              borderRadius: AppSizes.radius10, color: Colors.orange),
-          child: Padding(
-            padding: const EdgeInsets.all(11.0),
-            child: Image.asset(
-              'assets/images/send.png',
-              color: AppColors.whiteColor,
-            ),
+      child: Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+            borderRadius: AppSizes.radius10, color: Colors.orange),
+        child: Padding(
+          padding: const EdgeInsets.all(11.0),
+          child: Image.asset(
+            'assets/images/send.png',
+            color: AppColors.whiteColor,
           ),
         ),
       ),
     );
-  }
-
-  IconData icon(BoatChatCtrl bc) {
-    if (bc.isRecoreding == true) {
-      return Icons.close;
-    }
-    if (bc.isRecoreding == false && bc.recordedAudio == null) {
-      return Icons.mic_none_outlined;
-    }
-    return Icons.play_arrow;
   }
 }
