@@ -33,7 +33,7 @@ class CustomLeftNavigation extends StatelessWidget {
                     style: CustomFunctions.style(
                         fontWeight: FontWeight.w500,
                         size: 18,
-                        color: AppColors.whiteColor),
+                        color: globelCtrl.focusColor),
                   ),
                 ),
                 AppSizes.height20,
@@ -57,13 +57,13 @@ class CustomLeftNavigation extends StatelessWidget {
                                     const EdgeInsets.symmetric(horizontal: 5),
                                 decoration: BoxDecoration(
                                     color: globelCtrl.isChatHelper
-                                        ? AppColors.whiteColor.withAlpha(300)
+                                        ? globelCtrl.containerClr
                                         : Colors.transparent,
                                     border:
                                         Border.all(color: AppColors.bgColor),
                                     borderRadius: AppSizes.radius5),
                                 child: Icon(Icons.home,
-                                    color: AppColors.whiteColor),
+                                    color: globelCtrl.focusColor),
                               ),
                             ),
                             GestureDetector(
@@ -85,7 +85,7 @@ class CustomLeftNavigation extends StatelessWidget {
                                         Border.all(color: AppColors.bgColor),
                                     borderRadius: AppSizes.radius5),
                                 child: Icon(Icons.settings,
-                                    color: AppColors.whiteColor),
+                                    color: globelCtrl.focusColor),
                               ),
                             )
                           ],
@@ -163,7 +163,8 @@ class CustomLeftNavigation extends StatelessWidget {
                         ],
                       ),
                 context.width <= 968
-                    ? HistoryView(color: AppColors.whiteColor)
+                    ? HistoryView(
+                        color: globelCtrl.focusColor ?? AppColors.blackColor)
                     : const SizedBox(),
                 context.width > 968 ? const Spacer() : const SizedBox(),
                 Divider(
@@ -186,7 +187,7 @@ class CustomLeftNavigation extends StatelessWidget {
                     },
                     minLeadingWidth: 0,
                     horizontalTitleGap: 0,
-                    trailing: Icon(Icons.logout, color: AppColors.greyColor),
+                    trailing: Icon(Icons.logout, color: globelCtrl.focusColor),
                     title: Text(
                       'Logout',
                       overflow: TextOverflow.ellipsis,
@@ -194,7 +195,7 @@ class CustomLeftNavigation extends StatelessWidget {
                       style: CustomFunctions.style(
                           fontWeight: FontWeight.w500,
                           size: 14,
-                          color: AppColors.whiteColor),
+                          color: globelCtrl.focusColor),
                     ),
                   ),
                 ),

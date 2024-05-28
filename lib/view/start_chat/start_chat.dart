@@ -1,5 +1,6 @@
 import 'package:chatboat/view/widgets/celebration.dart';
 import 'package:chatboat/view/widgets/message_sender.dart';
+import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:flutter/material.dart';
@@ -27,13 +28,15 @@ class StartChatingView extends StatelessWidget {
             const Spacer(),
             Image.asset('assets/gif/boat-unscreen.gif',
                 height: 200, width: 200, fit: BoxFit.cover),
-            Text(
-              'How Can I Help You Today',
-              style: CustomFunctions.style(
-                  fontWeight: FontWeight.bold,
-                  size: 18,
-                  color: AppColors.blackColor),
-            ),
+            GetBuilder<GlobleController>(builder: (ctrl) {
+              return Text(
+                'How Can I Help You Today',
+                style: CustomFunctions.style(
+                    fontWeight: FontWeight.bold,
+                    size: 18,
+                    color: ctrl.focusColor),
+              );
+            }),
             const Spacer(),
             const Padding(
               padding: EdgeInsets.only(bottom: 0),

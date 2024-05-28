@@ -54,18 +54,21 @@ void forgotPasswordDialog(BuildContext context) {
                 AppSizes.height20,
                 loginC.isForgotLoading
                     ? const ButtonClickLoading()
-                    : ElevatedButton(
-                        onPressed: () async {
-                          if (ctrl.forgotEmailCtrl.text.isEmpty) {
-                            boatSnackBar(
-                                text: 'Failed',
-                                message: 'Enter Required Field',
-                                ctx: context);
-                          } else {
-                            await ctrl.forgotPassword(context);
-                          }
-                        },
-                        child: const Text('   Reset  ')),
+                    : SizedBox(
+                        width: 150,
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              if (ctrl.forgotEmailCtrl.text.isEmpty) {
+                                boatSnackBar(
+                                    text: 'Failed',
+                                    message: 'Enter Required Field',
+                                    ctx: context);
+                              } else {
+                                await ctrl.forgotPassword(context);
+                              }
+                            },
+                            child: const Text('   Reset  ')),
+                      ),
                 AppSizes.height20
               ],
             );

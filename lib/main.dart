@@ -1,6 +1,9 @@
 import 'package:chatboat/firebase_options.dart';
 import 'package:chatboat/view/splash/splash.dart';
+import 'package:chatboat/view_model/controller/globel_ctrl.dart';
+import 'package:chatboat/view_model/core/app_theme.dart';
 import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:chatboat/view_model/core/init_controllers.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -28,21 +31,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     InitControllers.init();
-    return GetMaterialApp(
-      title: 'Chat Boat',
-      theme: ThemeData(
-        appBarTheme: AppBarTheme(
-            centerTitle: true,
-            backgroundColor: AppColors.whiteColor,
-            elevation: 0),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: false,
-      ),
-      initialRoute: '/',
-      routes: {
-        '/': (_) => const SplashView(),
-      },
-      debugShowCheckedModeBanner: false,
-    );
+
+    return GetBuilder<GlobleController>(builder: (ctrl) {
+      return GetMaterialApp(
+        title: 'Chat Boat',
+        themeMode: ThemeMode.light,
+        darkTheme: AppTheme.darkTheme,
+        theme: ThemeData(
+            elevatedButtonTheme: AppTheme.elevatedButtonThemeData,
+            dividerColor:
+                ctrl.isDarkTheme ? AppColors.whiteColor : AppColors.greyColor,
+            brightness: ctrl.isDarkTheme ? Brightness.dark : Brightness.light,
+            appBarTheme: AppTheme.appBarTheme,
+            //  colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: false,
+            scaffoldBackgroundColor:
+                ctrl.isDarkTheme ? AppColors.blackColor : AppColors.whiteColor),
+        initialRoute: '/',
+        routes: {
+          '/': (_) => const SplashView(),
+        },
+        debugShowCheckedModeBanner: false,
+      );
+    });
   }
 }

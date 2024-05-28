@@ -55,6 +55,7 @@ class LoginView extends StatelessWidget {
                             maxWidth: context.width < 502 ? 300 : 400,
                             maxHeight: loginCtrl.isSignUp ? 480 : 420),
                         decoration: BoxDecoration(
+                          border: Border.all(color: AppColors.bgColor),
                           borderRadius: AppSizes.radius10,
                           color: AppColors.whiteColor,
                           boxShadow: [
@@ -146,13 +147,6 @@ class LoginView extends StatelessWidget {
                                             loginCtrl.isSignUpLoading
                                         ? const ButtonClickLoading()
                                         : ElevatedButton(
-                                            style: ButtonStyle(
-                                                shape: MaterialStatePropertyAll(
-                                                    RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            AppSizes.radius10)),
-                                                animationDuration:
-                                                    const Duration(seconds: 1)),
                                             onPressed: () async {
                                               await handleAuth(
                                                   loginCtrl, context);

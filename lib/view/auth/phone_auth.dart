@@ -61,27 +61,30 @@ void phoneAuth(BuildContext context) {
                 AppSizes.height20,
                 loginC.isOtpVerification
                     ? const ButtonClickLoading()
-                    : ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
-                                loginC.isVerifyLoading == false &&
-                                        loginC.otpCtrl.text.length > 5
-                                    ? Colors.deepPurple
-                                    : AppColors.greyColor)),
-                        onPressed: loginC.isVerifyLoading
-                            ? () async {
-                                if (ctrl.otpCtrl.text.isEmpty) {
-                                  boatSnackBar(
-                                      text: 'Failed',
-                                      message: 'Enter Otp Field',
-                                      ctx: context);
-                                } else {
-                                  await ctrl
-                                      .handlePhoneOtpVerification(context);
+                    : SizedBox(
+                        width: 150,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                  loginC.isVerifyLoading == false &&
+                                          loginC.otpCtrl.text.length > 5
+                                      ? AppColors.secondBg
+                                      : AppColors.greyColor)),
+                          onPressed: loginC.isVerifyLoading
+                              ? () async {
+                                  if (ctrl.otpCtrl.text.isEmpty) {
+                                    boatSnackBar(
+                                        text: 'Failed',
+                                        message: 'Enter Otp Field',
+                                        ctx: context);
+                                  } else {
+                                    await ctrl
+                                        .handlePhoneOtpVerification(context);
+                                  }
                                 }
-                              }
-                            : () {},
-                        child: const Text('   Verify  '),
+                              : () {},
+                          child: const Text('   Verify  '),
+                        ),
                       ),
                 AppSizes.height20
               ],

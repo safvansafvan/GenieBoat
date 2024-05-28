@@ -39,28 +39,25 @@ ratingBottomSheet(
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.blackColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+              child: SizedBox(
+                width: 150,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.back();
+                    Get.back();
+                    Get.back();
+                    gctrl.chatHelperState();
+                    gctrl.controllerTopCenter.play();
+                    boatSnackBar(
+                        text: 'Suceed',
+                        isSuccess: true,
+                        ctx: context,
+                        message: 'Thanks For Your Rating');
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+                    child: Text('Submit'),
                   ),
-                ),
-                onPressed: () {
-                  Get.back();
-                  Get.back();
-                  Get.back();
-                  gctrl.chatHelperState();
-                  gctrl.controllerTopCenter.play();
-                  boatSnackBar(
-                      text: 'Suceed',
-                      isSuccess: true,
-                      ctx: context,
-                      message: 'Thanks For Your Rating');
-                },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
-                  child: Text('Submit'),
                 ),
               ),
             )
