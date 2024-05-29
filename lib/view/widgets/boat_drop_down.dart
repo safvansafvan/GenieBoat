@@ -53,7 +53,7 @@ class _CredrDropDownState extends State<CredrDropDown> {
             } else if (value == 'Light') {
               gctrl.darkThemeState(false);
             } else {
-              gctrl.darkThemeState(false);
+              gctrl.systemThemeState(true);
             }
           },
           buttonStyleData: ButtonStyleData(

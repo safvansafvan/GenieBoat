@@ -63,7 +63,7 @@ class _HomeViewState extends State<HomeView>
                   child: Row(
                     children: [
                       if (context.width > 748) const CustomLeftNavigation(),
-                      centerViewHandling(ctrl),
+                      if (context.width > 748) centerViewHandling(ctrl),
                       if (context.width > 968 && ctrl.allHistory.isNotEmpty)
                         const GenieHistory(),
                     ],
@@ -81,7 +81,7 @@ class _HomeViewState extends State<HomeView>
   Widget centerViewHandling(BoatChatCtrl ctrl) {
     switch (ctrl.bodyCurrentInd) {
       case 0:
-        return const Expanded(child: StartChatingView());
+        return const Expanded(child: ChatHelperWidget());
       case 1:
         return const Expanded(child: ChatHelperWidget());
       default:

@@ -3,16 +3,17 @@ import 'package:chatboat/view/splash/splash.dart';
 import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:chatboat/view_model/core/app_theme.dart';
 import 'package:chatboat/view_model/core/colors.dart';
-import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:chatboat/view_model/core/init_controllers.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   if (kIsWeb) {
     await FacebookAuth.i.webAndDesktopInitialize(
@@ -46,7 +47,9 @@ class MyApp extends StatelessWidget {
             //  colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: false,
             scaffoldBackgroundColor:
-                ctrl.isDarkTheme ? AppColors.blackColor : AppColors.whiteColor),
+                ctrl.isDarkTheme || (kIsWeb && ctrl.isSystemTheme)
+                    ? AppColors.blackColor
+                    : AppColors.whiteColor),
         initialRoute: '/',
         routes: {
           '/': (_) => const SplashView(),

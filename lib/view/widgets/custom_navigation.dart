@@ -6,6 +6,7 @@ import 'package:chatboat/view_model/controller/login_ctrl.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:chatboat/view_model/core/durations.dart';
 import 'package:chatboat/view_model/core/sizes.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../view_model/controller/globel_ctrl.dart';
@@ -21,6 +22,10 @@ class CustomLeftNavigation extends StatelessWidget {
       builder: (globelCtrl) {
         return SafeArea(
           child: Container(
+            decoration: BoxDecoration(
+                border: Border(
+              right: BorderSide(color: AppColors.bgColor),
+            )),
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             width: 210,
             child: Column(
@@ -101,7 +106,7 @@ class CustomLeftNavigation extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: globelCtrl.isChatHelper
                                   ? AppColors.bttnBg
-                                  : AppColors.blackColor,
+                                  : Colors.transparent,
                               borderRadius: AppSizes.radius10,
                             ),
                             child: ListTile(
@@ -122,7 +127,7 @@ class CustomLeftNavigation extends StatelessWidget {
                                 style: CustomFunctions.style(
                                     fontWeight: FontWeight.w500,
                                     size: 14,
-                                    color: AppColors.whiteColor),
+                                    color: globelCtrl.focusColor),
                               ),
                             ),
                           ),
@@ -134,7 +139,7 @@ class CustomLeftNavigation extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: globelCtrl.isSettings
                                   ? AppColors.bttnBg
-                                  : AppColors.blackColor,
+                                  : Colors.transparent,
                               borderRadius: AppSizes.radius10,
                             ),
                             child: ListTile(
@@ -156,7 +161,7 @@ class CustomLeftNavigation extends StatelessWidget {
                                 style: CustomFunctions.style(
                                     fontWeight: FontWeight.w500,
                                     size: 14,
-                                    color: AppColors.whiteColor),
+                                    color: globelCtrl.focusColor),
                               ),
                             ),
                           ),
