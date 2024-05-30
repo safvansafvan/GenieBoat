@@ -26,6 +26,7 @@ void phoneAuth(BuildContext context) {
     },
     builder: (context) {
       return AlertDialog(
+        backgroundColor: AppColors.whiteColor,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -35,10 +36,11 @@ void phoneAuth(BuildContext context) {
                   CustomFunctions.style(fontWeight: FontWeight.w600, size: 17),
             ),
             IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.close))
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.close, color: AppColors.black87),
+            )
           ],
         ),
         content: GetBuilder<LoginController>(

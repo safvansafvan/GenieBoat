@@ -79,10 +79,6 @@ class _HomeViewState extends State<HomeView>
   }
 
   Widget centerViewHandling(BoatChatCtrl ctrl) {
-    // bool value = bc.allHistory.isEmpty;
-    // if (value == true) {
-    //   ctrl.bodyCurrentIndState(1);
-    // }
     switch (ctrl.bodyCurrentInd) {
       case 0:
         return const Expanded(child: StartChatingView());

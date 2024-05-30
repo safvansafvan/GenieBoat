@@ -1,6 +1,5 @@
 import 'package:chatboat/view/widgets/celebration.dart';
 import 'package:chatboat/view/widgets/message_sender.dart';
-import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +13,9 @@ class StartChatingView extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.symmetric(vertical: context.isPhone ? 0 : 12),
         decoration: BoxDecoration(
-            color: !context.isPhone ? AppColors.whiteColor : Colors.transparent,
+            color: !context.isPhone
+                ? Theme.of(context).colorScheme.background
+                : Colors.transparent,
             borderRadius: !context.isPhone
                 ? const BorderRadius.only(
                     topLeft: Radius.circular(15),
@@ -32,7 +33,7 @@ class StartChatingView extends StatelessWidget {
               style: CustomFunctions.style(
                   fontWeight: FontWeight.bold,
                   size: 18,
-                  color: AppColors.blackColor),
+                  color: Theme.of(context).colorScheme.primary),
             ),
             const Spacer(),
             const Padding(
