@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
 
 class ThemeSetup {
   static AppBarTheme appBarTheme = AppBarTheme(
-      centerTitle: true, backgroundColor: AppColors.whiteColor, elevation: 0);
+      centerTitle: true,
+      backgroundColor: AppColors.whiteColor,
+      elevation: 0,
+      foregroundColor: AppColors.blackColor);
   static AppBarTheme appBarThemeDark = AppBarTheme(
-      centerTitle: true, backgroundColor: AppColors.blackColor, elevation: 0);
+      centerTitle: true,
+      backgroundColor: AppColors.blackColor,
+      elevation: 0,
+      foregroundColor: AppColors.whiteColor);
 
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
