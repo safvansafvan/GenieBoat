@@ -2,6 +2,7 @@ import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:chatboat/view/widgets/button_loading.dart';
 import 'package:chatboat/view/widgets/login_text_field.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
+import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:chatboat/view_model/core/durations.dart';
 import 'package:chatboat/view_model/controller/login_ctrl.dart';
@@ -25,6 +26,7 @@ void forgotPasswordDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
+        backgroundColor: AppColors.whiteColor,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -37,7 +39,7 @@ void forgotPasswordDialog(BuildContext context) {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: const Icon(Icons.close),
+              icon: Icon(Icons.close, color: AppColors.black87),
             )
           ],
         ),

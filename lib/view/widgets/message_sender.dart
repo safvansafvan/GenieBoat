@@ -3,6 +3,7 @@
 import 'package:chatboat/view/widgets/choose_image_source.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:chatboat/view_model/controller/boat_controller.dart';
+import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:chatboat/view_model/core/sizes.dart';
@@ -49,7 +50,7 @@ class GenieMessageSender extends StatelessWidget {
                     )
                   : null,
               borderRadius: AppSizes.radius10,
-              color: AppColors.bgColor,
+              color: Theme.of(context).colorScheme.inversePrimary,
             ),
             child: chatCtrl.selectedImage == null
                 ? Icon(Icons.upload_file, color: AppColors.blackColor)
@@ -90,32 +91,38 @@ class GenieMessageSender extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(
             vertical: 5, horizontal: context.isPhone ? 5 : 10),
-        child: TextField(
-          onTap: () {
-            FocusScope.of(context).requestFocus(focusNode);
-          },
-          focusNode: focusNode,
-          keyboardType: TextInputType.name,
-          cursorColor: AppColors.blackColor,
-          controller: chatCtrl.questionCtrl,
-          maxLength: null,
-          maxLines: null,
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.only(left: 20),
-            hintStyle: CustomFunctions.style(
+        child: GetBuilder<GlobleController>(builder: (ctrl) {
+          return TextField(
+            onTap: () {
+              FocusScope.of(context).requestFocus(focusNode);
+            },
+            focusNode: focusNode,
+            keyboardType: TextInputType.name,
+            cursorColor: AppColors.blackColor,
+            controller: chatCtrl.questionCtrl,
+            maxLength: null,
+            maxLines: null,
+            style: CustomFunctions.style(
                 fontWeight: FontWeight.w500,
                 size: 14,
                 color: AppColors.blackColor),
-            hintText: 'Message ChatGenie....',
-            fillColor: AppColors.bgColor,
-            enabled: true,
-            filled: true,
-            enabledBorder: OutlineInputBorder(
-                borderRadius: AppSizes.radius10, borderSide: BorderSide.none),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: AppSizes.radius10, borderSide: BorderSide.none),
-          ),
-        ),
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.only(left: 20),
+              hintStyle: CustomFunctions.style(
+                  fontWeight: FontWeight.w500,
+                  size: 14,
+                  color: AppColors.blackColor),
+              hintText: 'Message ChatGenie....',
+              fillColor: Theme.of(context).colorScheme.inversePrimary,
+              enabled: true,
+              filled: true,
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: AppSizes.radius10, borderSide: BorderSide.none),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: AppSizes.radius10, borderSide: BorderSide.none),
+            ),
+          );
+        }),
       ),
     );
   }

@@ -32,7 +32,7 @@ class CustomLeftNavigation extends StatelessWidget {
                     'ChatGenie',
                     style: CustomFunctions.style(
                         fontWeight: FontWeight.w500,
-                        size: 18,
+                        size: 15,
                         color: AppColors.whiteColor),
                   ),
                 ),
@@ -121,7 +121,7 @@ class CustomLeftNavigation extends StatelessWidget {
                                 maxLines: 1,
                                 style: CustomFunctions.style(
                                     fontWeight: FontWeight.w500,
-                                    size: 14,
+                                    size: 13,
                                     color: AppColors.whiteColor),
                               ),
                             ),
@@ -155,7 +155,7 @@ class CustomLeftNavigation extends StatelessWidget {
                                 maxLines: 1,
                                 style: CustomFunctions.style(
                                     fontWeight: FontWeight.w500,
-                                    size: 14,
+                                    size: 13,
                                     color: AppColors.whiteColor),
                               ),
                             ),
@@ -166,12 +166,7 @@ class CustomLeftNavigation extends StatelessWidget {
                     ? HistoryView(color: AppColors.whiteColor)
                     : const SizedBox(),
                 context.width > 968 ? const Spacer() : const SizedBox(),
-                Divider(
-                  color: AppColors.whiteColor.withAlpha(300),
-                  thickness: 1,
-                  indent: 10,
-                  endIndent: 10,
-                ),
+                const Divider(indent: 10, endIndent: 10),
                 AnimatedContainer(
                   duration: AppDurations.minDuration,
                   curve: Curves.decelerate,

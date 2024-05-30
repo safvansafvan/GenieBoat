@@ -32,7 +32,7 @@ class BoatTextFormFieldLogin extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 0),
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: 68),
+          constraints: const BoxConstraints(maxHeight: 68, minHeight: 50),
           child: Center(
             child: TextFormField(
               inputFormatters:

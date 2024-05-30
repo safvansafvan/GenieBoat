@@ -20,6 +20,7 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteColor,
       body: Stack(
         children: [
           Container(
@@ -146,13 +147,6 @@ class LoginView extends StatelessWidget {
                                             loginCtrl.isSignUpLoading
                                         ? const ButtonClickLoading()
                                         : ElevatedButton(
-                                            style: ButtonStyle(
-                                                shape: MaterialStatePropertyAll(
-                                                    RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            AppSizes.radius10)),
-                                                animationDuration:
-                                                    const Duration(seconds: 1)),
                                             onPressed: () async {
                                               await handleAuth(
                                                   loginCtrl, context);

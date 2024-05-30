@@ -1,5 +1,4 @@
 import 'package:aligned_dialog/aligned_dialog.dart';
-import 'package:chatboat/view/widgets/boat_drop_down.dart';
 import 'package:chatboat/view/widgets/bottom_sheet.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
@@ -51,23 +50,33 @@ settingsDialog(BuildContext context) {
                           gc.chatHelperState();
                           Navigator.pop(context);
                         },
-                        icon: const Icon(Icons.close),
+                        icon: Icon(
+                          Icons.close,
+                          color: AppColors.black87,
+                        ),
                       )
                     ],
                   ),
                 ),
                 const Divider(),
-                ListTile(
-                  title: Text(
-                    'Theme',
-                    style: CustomFunctions.style(
-                        fontWeight: FontWeight.w500, size: 16),
-                  ),
-                  trailing: const SizedBox(
-                    width: 150,
-                    child: CredrDropDown(hintText: 'Theme'),
-                  ),
-                ),
+                GetBuilder<GlobleController>(builder: (gc) {
+                  return ListTile(
+                    title: Text(
+                      'Theme',
+                      style: CustomFunctions.style(
+                          fontWeight: FontWeight.w500, size: 16),
+                    ),
+                    trailing: SizedBox(
+                      width: 150,
+                      child: Switch(
+                        value: gc.themeMode,
+                        onChanged: (value) {
+                          gc.toggleTheme(value);
+                        },
+                      ),
+                    ),
+                  );
+                }),
                 ListTile(
                   onTap: () {},
                   title: Text(
@@ -75,7 +84,10 @@ settingsDialog(BuildContext context) {
                     style: CustomFunctions.style(
                         fontWeight: FontWeight.w500, size: 16),
                   ),
-                  trailing: const Icon(Icons.arrow_forward_ios),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: AppColors.black87,
+                  ),
                 ),
                 ListTile(
                   onTap: () {},
@@ -84,7 +96,10 @@ settingsDialog(BuildContext context) {
                     style: CustomFunctions.style(
                         fontWeight: FontWeight.w500, size: 16),
                   ),
-                  trailing: const Icon(Icons.arrow_forward_ios),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: AppColors.black87,
+                  ),
                 ),
                 ListTile(
                   onTap: () {
@@ -95,7 +110,10 @@ settingsDialog(BuildContext context) {
                     style: CustomFunctions.style(
                         fontWeight: FontWeight.w500, size: 16),
                   ),
-                  trailing: const Icon(Icons.arrow_forward_ios),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: AppColors.black87,
+                  ),
                 ),
                 ListTile(
                   onTap: () {},
@@ -159,7 +177,7 @@ settingsDialog(BuildContext context) {
                     ),
                     trailing: IconButton(
                       onPressed: () {},
-                      icon: const Icon(Icons.logout),
+                      icon: Icon(Icons.logout, color: AppColors.black87),
                     ),
                   ),
                 ),

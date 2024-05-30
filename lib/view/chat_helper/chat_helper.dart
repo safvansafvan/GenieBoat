@@ -3,8 +3,6 @@ import 'package:chatboat/view/widgets/boat_animate.dart';
 import 'package:chatboat/view/widgets/lottie_view.dart';
 import 'package:chatboat/view/widgets/message_sender.dart';
 import 'package:chatboat/view_model/controller/boat_controller.dart';
-import 'package:chatboat/view_model/core/colors.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +19,7 @@ class ChatHelperWidget extends StatelessWidget {
         ),
         width: context.width - 460,
         decoration: BoxDecoration(
-          color: kIsWeb ? AppColors.whiteColor : null,
+          color: Theme.of(context).colorScheme.background,
           borderRadius: (context.width < 968)
               ? context.isPhone
                   ? null
