@@ -14,8 +14,9 @@ class BoatAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SizedBox(
+    return ColoredBox(
+      color: Theme.of(context).colorScheme.background,
+      child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: ListTile(
