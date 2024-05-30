@@ -66,14 +66,11 @@ settingsDialog(BuildContext context) {
                       style: CustomFunctions.style(
                           fontWeight: FontWeight.w500, size: 16),
                     ),
-                    trailing: SizedBox(
-                      width: 150,
-                      child: Switch(
-                        value: gc.themeMode,
-                        onChanged: (value) {
-                          gc.toggleTheme(value);
-                        },
-                      ),
+                    trailing: Switch(
+                      value: gc.themeMode,
+                      onChanged: (value) {
+                        gc.toggleTheme(value);
+                      },
                     ),
                   );
                 }),
