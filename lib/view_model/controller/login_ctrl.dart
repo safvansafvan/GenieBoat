@@ -174,8 +174,12 @@ class LoginController extends GetxController {
       UserCredential credential = await auth.createUserWithEmailAndPassword(
           email: emailCtrl.text, password: passworldCtrl.text);
       await UserFirestoreRes().addUserToFirestore(
-        model: UserModel(emailCtrl.text, userNameCtrl.text,
-            credential.user?.uid, DateTime.now().toString(), null),
+        model: UserModel(
+            email: emailCtrl.text,
+            name: userNameCtrl.text,
+            uid: credential.user?.uid,
+            datetime: DateTime.now().toString(),
+            url: null),
       );
 
       isSignUpLoading = false;

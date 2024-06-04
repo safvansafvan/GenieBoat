@@ -86,18 +86,7 @@ class BoatChatCtrl extends GetxController {
         Get.back();
         update();
       }
-    }
-    // else {
-    //   if (kIsWeb) {
-    //     log('message');
-    //     XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    //     if (image != null) {
-    //       var f = await image.readAsBytes();
-    //       selectedImage = f;
-    //       update();
-    //     }
-    //   }
-    else {
+    } else {
       final XFile? gfile = await picker.pickImage(source: ImageSource.gallery);
       if (gfile != null) {
         selectedImage = await gfile.readAsBytes();

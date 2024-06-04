@@ -1,4 +1,5 @@
 import 'package:aligned_dialog/aligned_dialog.dart';
+import 'package:chatboat/view/profile/profile_view.dart';
 import 'package:chatboat/view/widgets/bottom_sheet.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
@@ -156,6 +157,12 @@ settingsDialog(BuildContext context) {
                   padding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   child: ListTile(
+                    onTap: () {
+                      Get.off(() => const ProfileView(),
+                          curve: Curves.easeInOut,
+                          duration: const Duration(milliseconds: 400),
+                          transition: Transition.zoom);
+                    },
                     shape: OutlineInputBorder(
                         borderRadius: AppSizes.radius10,
                         borderSide: BorderSide.none),
@@ -169,7 +176,7 @@ settingsDialog(BuildContext context) {
                       maxLines: 1,
                       style: CustomFunctions.style(
                           fontWeight: FontWeight.w500,
-                          size: 12,
+                          size: 13,
                           color: AppColors.blackColor),
                     ),
                     trailing: IconButton(

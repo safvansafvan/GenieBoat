@@ -19,7 +19,7 @@ class GlobleController extends GetxController {
       StorageUtil.insertData('theme_mode', true);
       log('DARK THEME $themeMode');
     } else {
-      StorageUtil.insertData('theme_mode', true);
+      StorageUtil.insertData('theme_mode', false);
       log('LIGHT THEME $themeMode');
     }
     update();
