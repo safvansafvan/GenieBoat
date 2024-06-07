@@ -18,7 +18,7 @@ class GenieHistory extends StatelessWidget {
           width: 210,
           decoration: BoxDecoration(
             color: ctrl.themeMode
-                ? Theme.of(context).colorScheme.background
+                ? Theme.of(context).colorScheme.surface
                 : Theme.of(context).colorScheme.secondary,
             borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(15),

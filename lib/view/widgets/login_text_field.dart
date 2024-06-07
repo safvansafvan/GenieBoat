@@ -54,7 +54,7 @@ class BoatTextFormFieldLogin extends StatelessWidget {
                 label: Text(label),
                 labelStyle: CustomFunctions.style(
                     fontWeight: FontWeight.w500,
-                    size: 18,
+                    size: 14,
                     color: AppColors.greyColor),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),

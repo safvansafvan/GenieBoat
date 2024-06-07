@@ -1,6 +1,7 @@
 import 'package:chatboat/firebase_options.dart';
 import 'package:chatboat/view/auth/auth.dart';
 import 'package:chatboat/view/home/home.dart';
+import 'package:chatboat/view/profile/profile_view.dart';
 import 'package:chatboat/view/splash/splash.dart';
 import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:chatboat/view_model/core/init_controllers.dart';
@@ -38,10 +39,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeSetup.lightTheme,
         darkTheme: ThemeSetup.darkTheme,
         themeMode: ctrl.themeMode ? ThemeMode.dark : ThemeMode.light,
-        title: 'Chat Boat',
+        title: 'Chat Genie',
         initialRoute: '/',
         routes: {
-          '/': (_) => const SplashView(),
+          '/': (_) => const ProfileView(),
           '/LoginView': (_) => const LoginView(),
           '/HomeView': (_) => const HomeView(),
         },

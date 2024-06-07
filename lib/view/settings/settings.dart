@@ -1,6 +1,8 @@
 import 'package:aligned_dialog/aligned_dialog.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatboat/view/profile/profile_view.dart';
 import 'package:chatboat/view/widgets/bottom_sheet.dart';
+import 'package:chatboat/view_model/controller/profile_controller.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:chatboat/view_model/core/durations.dart';
@@ -62,10 +64,11 @@ settingsDialog(BuildContext context) {
                 const Divider(),
                 GetBuilder<GlobleController>(builder: (gc) {
                   return ListTile(
+                    minVerticalPadding: 0,
                     title: Text(
                       'Theme',
                       style: CustomFunctions.style(
-                          fontWeight: FontWeight.w500, size: 16),
+                          fontWeight: FontWeight.w500, size: 14),
                     ),
                     trailing: Switch(
                       value: gc.themeMode,
@@ -76,11 +79,12 @@ settingsDialog(BuildContext context) {
                   );
                 }),
                 ListTile(
+                  minVerticalPadding: 0,
                   onTap: () {},
                   title: Text(
                     'Privacy & Policy',
                     style: CustomFunctions.style(
-                        fontWeight: FontWeight.w500, size: 16),
+                        fontWeight: FontWeight.w500, size: 14),
                   ),
                   trailing: Icon(
                     Icons.arrow_forward_ios,
@@ -88,11 +92,12 @@ settingsDialog(BuildContext context) {
                   ),
                 ),
                 ListTile(
+                  minVerticalPadding: 0,
                   onTap: () {},
                   title: Text(
                     'About',
                     style: CustomFunctions.style(
-                        fontWeight: FontWeight.w500, size: 16),
+                        fontWeight: FontWeight.w500, size: 14),
                   ),
                   trailing: Icon(
                     Icons.arrow_forward_ios,
@@ -100,13 +105,14 @@ settingsDialog(BuildContext context) {
                   ),
                 ),
                 ListTile(
+                  minVerticalPadding: 0,
                   onTap: () {
                     ratingBottomSheet(context, gc.animationController);
                   },
                   title: Text(
                     'Rating',
                     style: CustomFunctions.style(
-                        fontWeight: FontWeight.w500, size: 16),
+                        fontWeight: FontWeight.w500, size: 14),
                   ),
                   trailing: Icon(
                     Icons.arrow_forward_ios,
@@ -114,22 +120,24 @@ settingsDialog(BuildContext context) {
                   ),
                 ),
                 ListTile(
+                  minVerticalPadding: 0,
                   onTap: () {},
                   title: Text(
                     'Delete Account',
                     style: CustomFunctions.style(
                         fontWeight: FontWeight.w500,
-                        size: 16,
+                        size: 14,
                         color: AppColors.redColor),
                   ),
                   trailing:
                       Icon(Icons.arrow_forward_ios, color: AppColors.redColor),
                 ),
                 ListTile(
+                  minVerticalPadding: 0,
                   title: Text(
                     'Clear History',
                     style: CustomFunctions.style(
-                        fontWeight: FontWeight.w500, size: 16),
+                        fontWeight: FontWeight.w500, size: 14),
                   ),
                   trailing: InkWell(
                     onTap: () {},
@@ -156,34 +164,41 @@ settingsDialog(BuildContext context) {
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  child: ListTile(
-                    onTap: () {
-                      Get.off(() => const ProfileView(),
-                          curve: Curves.easeInOut,
-                          duration: const Duration(milliseconds: 400),
-                          transition: Transition.zoom);
-                    },
-                    shape: OutlineInputBorder(
-                        borderRadius: AppSizes.radius10,
-                        borderSide: BorderSide.none),
-                    minLeadingWidth: 0,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 2),
-                    horizontalTitleGap: 10,
-                    leading: const CircleAvatar(radius: 20),
-                    title: Text(
-                      'Muhammed Safvan',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: CustomFunctions.style(
-                          fontWeight: FontWeight.w500,
-                          size: 13,
-                          color: AppColors.blackColor),
-                    ),
-                    trailing: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.logout, color: AppColors.black87),
-                    ),
-                  ),
+                  child: GetBuilder<ProfileCtrl>(builder: (pc) {
+                    return ListTile(
+                      onTap: () {
+                        gc.chatHelperState();
+                        Get.off(() => const ProfileView(),
+                            curve: Curves.easeInOut,
+                            duration: const Duration(milliseconds: 400),
+                            transition: Transition.zoom);
+                      },
+                      shape: OutlineInputBorder(
+                          borderRadius: AppSizes.radius10,
+                          borderSide: BorderSide.none),
+                      minLeadingWidth: 0,
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 2),
+                      horizontalTitleGap: 10,
+                      leading: CircleAvatar(
+                        radius: 20,
+                        backgroundImage:
+                            CachedNetworkImageProvider(pc.profileDownloadedUrl),
+                      ),
+                      title: Text(
+                        pc.nameController.text,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: CustomFunctions.style(
+                            fontWeight: FontWeight.w500,
+                            size: 13,
+                            color: AppColors.blackColor),
+                      ),
+                      trailing: IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.logout, color: AppColors.black87),
+                      ),
+                    );
+                  }),
                 ),
               ],
             ),

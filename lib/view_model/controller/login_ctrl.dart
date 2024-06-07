@@ -12,6 +12,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 class LoginController extends GetxController {
@@ -178,8 +179,10 @@ class LoginController extends GetxController {
             email: emailCtrl.text,
             name: userNameCtrl.text,
             uid: credential.user?.uid,
-            datetime: DateTime.now().toString(),
-            url: null),
+            datetime: DateFormat.yMMMMEEEEd().format(DateTime.now()),
+            url: '',
+            lastUpdated: '',
+            number: ''),
       );
 
       isSignUpLoading = false;

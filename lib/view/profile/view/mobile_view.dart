@@ -1,8 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chatboat/view/profile/view/widget/update_bttn.dart';
 import 'package:chatboat/view/widgets/boat_text_field.dart';
 import 'package:chatboat/view/widgets/choose_image_source.dart';
 import 'package:chatboat/view_model/controller/profile_controller.dart';
 import 'package:chatboat/view_model/core/colors.dart';
-import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:chatboat/view_model/core/durations.dart';
 import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
@@ -45,22 +46,11 @@ class MobileViewProfile extends StatelessWidget {
                           clipBehavior: Clip.none,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(top: 15),
-                              child: pCtrl.selectedProfileImg == null
-                                  ? const CircleAvatar(
-                                      radius: 40,
-                                      backgroundImage: AssetImage(
-                                          'assets/images/person.jpg'),
-                                    )
-                                  : CircleAvatar(
-                                      radius: 40,
-                                      backgroundImage: MemoryImage(
-                                          pCtrl.selectedProfileImg!),
-                                    ),
-                            ),
+                                padding: const EdgeInsets.only(top: 15),
+                                child: profileView(pCtrl)),
                             Positioned(
                               top: 15,
-                              right: 0,
+                              right: 7,
                               child: GestureDetector(
                                 onTap: () {
                                   chooseImageSource(
@@ -80,31 +70,29 @@ class MobileViewProfile extends StatelessWidget {
                       },
                     ),
                     AppSizes.height20,
-                    BoatTextField(controller: pc.nameController, label: 'Name'),
                     BoatTextField(
-                        controller: pc.emailController, label: 'Email'),
+                        controller: pc.nameController,
+                        label: 'Name',
+                        isName: true),
                     BoatTextField(
-                        controller: pc.numberController, label: 'Number'),
+                        controller: pc.emailController,
+                        label: 'Email',
+                        isEmail: true),
+                    BoatTextField(
+                        controller: pc.numberController,
+                        label: 'Number',
+                        isNumber: true),
+                    BoatTextField(
+                      controller: pc.createdCtrl,
+                      label: 'Created Date',
+                    ),
+                    if (pc.updatedCtrl.text.isNotEmpty)
+                      BoatTextField(
+                        controller: pc.updatedCtrl,
+                        label: 'Updated Date',
+                      ),
                     const SizedBox(height: 20),
-                    AnimatedContainer(
-                      margin: const EdgeInsets.only(bottom: 15),
-                      duration: AppDurations.boatDuration,
-                      height: 40,
-                      width: context.width / 2,
-                      decoration: BoxDecoration(
-                        color: AppColors.button,
-                        borderRadius: AppSizes.radius10,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'UPDATE',
-                          style: CustomFunctions.style(
-                              fontWeight: FontWeight.w600,
-                              size: 14,
-                              color: AppColors.whiteColor),
-                        ),
-                      ),
-                    )
+                    const UpdateButton(),
                   ],
                 ),
               ),
@@ -113,5 +101,27 @@ class MobileViewProfile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget profileView(ProfileCtrl pc) {
+    if (pc.profileDownloadedUrl.isNotEmpty) {
+      return CircleAvatar(
+        radius: 50,
+        backgroundImage: CachedNetworkImageProvider(pc.profileDownloadedUrl),
+      );
+    }
+    if (pc.selectedProfileImg == null && pc.selectedProfileImg == null) {
+      return const CircleAvatar(
+        radius: 50,
+        backgroundImage: AssetImage('assets/images/person.jpg'),
+      );
+    }
+    if (pc.selectedProfileImg != null) {
+      return CircleAvatar(
+        radius: 50,
+        backgroundImage: MemoryImage(pc.selectedProfileImg!),
+      );
+    }
+    return const SizedBox();
   }
 }

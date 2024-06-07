@@ -13,7 +13,7 @@ class StartChatingView extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.symmetric(vertical: context.isPhone ? 0 : 12),
         decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: !context.isPhone
                 ? const BorderRadius.only(
                     topLeft: Radius.circular(15),

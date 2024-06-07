@@ -26,7 +26,7 @@ class BoatChatDataWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: AppSizes.radius10,
           gradient: RadialGradient(
             center: Alignment.topLeft,
