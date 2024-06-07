@@ -30,7 +30,7 @@ class ThemeSetup {
     dividerTheme: DividerThemeData(color: AppColors.divider),
     appBarTheme: appBarTheme,
     colorScheme: ColorScheme.light(
-        background: AppColors.whiteColor,
+        surface: AppColors.whiteColor,
         primary: AppColors.blackColor,
         secondary: const Color.fromARGB(246, 255, 255, 255),
         inversePrimary: AppColors.bgColor),
@@ -43,7 +43,7 @@ class ThemeSetup {
     elevatedButtonTheme: ElevatedButtonThemeData(style: buttonStyle),
     appBarTheme: appBarThemeDark,
     colorScheme: ColorScheme.dark(
-        background: AppColors.blackColor,
+        surface: AppColors.blackColor,
         primary: AppColors.whiteColor,
         secondary: AppColors.whiteColor,
         inversePrimary: AppColors.whiteColor),
@@ -60,13 +60,13 @@ class ThemeSetup {
   );
 
   static SwitchThemeData switchTheme = SwitchThemeData(
-    overlayColor: MaterialStatePropertyAll(AppColors.blueColor),
+    overlayColor: WidgetStatePropertyAll(AppColors.blueColor),
     splashRadius: 1,
-    trackColor: MaterialStatePropertyAll(AppColors.bgColor),
-    trackOutlineColor: MaterialStatePropertyAll(AppColors.bgColor),
-    mouseCursor: MaterialStateMouseCursor.clickable,
+    trackColor: WidgetStatePropertyAll(AppColors.bgColor),
+    trackOutlineColor: WidgetStatePropertyAll(AppColors.bgColor),
+    mouseCursor: WidgetStateMouseCursor.clickable,
     materialTapTargetSize: MaterialTapTargetSize.padded,
-    thumbIcon: const MaterialStatePropertyAll(Icon(Icons.dark_mode)),
-    thumbColor: MaterialStatePropertyAll(AppColors.button),
+    thumbIcon: const WidgetStatePropertyAll(Icon(Icons.dark_mode)),
+    thumbColor: WidgetStatePropertyAll(AppColors.button),
   );
 }

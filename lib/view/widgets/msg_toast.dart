@@ -17,6 +17,7 @@ void boatSnackBar(
           BoxShadow(
               color: AppColors.greyColor, blurRadius: 0.2, spreadRadius: 0.5)
         ],
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         backgroundColor: AppColors.whiteColor,
         borderWidth: 0.5,

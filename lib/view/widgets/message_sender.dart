@@ -33,8 +33,8 @@ class GenieMessageSender extends StatelessWidget {
 
   Widget _buildImageSelector(BuildContext context, BoatChatCtrl chatCtrl) {
     return GestureDetector(
-      onTap: () async {
-        await chooseImageSource(context);
+      onTap: () {
+        chooseImageSource(context: context);
       },
       child: Stack(
         clipBehavior: Clip.none,

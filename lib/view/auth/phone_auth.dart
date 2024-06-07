@@ -65,7 +65,7 @@ void phoneAuth(BuildContext context) {
                     ? const ButtonClickLoading()
                     : ElevatedButton(
                         style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
+                            backgroundColor: WidgetStatePropertyAll(
                                 loginC.isVerifyLoading == false &&
                                         loginC.otpCtrl.text.length > 5
                                     ? Colors.deepPurple

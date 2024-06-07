@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/controller/globel_ctrl.dart';
+import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,11 @@ ratingBottomSheet(
     BuildContext context, AnimationController animationController) {
   final gctrl = Get.find<GlobleController>();
   return showModalBottomSheet(
+    backgroundColor: AppColors.whiteColor,
+    barrierColor: Colors.transparent,
+    shape: RoundedRectangleBorder(borderRadius: AppSizes.radius10),
     transitionAnimationController: animationController,
+    constraints: BoxConstraints(minWidth: context.width),
     context: context,
     builder: (context) {
       return Padding(
@@ -59,7 +64,7 @@ ratingBottomSheet(
                       message: 'Thanks For Your Rating');
                 },
                 child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
                   child: Text('Submit'),
                 ),
               ),

@@ -19,7 +19,7 @@ class ChatHelperWidget extends StatelessWidget {
         ),
         width: context.width - 460,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: (context.width < 968)
               ? context.isPhone
                   ? null

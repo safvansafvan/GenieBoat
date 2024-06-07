@@ -6,6 +6,7 @@ import 'package:chatboat/view/widgets/celebration.dart';
 import 'package:chatboat/view/widgets/custom_navigation.dart';
 import 'package:chatboat/view/widgets/menu_drawer.dart';
 import 'package:chatboat/view_model/controller/boat_controller.dart';
+import 'package:chatboat/view_model/controller/profile_controller.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:confetti/confetti.dart';
@@ -23,6 +24,7 @@ class _HomeViewState extends State<HomeView>
     with SingleTickerProviderStateMixin {
   final gctrl = Get.find<GlobleController>();
   final bc = Get.find<BoatChatCtrl>();
+  final pc = Get.find<ProfileCtrl>();
 
   @override
   void initState() {
@@ -33,6 +35,8 @@ class _HomeViewState extends State<HomeView>
     gctrl.controllerTopCenter =
         ConfettiController(duration: const Duration(seconds: 4));
     bc.getHistoryFirestore();
+
+    pc.getUsersDetailsForProfile();
     super.initState();
   }
 
@@ -81,7 +85,7 @@ class _HomeViewState extends State<HomeView>
   Widget centerViewHandling(BoatChatCtrl ctrl) {
     switch (ctrl.bodyCurrentInd) {
       case 0:
-        return const Expanded(child: StartChatingView());
+        return const Expanded(child: ChatHelperWidget());
       case 1:
         return const Expanded(child: ChatHelperWidget());
       default:

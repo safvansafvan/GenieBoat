@@ -33,6 +33,9 @@ dependencies:
   lottie: ^3.1.1
   flutter_staggered_animations: ^1.1.1
   get_storage: ^2.1.1
+  firebase_storage: ^11.7.7
+  cached_network_image: ^3.2.0
+  flutter_cors: ^1.5.0
 
 dev_dependencies:
   flutter_test:
@@ -42,7 +45,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
   assets:
     - assets/gif/
     - assets/images/

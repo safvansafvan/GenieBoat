@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeSetup.lightTheme,
         darkTheme: ThemeSetup.darkTheme,
         themeMode: ctrl.themeMode ? ThemeMode.dark : ThemeMode.light,
-        title: 'Chat Boat',
+        title: 'Chat Genie',
         initialRoute: '/',
         routes: {
           '/': (_) => const SplashView(),
