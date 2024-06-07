@@ -92,6 +92,7 @@ class BoatChatDataWidget extends StatelessWidget {
                           color: AppColors.whiteColor,
                           size: 15,
                         ),
+                        AppSizes.width10,
                         Text(
                           'Copy Text',
                           style: CustomFunctions.style(
@@ -106,16 +107,6 @@ class BoatChatDataWidget extends StatelessWidget {
               ),
             ),
             const Divider(),
-            isLastIndex && ctrl.isLoadingNew
-                ? AnimatedTextKitWidget(textV: dataSet.ans ?? "")
-                : Text(
-                    dataSet.ans ?? "",
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15),
-                  ),
-            AppSizes.height10,
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -138,7 +129,16 @@ class BoatChatDataWidget extends StatelessWidget {
                   maxLines: null,
                 ),
               ),
-            )
+            ),
+            isLastIndex && ctrl.isLoadingNew
+                ? AnimatedTextKitWidget(textV: dataSet.ans ?? "")
+                : Text(
+                    dataSet.ans ?? "",
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15),
+                  ),
           ],
         ),
       );

@@ -1,7 +1,6 @@
 import 'package:chatboat/firebase_options.dart';
 import 'package:chatboat/view/auth/auth.dart';
 import 'package:chatboat/view/home/home.dart';
-import 'package:chatboat/view/profile/profile_view.dart';
 import 'package:chatboat/view/splash/splash.dart';
 import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:chatboat/view_model/core/init_controllers.dart';
@@ -42,7 +41,7 @@ class MyApp extends StatelessWidget {
         title: 'Chat Genie',
         initialRoute: '/',
         routes: {
-          '/': (_) => const ProfileView(),
+          '/': (_) => const SplashView(),
           '/LoginView': (_) => const LoginView(),
           '/HomeView': (_) => const HomeView(),
         },
