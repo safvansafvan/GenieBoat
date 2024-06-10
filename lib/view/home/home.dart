@@ -85,7 +85,7 @@ class _HomeViewState extends State<HomeView>
   Widget centerViewHandling(BoatChatCtrl ctrl) {
     switch (ctrl.bodyCurrentInd) {
       case 0:
-        return const Expanded(child: ChatHelperWidget());
+        return const Expanded(child: StartChatingView());
       case 1:
         return const Expanded(child: ChatHelperWidget());
       default:

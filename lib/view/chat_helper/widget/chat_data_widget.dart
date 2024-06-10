@@ -135,7 +135,7 @@ class BoatChatDataWidget extends StatelessWidget {
                 : Text(
                     dataSet.ans ?? "",
                     style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.w500,
                         fontSize: 15),
                   ),

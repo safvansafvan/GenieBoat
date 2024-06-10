@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:typed_data';
-
 import 'package:chatboat/model/edit_user_model.dart';
 import 'package:chatboat/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -47,5 +46,10 @@ class UserFirestoreRes {
     User? user = auth.currentUser;
     await firestore.collection('users').doc(user?.uid).set(model.toJson());
     log('CURRENT USER DETAILS UPDATED');
+  }
+
+  Future<void> deleteUserCollection() async {
+    User? user = auth.currentUser;
+    FirebaseFirestore.instance.collection('users').doc(user?.uid).delete();
   }
 }

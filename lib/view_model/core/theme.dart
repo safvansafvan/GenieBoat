@@ -59,6 +59,16 @@ class ThemeSetup {
     ),
   );
 
+  static ButtonStyle redButtonStyle = ElevatedButton.styleFrom(
+    backgroundColor: AppColors.redColor,
+    foregroundColor: AppColors.whiteColor,
+    animationDuration: AppDurations.boatDuration,
+    elevation: 5,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+  );
+
   static SwitchThemeData switchTheme = SwitchThemeData(
     overlayColor: WidgetStatePropertyAll(AppColors.blueColor),
     splashRadius: 1,

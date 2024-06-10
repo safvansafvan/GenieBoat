@@ -112,7 +112,6 @@ class LoginView extends StatelessWidget {
                                   isUsername: true,
                                   inputType: TextInputType.emailAddress,
                                 ),
-                                AppSizes.minHeight,
                                 BoatTextFormFieldLogin(
                                   controller: loginCtrl.passworldCtrl,
                                   label: 'Password',
@@ -290,7 +289,7 @@ class LoginView extends StatelessWidget {
               ?.then((value) => ctrl.clearControllers());
         } else {
           boatSnackBar(
-              message: 'Something Wrong', text: 'Failed', ctx: context);
+              message: 'Something Went Wrong', text: 'Failed', ctx: context);
         }
       }
     }
