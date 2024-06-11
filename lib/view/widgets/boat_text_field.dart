@@ -21,7 +21,7 @@ class BoatTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 5),
       child: SizedBox(
         height: 45,
         child: Center(

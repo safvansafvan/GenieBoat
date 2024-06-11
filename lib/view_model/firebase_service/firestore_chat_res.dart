@@ -16,7 +16,7 @@ class FireStoreRes {
         .collection('historys')
         .doc(model.id)
         .set(model.toJson());
-    log('Historys List To added Values');
+    log('HISTORY LIST TO ADDED VALUE');
   }
 
   Future<List<FirestoreModel>> getHistoryFromFireStore() async {
@@ -35,9 +35,8 @@ class FireStoreRes {
             date: data['date'],
             time: data['time']),
       );
-
-      log('Fetched Values From firestore cloud ${allHistory.length}');
     }
+    log('FETCHED VALUES FROM FIRESTORE ${allHistory.length}');
     return allHistory;
   }
 
@@ -47,5 +46,17 @@ class FireStoreRes {
         .doc(userId)
         .collection('historys')
         .get();
+  }
+
+  Future<void> deleteCollection() async {
+    User? user = auth.currentUser;
+    final collectionRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user?.uid)
+        .collection('historys');
+    var snapshots = await collectionRef.get();
+    for (var doc in snapshots.docs) {
+      await doc.reference.delete();
+    }
   }
 }

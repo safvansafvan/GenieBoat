@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'package:chatboat/model/firestore_model.dart';
+import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:chatboat/view_model/firebase_service/firestore_chat_res.dart';
+import 'package:chatboat/view_model/storage/get_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -20,6 +22,7 @@ class BoatChatCtrl extends GetxController {
   String currentDate = '';
   String currentTime = '';
   bool isLoadingNew = false;
+  bool isClearHistory = false;
   var uuid = const Uuid();
   Uint8List? selectedImage;
 
@@ -52,6 +55,7 @@ class BoatChatCtrl extends GetxController {
           time: currentTime,
         ),
       );
+      StorageUtil.insertData('doc_key', id);
       await getHistoryFirestore();
     } catch (e) {
       log(e.toString());
@@ -68,6 +72,33 @@ class BoatChatCtrl extends GetxController {
       update();
     } catch (e) {
       log(e.toString());
+    }
+  }
+
+  Future<void> clearHistory(context) async {
+    isClearHistory = true;
+
+    try {
+      await FireStoreRes().deleteCollection().then((_) async {
+        await getHistoryFirestore();
+      });
+      if (allHistory.isEmpty) {
+        bodyCurrentInd = 0;
+        boatSnackBar(
+            text: 'Success',
+            message: 'All Historys Deleted',
+            ctx: context,
+            isSuccess: true);
+      }
+    } catch (e) {
+      boatSnackBar(
+          text: 'Error',
+          message: 'Genie Clear History Failed',
+          ctx: context,
+          isSuccess: false);
+    } finally {
+      isClearHistory = false;
+      update();
     }
   }
 
@@ -98,7 +129,6 @@ class BoatChatCtrl extends GetxController {
 
   void clearSelectedImage() {
     selectedImage = null;
-
     update();
   }
 }

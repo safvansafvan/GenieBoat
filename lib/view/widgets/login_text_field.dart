@@ -48,7 +48,7 @@ class BoatTextFormFieldLogin extends StatelessWidget {
               decoration: InputDecoration(
                 errorStyle: CustomFunctions.style(
                     fontWeight: FontWeight.w500,
-                    size: 14,
+                    size: 10,
                     color: AppColors.redColor),
                 suffixIcon: suffixWidget(loginCtrl, context),
                 label: Text(label),

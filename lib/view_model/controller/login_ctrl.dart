@@ -5,6 +5,7 @@ import 'package:chatboat/model/user_model.dart';
 import 'package:chatboat/view/auth/auth.dart';
 import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
+import 'package:chatboat/view_model/firebase_service/auth_service.dart';
 import 'package:chatboat/view_model/firebase_service/firestore_user_res.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,6 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
-import 'package:uuid/uuid.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailCtrl = TextEditingController();
@@ -26,7 +26,6 @@ class LoginController extends GetxController {
   bool obscurePassword = true;
   bool isSignUp = false;
   User? user;
-  var uuid = const Uuid();
 
   void obscureState() {
     obscurePassword = !obscurePassword;
@@ -54,25 +53,14 @@ class LoginController extends GetxController {
     update();
     log(numberCtrl.text, name: isVerifyLoading.toString());
     try {
-      await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: countryCode + numberCtrl.text,
-        codeSent: (String verificationId, int? resendToken) {
-          verifyId = verificationId;
-          update();
-        },
-        verificationCompleted: (PhoneAuthCredential credential) {},
-        verificationFailed: (FirebaseAuthException e) {
-          log(e.toString(), name: 'Failed');
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {},
-      );
-      isVerifyLoading = false;
-      update();
+      verifyId = await AuthServices.verifyPhoneNumService(
+          countryCode, numberCtrl.text);
     } catch (e) {
       log(e.toString());
+    } finally {
+      isVerifyLoading = false;
+      update();
     }
-    isVerifyLoading = false;
-    update();
   }
 
   bool isOtpVerification = false;
@@ -101,6 +89,7 @@ class LoginController extends GetxController {
     numberCtrl.clear();
     otpCtrl.clear();
   }
+  // -end
 
   Future<void> signInWithGoogle({required BuildContext context}) async {
     User? user;
@@ -121,9 +110,13 @@ class LoginController extends GetxController {
 
         user = userCredential.user;
         if (user != null) {
-          await Get.off(() => const HomeView());
+          Get.off(() => const HomeView(),
+              curve: Curves.easeInOut,
+              duration: const Duration(milliseconds: 400),
+              transition: Transition.zoom);
         } else {
-          boatSnackBar(text: 'Error', message: 'Something Wrong', ctx: context);
+          boatSnackBar(
+              text: 'Error', message: 'Something Went Wrong', ctx: context);
         }
       } on FirebaseAuthException catch (e) {
         log(e.toString());
@@ -148,7 +141,7 @@ class LoginController extends GetxController {
     }
   }
 
-// logout
+// -------------------------------------------------logout----------------------------------------------------
   Future<void> logout(context) async {
     try {
       await FirebaseAuth.instance.signOut();
@@ -166,14 +159,14 @@ class LoginController extends GetxController {
     }
   }
 
-  ///*************************** singup with email and password *********************************
+  ///*************************** singup with email and password ***********************************************
   bool isSignUpLoading = false;
   Future<User?> signUpWithEmailAndPassword(BuildContext ctx) async {
     isSignUpLoading = true;
     update();
     try {
-      UserCredential credential = await auth.createUserWithEmailAndPassword(
-          email: emailCtrl.text, password: passworldCtrl.text);
+      UserCredential credential =
+          await AuthServices.signUP(emailCtrl.text, passworldCtrl.text);
       await UserFirestoreRes().addUserToFirestore(
         model: UserModel(
             email: emailCtrl.text,
@@ -184,23 +177,19 @@ class LoginController extends GetxController {
             lastUpdated: '',
             number: ''),
       );
-
-      isSignUpLoading = false;
-      update();
-      passworldCtrl.clear();
-      emailCtrl.clear();
-      userNameCtrl.clear();
+      clearControllers();
       boatSnackBar(
-          message: 'SignUp SuccessFully',
+          message: 'SignUp Successfully',
           text: 'Succeed',
           isSuccess: true,
           ctx: ctx);
       return credential.user;
     } catch (e) {
       log(e.toString());
+    } finally {
+      isSignUpLoading = false;
+      update();
     }
-    isSignUpLoading = false;
-    update();
     return null;
   }
 
@@ -210,10 +199,8 @@ class LoginController extends GetxController {
     isSignInLoading = true;
     update();
     try {
-      UserCredential credential = await auth.signInWithEmailAndPassword(
-          email: emailCtrl.text, password: passworldCtrl.text);
-      isSignInLoading = false;
-      update();
+      UserCredential credential =
+          await AuthServices.signIN(emailCtrl.text, passworldCtrl.text);
       passworldCtrl.clear();
       emailCtrl.clear();
       boatSnackBar(
@@ -224,9 +211,10 @@ class LoginController extends GetxController {
       return credential.user;
     } catch (e) {
       log(e.toString());
+    } finally {
+      isSignInLoading = false;
+      update();
     }
-    isSignInLoading = false;
-    update();
     return null;
   }
 
@@ -237,24 +225,21 @@ class LoginController extends GetxController {
     isForgotLoading = true;
     update();
     try {
-      await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: forgotEmailCtrl.text)
-          .then((value) {
+      AuthServices.forgotPassword(emailCtrl.text).then((value) {
         Navigator.pop(context);
         forgotEmailCtrl.clear();
-        isForgotLoading = false;
         boatSnackBar(
             message: 'Check Email Inbox',
             text: 'Succeed',
             isSuccess: true,
             ctx: context);
-        update();
       });
     } catch (e) {
       log(e.toString());
+    } finally {
+      isForgotLoading = false;
+      update();
     }
-    isForgotLoading = false;
-    update();
   }
 
   Future<void> facebookAuth() async {
@@ -264,6 +249,28 @@ class LoginController extends GetxController {
           FacebookAuthProvider.credential(result.accessToken!.token);
       FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
       await Get.off(() => const HomeView());
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+//----------------------------------------Delete account-----------------------------------------------------
+  Future<void> deleteAccount(context) async {
+    try {
+      log('CALLED DELETE ACCOUNT ');
+      bool status = await AuthServices.deleteUserAccount();
+      if (status) {
+        await UserFirestoreRes().deleteUserCollection();
+        Get.offAll(() => const LoginView(),
+            curve: Curves.easeInOut,
+            duration: const Duration(milliseconds: 400),
+            transition: Transition.zoom);
+      } else {
+        boatSnackBar(
+            text: 'Error',
+            message: 'Just Now You Create Account',
+            ctx: context);
+      }
     } catch (e) {
       log(e.toString());
     }

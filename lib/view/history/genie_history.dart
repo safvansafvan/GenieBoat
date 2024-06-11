@@ -1,5 +1,7 @@
 import 'package:chatboat/view/widgets/boat_animate.dart';
+import 'package:chatboat/view/widgets/button_loading.dart';
 import 'package:chatboat/view/widgets/history_view.dart';
+import 'package:chatboat/view_model/controller/boat_controller.dart';
 import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
@@ -79,31 +81,44 @@ class GenieHistory extends StatelessWidget {
               ),
               HistoryView(
                   color: Theme.of(context).colorScheme.primary, paddingLeft: 5),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                height: 35,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: AppSizes.radius10,
-                    color: AppColors.whiteColor,
-                    border: Border.all(color: AppColors.bgColor),
-                    boxShadow: [BoxShadow(color: AppColors.greyColor)]),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.delete_outline, color: AppColors.blackColor),
-                      Text(
-                        'Clear History',
-                        style: CustomFunctions.style(
-                            fontWeight: FontWeight.w500,
-                            size: 14,
-                            color: AppColors.blackColor),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              GetBuilder<BoatChatCtrl>(builder: (bc) {
+                return bc.isClearHistory
+                    ? const ButtonClickLoading()
+                    : InkWell(
+                        onTap: () async {
+                          await bc.clearHistory(context);
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 2),
+                          height: 35,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: AppSizes.radius10,
+                              color: AppColors.whiteColor,
+                              border: Border.all(color: AppColors.bgColor),
+                              boxShadow: [
+                                BoxShadow(color: AppColors.greyColor)
+                              ]),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.delete_outline,
+                                    color: AppColors.blackColor),
+                                Text(
+                                  'Clear History',
+                                  style: CustomFunctions.style(
+                                      fontWeight: FontWeight.w500,
+                                      size: 14,
+                                      color: AppColors.blackColor),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+              }),
             ],
           ),
         );
