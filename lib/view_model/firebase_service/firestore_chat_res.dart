@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class FireStoreRes {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  List<FirestoreModel> allHistory = [];
+
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   Future<void> addHistoryToFirestore({required FirestoreModel model}) async {
@@ -20,6 +20,7 @@ class FireStoreRes {
   }
 
   Future<List<FirestoreModel>> getHistoryFromFireStore() async {
+    List<FirestoreModel> allHistory = [];
     User? user = auth.currentUser;
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
         await historys(user?.uid ?? '');
@@ -33,10 +34,12 @@ class FireStoreRes {
             ans: data['ans'],
             qus: data['qus'],
             date: data['date'],
+            timestamp: data['timestamp'],
             time: data['time']),
       );
     }
     log('FETCHED VALUES FROM FIRESTORE ${allHistory.length}');
+
     return allHistory;
   }
 
@@ -45,6 +48,7 @@ class FireStoreRes {
         .collection('users')
         .doc(userId)
         .collection('historys')
+        .orderBy('timestamp', descending: false)
         .get();
   }
 

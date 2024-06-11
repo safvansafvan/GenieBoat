@@ -89,27 +89,49 @@ class LoginController extends GetxController {
     numberCtrl.clear();
     otpCtrl.clear();
   }
+
   // -end
-
+//--------------------------------------------GOOGLE SIGNIN -------------------------------------------------
+  bool isGoogleSign = false;
   Future<void> signInWithGoogle({required BuildContext context}) async {
-    User? user;
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    final GoogleSignInAccount? googleSignInAccount =
-        await googleSignIn.signIn();
-    if (googleSignInAccount != null) {
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
+    isGoogleSign = true;
+    update();
+    log('CALLED CONTINUE WITH GOOGLE');
 
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
-      try {
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+        scopes: [
+          'email',
+        ],
+        clientId:
+            '874085453445-8mg0ohs4o1j9ku541op9ljl2aiutovd6.apps.googleusercontent.com');
+
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signIn();
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
 
         user = userCredential.user;
+
         if (user != null) {
+          await UserFirestoreRes().addUserToFirestore(
+            model: UserModel(
+                email: user?.email ?? '',
+                name: user?.displayName ?? '',
+                uid: user?.uid ?? '',
+                datetime: DateFormat.yMMMMEEEEd().format(DateTime.now()),
+                url: user?.photoURL ?? "",
+                lastUpdated: '',
+                number: user?.phoneNumber ?? ""),
+          );
           Get.off(() => const HomeView(),
               curve: Curves.easeInOut,
               duration: const Duration(milliseconds: 400),
@@ -118,11 +140,14 @@ class LoginController extends GetxController {
           boatSnackBar(
               text: 'Error', message: 'Something Went Wrong', ctx: context);
         }
-      } on FirebaseAuthException catch (e) {
-        log(e.toString());
       }
-    } else {
-      log("account is doesn't exist");
+    } on FirebaseAuthException catch (e) {
+      log(e.toString());
+    } catch (e) {
+      log(e.toString());
+    } finally {
+      isGoogleSign = false;
+      update();
     }
   }
 

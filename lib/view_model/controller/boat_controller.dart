@@ -3,6 +3,7 @@ import 'package:chatboat/model/firestore_model.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:chatboat/view_model/firebase_service/firestore_chat_res.dart';
 import 'package:chatboat/view_model/storage/get_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -31,6 +32,11 @@ class BoatChatCtrl extends GetxController {
     update();
   }
 
+  void loadingNewState() {
+    isLoadingNew = false;
+    update();
+  }
+
   Future<void> boatChatHandling(context) async {
     String valueText = questionCtrl.text;
     questionCtrl.clear();
@@ -48,12 +54,12 @@ class BoatChatCtrl extends GetxController {
       log('$currentDate  $currentTime  $id');
       await FireStoreRes().addHistoryToFirestore(
         model: FirestoreModel(
-          id: id,
-          ans: response.text,
-          qus: valueText,
-          date: currentDate,
-          time: currentTime,
-        ),
+            id: id,
+            ans: response.text,
+            qus: valueText,
+            date: currentDate,
+            time: currentTime,
+            timestamp: Timestamp.now()),
       );
       StorageUtil.insertData('doc_key', id);
       await getHistoryFirestore();

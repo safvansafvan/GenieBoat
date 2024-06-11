@@ -38,28 +38,33 @@ class ChatHelperWidget extends StatelessWidget {
             Expanded(
               child: GetBuilder<BoatChatCtrl>(
                 builder: (fCtrl) {
-                  return ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    primary: true,
-                    itemCount: fCtrl.allHistory.length,
-                    itemBuilder: (context, index) {
-                      final dataSet = fCtrl.allHistory[index];
-                      if (index == fCtrl.allHistory.length - 1) {
-                        return BoatChatDataWidget(
-                          dataSet: dataSet,
-                          isLastIndex: true,
-                          ctrl: fCtrl,
-                        );
-                      } else {
-                        return BoatChatDataWidget(
-                          dataSet: dataSet,
-                          isLastIndex: false,
-                          ctrl: fCtrl,
-                        );
-                      }
+                  return GestureDetector(
+                    onVerticalDragUpdate: (details) {
+                      fCtrl.loadingNewState();
                     },
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      primary: true,
+                      itemCount: fCtrl.allHistory.length,
+                      itemBuilder: (context, index) {
+                        final dataSet = fCtrl.allHistory[index];
+                        if (index == fCtrl.allHistory.length - 1) {
+                          return BoatChatDataWidget(
+                            dataSet: dataSet,
+                            isLastIndex: true,
+                            ctrl: fCtrl,
+                          );
+                        } else {
+                          return BoatChatDataWidget(
+                            dataSet: dataSet,
+                            isLastIndex: false,
+                            ctrl: fCtrl,
+                          );
+                        }
+                      },
+                    ),
                   );
                 },
               ),

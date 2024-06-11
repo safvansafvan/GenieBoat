@@ -30,51 +30,55 @@ class GenieHistory extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 12),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'History',
-                      style: CustomFunctions.style(
-                          fontWeight: FontWeight.w700,
-                          size: 18,
-                          color: Theme.of(context).colorScheme.primary),
-                    ),
-                    Container(
-                      height: 30,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: AppColors.bgColor),
-                      child: Center(
-                        child: RichText(
-                          text: TextSpan(
-                            text: '1',
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary),
-                            children: [
-                              TextSpan(
-                                text: '/',
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.primary),
-                              ),
-                              TextSpan(
-                                text: '50',
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.primary),
-                              )
-                            ],
+              GetBuilder<BoatChatCtrl>(builder: (bc) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'History',
+                        style: CustomFunctions.style(
+                            fontWeight: FontWeight.w700,
+                            size: 18,
+                            color: Theme.of(context).colorScheme.primary),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: AppColors.bgColor),
+                        child: Center(
+                          child: RichText(
+                            text: TextSpan(
+                              text: bc.allHistory.length.toString(),
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
+                              children: [
+                                TextSpan(
+                                  text: '/',
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
+                                ),
+                                TextSpan(
+                                  text: '50',
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                    ],
+                  ),
+                );
+              }),
               const Padding(
                 padding: EdgeInsets.only(top: 5),
                 child: Divider(),

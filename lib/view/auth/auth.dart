@@ -33,14 +33,7 @@ class LoginView extends StatelessWidget {
               ),
               fit: BoxFit.cover,
               filterQuality: FilterQuality.high,
-            )
-                // gradient: LinearGradient(
-                //   colors: [
-                //     Color.fromARGB(231, 33, 149, 243),
-                //     Color.fromARGB(231, 104, 58, 183)
-                //   ],
-                // ),
-                ),
+            )),
           ),
           Align(
             alignment: Alignment.center,
@@ -175,34 +168,37 @@ class LoginView extends StatelessWidget {
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    FlutterSocialButton(
-                                      buttonType: ButtonType.google,
-                                      mini: true,
-                                      onTap: () async {
-                                        await loginCtrl.signInWithGoogle(
-                                            context: context);
-                                      },
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: context.isPhone ? 10 : 0),
-                                      child: FlutterSocialButton(
-                                        buttonType: ButtonType.facebook,
-                                        mini: true,
-                                        onTap: () async {
-                                          await loginCtrl.facebookAuth();
-                                        },
-                                      ),
-                                    ),
-                                    FlutterSocialButton(
-                                      buttonType: ButtonType.phone,
-                                      mini: true,
-                                      onTap: () {
-                                        phoneAuth(context);
-                                      },
-                                    ),
-                                  ],
+                                  children: loginCtrl.isGoogleSign
+                                      ? [const ButtonClickLoading()]
+                                      : [
+                                          FlutterSocialButton(
+                                            buttonType: ButtonType.google,
+                                            mini: true,
+                                            onTap: () async {
+                                              await loginCtrl.signInWithGoogle(
+                                                  context: context);
+                                            },
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal:
+                                                    context.isPhone ? 10 : 0),
+                                            child: FlutterSocialButton(
+                                              buttonType: ButtonType.facebook,
+                                              mini: true,
+                                              onTap: () async {
+                                                await loginCtrl.facebookAuth();
+                                              },
+                                            ),
+                                          ),
+                                          FlutterSocialButton(
+                                            buttonType: ButtonType.phone,
+                                            mini: true,
+                                            onTap: () {
+                                              phoneAuth(context);
+                                            },
+                                          ),
+                                        ],
                                 )
                               ],
                             ),
