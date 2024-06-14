@@ -43,6 +43,16 @@ class LoginController extends GetxController {
     userNameCtrl.clear();
   }
 
+  @override
+  void onInit() {
+    super.onInit();
+    numberCtrl.addListener(_updateState);
+  }
+
+  void _updateState() {
+    update();
+  }
+
 //*************************** phone auth view ********************************************************************
   String countryCode = '+91';
   String verifyId = '';
@@ -229,7 +239,7 @@ class LoginController extends GetxController {
       passworldCtrl.clear();
       emailCtrl.clear();
       boatSnackBar(
-          message: 'Login SuccessFully',
+          message: 'Login Successfully',
           text: 'Succeed',
           isSuccess: true,
           ctx: ctx);
@@ -243,7 +253,7 @@ class LoginController extends GetxController {
     return null;
   }
 
-  //*********************************************forgot password ***************************************
+  //********************************************* forgot password ***************************************
 
   bool isForgotLoading = false;
   Future<void> forgotPassword(context) async {
@@ -267,13 +277,45 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> facebookAuth() async {
+  Future<void> facebookAuth(context) async {
+    log('CALLED CONTINUE WITH FACEBOOK');
     try {
-      final LoginResult result = await FacebookAuth.instance.login();
-      final OAuthCredential facebookAuthCredential =
-          FacebookAuthProvider.credential(result.accessToken!.token);
-      FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-      await Get.off(() => const HomeView());
+      final LoginResult result = await FacebookAuth.instance.login(
+        permissions: [
+          'public_profile',
+          'gaming_user_picture',
+          'gaming_profile'
+        ],
+      );
+      if (result.status == LoginStatus.success) {
+        final OAuthCredential facebookAuthCredential =
+            FacebookAuthProvider.credential(result.accessToken!.token);
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithCredential(facebookAuthCredential);
+        user = userCredential.user;
+        if (user != null) {
+          await UserFirestoreRes().addUserToFirestore(
+            model: UserModel(
+                email: user?.email ?? '',
+                name: user?.displayName ?? '',
+                uid: user?.uid ?? '',
+                datetime: DateFormat.yMMMMEEEEd().format(DateTime.now()),
+                url: user?.photoURL ?? "",
+                lastUpdated: '',
+                number: user?.phoneNumber ?? ""),
+          );
+          Get.off(() => const HomeView(),
+              curve: Curves.easeInOut,
+              duration: const Duration(milliseconds: 400),
+              transition: Transition.zoom);
+
+          boatSnackBar(
+              message: 'LOGIN SUCCESS',
+              text: 'SUCCESS',
+              isSuccess: true,
+              ctx: context);
+        }
+      } else if (result.status == LoginStatus.cancelled) {}
     } catch (e) {
       log(e.toString());
     }

@@ -187,7 +187,8 @@ class LoginView extends StatelessWidget {
                                               buttonType: ButtonType.facebook,
                                               mini: true,
                                               onTap: () async {
-                                                await loginCtrl.facebookAuth();
+                                                await loginCtrl
+                                                    .facebookAuth(context);
                                               },
                                             ),
                                           ),

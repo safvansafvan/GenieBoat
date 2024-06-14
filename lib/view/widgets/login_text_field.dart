@@ -135,7 +135,9 @@ class BoatTextFormFieldLogin extends StatelessWidget {
             loginCtrl.obscurePassword ? Icons.visibility_off : Icons.visibility,
             color: AppColors.greyColor),
       );
-    } else if (isNumber == true && loginCtrl.isVerifyLoading == false) {
+    } else if (isNumber == true &&
+        loginCtrl.isVerifyLoading == false &&
+        loginCtrl.numberCtrl.text.length >= 10) {
       return TextButton(
         onPressed: () async {
           if (loginCtrl.numberCtrl.text.isEmpty) {

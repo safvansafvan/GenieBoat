@@ -14,7 +14,6 @@ void phoneAuth(BuildContext context) {
   final ctrl = Get.find<LoginController>();
 
   showAlignedDialog(
-    barrierColor: Colors.transparent,
     barrierDismissible: false,
     duration: AppDurations.minDuration,
     context: context,
@@ -38,6 +37,7 @@ void phoneAuth(BuildContext context) {
             IconButton(
               onPressed: () {
                 Navigator.pop(context);
+                ctrl.numberCtrl.text = '';
               },
               icon: Icon(Icons.close, color: AppColors.black87),
             )
