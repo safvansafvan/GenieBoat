@@ -33,57 +33,62 @@ class BoatChatCtrl extends GetxController {
   }
 
   Future<void> boatChatHandling(context) async {
-    String valueText = questionCtrl.text;
-    questionCtrl.clear();
-    isLoadingAns = true;
-    isLoadingNew = false;
-    bodyCurrentInd = 1;
-    Uint8List? value = selectedImage;
-    selectedImage = null;
+    if (allHistory.length >= 50) {
+      return boatSnackBar(
+          text: 'Error', message: 'Please Clean Your History', ctx: context);
+    } else {
+      String valueText = questionCtrl.text;
+      questionCtrl.clear();
+      isLoadingAns = true;
+      isLoadingNew = false;
+      bodyCurrentInd = 1;
+      Uint8List? value = selectedImage;
+      selectedImage = null;
 
-    String? downloadedImageUrl;
-    update();
-    String id = uuid.v1();
-    formateDate(DateTime.now());
-
-    try {
-      if (value != null) {
-        downloadedImageUrl =
-            await FireStoreRes().uploadImageToStorage(value, uuid.v1());
-        log(downloadedImageUrl);
-      }
-      final model =
-          GenerativeModel(model: 'gemini-1.5-flash-latest', apiKey: key);
-      final content = [
-        value != null
-            ? Content.multi([
-                TextPart(valueText),
-                DataPart('image/jpeg', value),
-              ])
-            : Content.text(valueText)
-      ];
-      final response = await model.generateContent(content);
-      log(response.text ?? '');
-      log('$currentDate  $currentTime  $id');
-      await FireStoreRes().addHistoryToFirestore(
-        model: FirestoreModel(
-            id: id,
-            ans: response.text,
-            qus: valueText,
-            date: currentDate,
-            time: currentTime,
-            image: downloadedImageUrl,
-            timestamp: Timestamp.now()),
-      );
-
-      StorageUtil.insertData('doc_key', id);
-      await getHistoryFirestore();
-    } catch (e) {
-      log(e.toString());
-    } finally {
-      isLoadingAns = false;
-      isLoadingNew = true;
+      String? downloadedImageUrl;
       update();
+      String id = uuid.v1();
+      formateDate(DateTime.now());
+
+      try {
+        if (value != null) {
+          downloadedImageUrl =
+              await FireStoreRes().uploadImageToStorage(value, uuid.v1());
+          log(downloadedImageUrl);
+        }
+        final model =
+            GenerativeModel(model: 'gemini-1.5-flash-latest', apiKey: key);
+        final content = [
+          value != null
+              ? Content.multi([
+                  TextPart(valueText),
+                  DataPart('image/jpeg', value),
+                ])
+              : Content.text(valueText)
+        ];
+        final response = await model.generateContent(content);
+        log(response.text ?? '');
+        log('$currentDate  $currentTime  $id');
+        await FireStoreRes().addHistoryToFirestore(
+          model: FirestoreModel(
+              id: id,
+              ans: response.text?.split('*').join(),
+              qus: valueText,
+              date: currentDate,
+              time: currentTime,
+              image: downloadedImageUrl,
+              timestamp: Timestamp.now()),
+        );
+
+        StorageUtil.insertData('doc_key', id);
+        await getHistoryFirestore();
+      } catch (e) {
+        log(e.toString());
+      } finally {
+        isLoadingAns = false;
+        isLoadingNew = true;
+        update();
+      }
     }
   }
 
@@ -98,7 +103,7 @@ class BoatChatCtrl extends GetxController {
 
   Future<void> clearHistory(context) async {
     isClearHistory = true;
-
+    update();
     try {
       await FireStoreRes().deleteCollection().then((_) async {
         await getHistoryFirestore();

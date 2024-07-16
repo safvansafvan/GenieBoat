@@ -15,6 +15,7 @@ import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:chatboat/view_model/core/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 
 settingsDialog(BuildContext context) {
@@ -42,128 +43,144 @@ settingsDialog(BuildContext context) {
             height: 500,
             child: Column(
               children: [
-                AppSizes.minHeight,
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Settings',
-                        style: CustomFunctions.style(
-                            fontWeight: FontWeight.w700,
-                            size: 18,
-                            color: AppColors.blackColor),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          gc.chatHelperState();
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(
-                          Icons.close,
-                          color: AppColors.black87,
+                AnimationLimiter(
+                  child: Column(
+                    children: AnimationConfiguration.toStaggeredList(
+                      duration: const Duration(milliseconds: 500),
+                      childAnimationBuilder: (widget) => SlideAnimation(
+                        curve: Curves.ease,
+                        verticalOffset: 100.0,
+                        child: FadeInAnimation(
+                          child: widget,
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                const Divider(),
-                GetBuilder<GlobleController>(builder: (gc) {
-                  return ListTile(
-                    minVerticalPadding: 0,
-                    title: Text(
-                      'Theme',
-                      style: CustomFunctions.style(
-                          fontWeight: FontWeight.w500, size: 14),
+                      ),
+                      children: [
+                        AppSizes.minHeight,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Settings',
+                                style: CustomFunctions.style(
+                                    fontWeight: FontWeight.w700,
+                                    size: 18,
+                                    color: AppColors.blackColor),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  gc.chatHelperState();
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(
+                                  Icons.close,
+                                  color: AppColors.black87,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        const Divider(),
+                        GetBuilder<GlobleController>(builder: (gc) {
+                          return ListTile(
+                            minVerticalPadding: 0,
+                            title: Text(
+                              'Theme',
+                              style: CustomFunctions.style(
+                                  fontWeight: FontWeight.w500, size: 14),
+                            ),
+                            trailing: Switch(
+                              value: gc.themeMode,
+                              onChanged: (value) {
+                                gc.toggleTheme(value);
+                              },
+                            ),
+                          );
+                        }),
+                        ListTile(
+                          minVerticalPadding: 0,
+                          onTap: () {
+                            Get.off(() => const PrivacyAndPolicy(),
+                                curve: Curves.easeInOut,
+                                duration: const Duration(milliseconds: 400),
+                                transition: Transition.zoom);
+                          },
+                          title: Text(
+                            'Privacy & Policy',
+                            style: CustomFunctions.style(
+                                fontWeight: FontWeight.w500, size: 14),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: AppColors.black87,
+                          ),
+                        ),
+                        ListTile(
+                          minVerticalPadding: 0,
+                          onTap: () {
+                            Get.off(() => const AboutUs(),
+                                curve: Curves.easeInOut,
+                                duration: const Duration(milliseconds: 400),
+                                transition: Transition.zoom);
+                          },
+                          title: Text(
+                            'About Us',
+                            style: CustomFunctions.style(
+                                fontWeight: FontWeight.w500, size: 14),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: AppColors.black87,
+                          ),
+                        ),
+                        ListTile(
+                          minVerticalPadding: 0,
+                          onTap: () {
+                            ratingBottomSheet(context, gc.animationController);
+                          },
+                          title: Text(
+                            'Rating',
+                            style: CustomFunctions.style(
+                                fontWeight: FontWeight.w500, size: 14),
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios,
+                            color: AppColors.black87,
+                          ),
+                        ),
+                        ListTile(
+                          minVerticalPadding: 0,
+                          onTap: () {
+                            showDeleteAccountDialog(context);
+                          },
+                          title: Text(
+                            'Delete Account',
+                            style: CustomFunctions.style(
+                                fontWeight: FontWeight.w500,
+                                size: 14,
+                                color: AppColors.redColor),
+                          ),
+                          trailing: Icon(Icons.arrow_forward_ios,
+                              color: AppColors.redColor),
+                        ),
+                        ListTile(
+                            minVerticalPadding: 0,
+                            title: Text(
+                              'Clear History',
+                              style: CustomFunctions.style(
+                                  fontWeight: FontWeight.w500, size: 14),
+                            ),
+                            trailing: ElevatedButton(
+                                style: ThemeSetup.redButtonStyle,
+                                onPressed: () async {
+                                  showClearHistoryDialog(context);
+                                },
+                                child: const Text('Clear'))),
+                      ],
                     ),
-                    trailing: Switch(
-                      value: gc.themeMode,
-                      onChanged: (value) {
-                        gc.toggleTheme(value);
-                      },
-                    ),
-                  );
-                }),
-                ListTile(
-                  minVerticalPadding: 0,
-                  onTap: () {
-                    Get.off(() => const PrivacyAndPolicy(),
-                        curve: Curves.easeInOut,
-                        duration: const Duration(milliseconds: 400),
-                        transition: Transition.zoom);
-                  },
-                  title: Text(
-                    'Privacy & Policy',
-                    style: CustomFunctions.style(
-                        fontWeight: FontWeight.w500, size: 14),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: AppColors.black87,
                   ),
                 ),
-                ListTile(
-                  minVerticalPadding: 0,
-                  onTap: () {
-                    Get.off(() => const AboutUs(),
-                        curve: Curves.easeInOut,
-                        duration: const Duration(milliseconds: 400),
-                        transition: Transition.zoom);
-                  },
-                  title: Text(
-                    'About Us',
-                    style: CustomFunctions.style(
-                        fontWeight: FontWeight.w500, size: 14),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: AppColors.black87,
-                  ),
-                ),
-                ListTile(
-                  minVerticalPadding: 0,
-                  onTap: () {
-                    ratingBottomSheet(context, gc.animationController);
-                  },
-                  title: Text(
-                    'Rating',
-                    style: CustomFunctions.style(
-                        fontWeight: FontWeight.w500, size: 14),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: AppColors.black87,
-                  ),
-                ),
-                ListTile(
-                  minVerticalPadding: 0,
-                  onTap: () {
-                    showDeleteAccountDialog(context);
-                  },
-                  title: Text(
-                    'Delete Account',
-                    style: CustomFunctions.style(
-                        fontWeight: FontWeight.w500,
-                        size: 14,
-                        color: AppColors.redColor),
-                  ),
-                  trailing:
-                      Icon(Icons.arrow_forward_ios, color: AppColors.redColor),
-                ),
-                ListTile(
-                    minVerticalPadding: 0,
-                    title: Text(
-                      'Clear History',
-                      style: CustomFunctions.style(
-                          fontWeight: FontWeight.w500, size: 14),
-                    ),
-                    trailing: ElevatedButton(
-                        style: ThemeSetup.redButtonStyle,
-                        onPressed: () async {
-                          showClearHistoryDialog(context);
-                        },
-                        child: const Text('Clear'))),
                 const Spacer(),
                 Padding(
                   padding:

@@ -56,8 +56,8 @@ class RatingController extends GetxController {
       Get.back();
       Get.back();
       Get.back();
-      gctrl.chatHelperState();
       gctrl.controllerTopCenter.play();
+      gctrl.chatHelperState();
       boatSnackBar(
           text: 'Suceed',
           isSuccess: true,

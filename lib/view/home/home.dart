@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chatboat/view/chat_helper/chat_helper.dart';
 import 'package:chatboat/view/history/genie_history.dart';
 import 'package:chatboat/view/start_chat/start_chat.dart';
@@ -37,7 +39,6 @@ class _HomeViewState extends State<HomeView>
     gctrl.controllerTopCenter =
         ConfettiController(duration: const Duration(seconds: 4));
     bc.getHistoryFirestore();
-
     pc.getUsersDetailsForProfile();
     rating.getUserRatingData();
     super.initState();
@@ -86,6 +87,7 @@ class _HomeViewState extends State<HomeView>
   }
 
   Widget centerViewHandling(BoatChatCtrl ctrl) {
+    log(ctrl.bodyCurrentInd.toString(), name: 'CURRENT INDEX');
     switch (ctrl.bodyCurrentInd) {
       case 0:
         return const Expanded(child: StartChatingView());

@@ -7,6 +7,7 @@ import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:chatboat/view_model/core/durations.dart';
 import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import '../../view_model/controller/globel_ctrl.dart';
 
@@ -91,76 +92,88 @@ class CustomLeftNavigation extends StatelessWidget {
                           ],
                         ),
                       )
-                    : Column(
-                        children: [
-                          AnimatedContainer(
-                            curve: Curves.decelerate,
-                            duration: AppDurations.minDuration,
-                            width: 160,
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            decoration: BoxDecoration(
-                              color: globelCtrl.isChatHelper
-                                  ? AppColors.bttnBg
-                                  : AppColors.blackColor,
-                              borderRadius: AppSizes.radius10,
-                            ),
-                            child: ListTile(
-                              shape: OutlineInputBorder(
-                                  borderRadius: AppSizes.radius10),
-                              hoverColor: Colors.blue.withAlpha(300),
-                              onTap: () {
-                                globelCtrl.chatHelperState();
-                              },
-                              minLeadingWidth: 0,
-                              horizontalTitleGap: 12,
-                              leading: Icon(Icons.message_rounded,
-                                  color: AppColors.greyColor),
-                              title: Text(
-                                'Ai Chat Helper',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: CustomFunctions.style(
-                                    fontWeight: FontWeight.w500,
-                                    size: 13,
-                                    color: AppColors.whiteColor),
+                    : AnimationLimiter(
+                        child: Column(
+                          children: AnimationConfiguration.toStaggeredList(
+                            duration: const Duration(milliseconds: 1000),
+                            childAnimationBuilder: (widget) => SlideAnimation(
+                              curve: Curves.ease,
+                              verticalOffset: 100.0,
+                              child: FadeInAnimation(
+                                child: widget,
                               ),
                             ),
-                          ),
-                          AnimatedContainer(
-                            duration: AppDurations.minDuration,
-                            curve: Curves.decelerate,
-                            width: 160,
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            decoration: BoxDecoration(
-                              color: globelCtrl.isSettings
-                                  ? AppColors.bttnBg
-                                  : AppColors.blackColor,
-                              borderRadius: AppSizes.radius10,
-                            ),
-                            child: ListTile(
-                              shape: OutlineInputBorder(
-                                  borderRadius: AppSizes.radius10),
-                              hoverColor: Colors.blue.withAlpha(300),
-                              onTap: () async {
-                                globelCtrl.settingState();
-                                await settingsDialog(context);
-                              },
-                              minLeadingWidth: 0,
-                              horizontalTitleGap: 12,
-                              leading: Icon(Icons.settings,
-                                  color: AppColors.greyColor),
-                              title: Text(
-                                'Settings',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: CustomFunctions.style(
-                                    fontWeight: FontWeight.w500,
-                                    size: 13,
-                                    color: AppColors.whiteColor),
+                            children: [
+                              AnimatedContainer(
+                                curve: Curves.decelerate,
+                                duration: AppDurations.minDuration,
+                                width: 160,
+                                margin: const EdgeInsets.symmetric(vertical: 5),
+                                decoration: BoxDecoration(
+                                  color: globelCtrl.isChatHelper
+                                      ? AppColors.bttnBg
+                                      : AppColors.blackColor,
+                                  borderRadius: AppSizes.radius10,
+                                ),
+                                child: ListTile(
+                                  shape: OutlineInputBorder(
+                                      borderRadius: AppSizes.radius10),
+                                  hoverColor: Colors.blue.withAlpha(300),
+                                  onTap: () {
+                                    globelCtrl.chatHelperState();
+                                  },
+                                  minLeadingWidth: 0,
+                                  horizontalTitleGap: 12,
+                                  leading: Icon(Icons.message_rounded,
+                                      color: AppColors.greyColor),
+                                  title: Text(
+                                    'Ai Chat Helper',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: CustomFunctions.style(
+                                        fontWeight: FontWeight.w500,
+                                        size: 13,
+                                        color: AppColors.whiteColor),
+                                  ),
+                                ),
                               ),
-                            ),
+                              AnimatedContainer(
+                                duration: AppDurations.minDuration,
+                                curve: Curves.decelerate,
+                                width: 160,
+                                margin: const EdgeInsets.symmetric(vertical: 5),
+                                decoration: BoxDecoration(
+                                  color: globelCtrl.isSettings
+                                      ? AppColors.bttnBg
+                                      : AppColors.blackColor,
+                                  borderRadius: AppSizes.radius10,
+                                ),
+                                child: ListTile(
+                                  shape: OutlineInputBorder(
+                                      borderRadius: AppSizes.radius10),
+                                  hoverColor: Colors.blue.withAlpha(300),
+                                  onTap: () async {
+                                    globelCtrl.settingState();
+                                    await settingsDialog(context);
+                                  },
+                                  minLeadingWidth: 0,
+                                  horizontalTitleGap: 12,
+                                  leading: Icon(Icons.settings,
+                                      color: AppColors.greyColor),
+                                  title: Text(
+                                    'Settings',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: CustomFunctions.style(
+                                        fontWeight: FontWeight.w500,
+                                        size: 13,
+                                        color: AppColors.whiteColor),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                 context.width <= 968
                     ? HistoryView(color: AppColors.whiteColor)
