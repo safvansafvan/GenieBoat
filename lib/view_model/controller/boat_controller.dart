@@ -3,8 +3,9 @@ import 'package:chatboat/model/firestore_model.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:chatboat/view_model/firebase_service/firestore_chat_res.dart';
 import 'package:chatboat/view_model/storage/get_storage.dart';
-import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -37,26 +38,44 @@ class BoatChatCtrl extends GetxController {
     isLoadingAns = true;
     isLoadingNew = false;
     bodyCurrentInd = 1;
+    Uint8List? value = selectedImage;
+    selectedImage = null;
+
+    String? downloadedImageUrl;
     update();
     String id = uuid.v1();
     formateDate(DateTime.now());
+
     try {
-      final model = GenerativeModel(model: 'gemini-pro', apiKey: key);
+      if (value != null) {
+        downloadedImageUrl =
+            await FireStoreRes().uploadImageToStorage(value, uuid.v1());
+        log(downloadedImageUrl);
+      }
+      final model =
+          GenerativeModel(model: 'gemini-1.5-flash-latest', apiKey: key);
       final content = [
-        Content.text(valueText),
+        value != null
+            ? Content.multi([
+                TextPart(valueText),
+                DataPart('image/jpeg', value),
+              ])
+            : Content.text(valueText)
       ];
       final response = await model.generateContent(content);
       log(response.text ?? '');
       log('$currentDate  $currentTime  $id');
       await FireStoreRes().addHistoryToFirestore(
         model: FirestoreModel(
-          id: id,
-          ans: response.text,
-          qus: valueText,
-          date: currentDate,
-          time: currentTime,
-        ),
+            id: id,
+            ans: response.text,
+            qus: valueText,
+            date: currentDate,
+            time: currentTime,
+            image: downloadedImageUrl,
+            timestamp: Timestamp.now()),
       );
+
       StorageUtil.insertData('doc_key', id);
       await getHistoryFirestore();
     } catch (e) {
@@ -86,6 +105,7 @@ class BoatChatCtrl extends GetxController {
       });
       if (allHistory.isEmpty) {
         bodyCurrentInd = 0;
+        update();
         boatSnackBar(
             text: 'Success',
             message: 'All Historys Deleted',
@@ -123,10 +143,12 @@ class BoatChatCtrl extends GetxController {
       final XFile? gfile = await picker.pickImage(source: ImageSource.gallery);
       if (gfile != null) {
         selectedImage = await gfile.readAsBytes();
+
         Get.back();
         update();
       }
     }
+    log('IMAGE PICKED');
   }
 
   void clearSelectedImage() {

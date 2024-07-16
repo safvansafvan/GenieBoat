@@ -51,7 +51,10 @@ class GenieHistory extends StatelessWidget {
                       child: Center(
                         child: RichText(
                           text: TextSpan(
-                            text: '1',
+                            text: Get.find<BoatChatCtrl>()
+                                .allHistory
+                                .length
+                                .toString(),
                             style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary),
                             children: [

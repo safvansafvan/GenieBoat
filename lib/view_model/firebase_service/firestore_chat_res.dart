@@ -1,7 +1,9 @@
 import 'dart:developer';
+import 'dart:typed_data';
 import 'package:chatboat/model/firestore_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class FireStoreRes {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -33,6 +35,8 @@ class FireStoreRes {
             ans: data['ans'],
             qus: data['qus'],
             date: data['date'],
+            image: data['image'],
+            timestamp: data['timeStamp'],
             time: data['time']),
       );
     }
@@ -45,6 +49,7 @@ class FireStoreRes {
         .collection('users')
         .doc(userId)
         .collection('historys')
+        .orderBy('timestamp', descending: false)
         .get();
   }
 
@@ -58,5 +63,14 @@ class FireStoreRes {
     for (var doc in snapshots.docs) {
       await doc.reference.delete();
     }
+  }
+
+  Future<String> uploadImageToStorage(Uint8List file, String id) async {
+    FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+    Reference reference = firebaseStorage.ref().child('chat_img/$id');
+    UploadTask uploadTask = reference.putData(file);
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadedUrl = await snapshot.ref.getDownloadURL();
+    return downloadedUrl;
   }
 }

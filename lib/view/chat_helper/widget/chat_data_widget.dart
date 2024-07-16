@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatboat/model/firestore_model.dart';
 import 'package:chatboat/view/widgets/animated_text_kit.dart';
 import 'package:chatboat/view_model/controller/boat_controller.dart';
@@ -21,6 +24,7 @@ class BoatChatDataWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(dataSet.image ?? 'images');
     return GetBuilder<GlobleController>(builder: (gc) {
       return Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -107,28 +111,55 @@ class BoatChatDataWidget extends StatelessWidget {
               ),
             ),
             const Divider(),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: BoxDecoration(
-                color: AppColors.whiteColor,
-                borderRadius: AppSizes.radius10,
-                border: Border.all(
-                  color: AppColors.greyColor.withAlpha(300),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: AppColors.whiteColor,
+                      borderRadius: AppSizes.radius10,
+                      border: Border.all(
+                        color: AppColors.greyColor.withAlpha(300),
+                      ),
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        dataSet.qus ?? '',
+                        textAlign: TextAlign.start,
+                        style: CustomFunctions.style(
+                            fontWeight: FontWeight.w400,
+                            size: 14,
+                            color: AppColors.blackColor),
+                        maxLines: null,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  dataSet.qus ?? '',
-                  textAlign: TextAlign.start,
-                  style: CustomFunctions.style(
-                      fontWeight: FontWeight.w400,
-                      size: 14,
-                      color: AppColors.blackColor),
-                  maxLines: null,
-                ),
-              ),
+                dataSet.image != ''
+                    ? Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey[300]!),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          imageUrl: dataSet.image ?? '',
+                          // "https://firebasestorage.googleapis.com/v0/b/boat-app-d5438.appspot.com/o/chat_img%2F2OH94h4S8lMqy6W621LyEQTRd9g1?alt=media&token=e2414b6b-769e-4d7a-b882-b0839c2c661c",
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
+                      )
+                    : const SizedBox(),
+              ],
             ),
             isLastIndex && ctrl.isLoadingNew
                 ? AnimatedTextKitWidget(textV: dataSet.ans ?? "")

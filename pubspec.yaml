@@ -23,7 +23,7 @@ dependencies:
   google_sign_in: ^6.2.1
   dropdown_button2: ^2.3.9
   flutter_facebook_auth: ^6.2.0
-  google_generative_ai: ^0.3.2
+  google_generative_ai: ^0.4.3
   flutter_rating_bar: ^4.0.1
   confetti: ^0.7.0
   cloud_firestore: ^4.13.3
