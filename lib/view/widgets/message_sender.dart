@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:chatboat/view/widgets/choose_image_source.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:chatboat/view_model/controller/boat_controller.dart';
@@ -72,6 +70,7 @@ class GenieMessageSender extends StatelessWidget {
                       },
                       child: const Icon(
                         Icons.close,
+                        color: Colors.black,
                         size: 15,
                       ),
                     ),

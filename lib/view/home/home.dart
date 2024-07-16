@@ -7,6 +7,7 @@ import 'package:chatboat/view/widgets/custom_navigation.dart';
 import 'package:chatboat/view/widgets/menu_drawer.dart';
 import 'package:chatboat/view_model/controller/boat_controller.dart';
 import 'package:chatboat/view_model/controller/profile_controller.dart';
+import 'package:chatboat/view_model/controller/rating_controller.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:confetti/confetti.dart';
@@ -25,6 +26,7 @@ class _HomeViewState extends State<HomeView>
   final gctrl = Get.find<GlobleController>();
   final bc = Get.find<BoatChatCtrl>();
   final pc = Get.find<ProfileCtrl>();
+  final rating = Get.find<RatingController>();
 
   @override
   void initState() {
@@ -37,6 +39,7 @@ class _HomeViewState extends State<HomeView>
     bc.getHistoryFirestore();
 
     pc.getUsersDetailsForProfile();
+    rating.getUserRatingData();
     super.initState();
   }
 

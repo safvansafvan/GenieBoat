@@ -129,12 +129,12 @@ class LoginController extends GetxController {
   handleScreens(context) {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      return Get.off(() => const HomeView(),
+      return Get.offAll(() => const HomeView(),
           curve: Curves.easeInOut,
           duration: const Duration(milliseconds: 400),
           transition: Transition.zoom);
     } else {
-      return Get.off(() => const LoginView(),
+      return Get.offAll(() => const LoginView(),
           curve: Curves.easeInOut,
           duration: const Duration(milliseconds: 400),
           transition: Transition.zoom);
@@ -268,7 +268,8 @@ class LoginController extends GetxController {
       } else {
         boatSnackBar(
             text: 'Error',
-            message: 'Just Now You Create Account',
+            message:
+                'Just Now You Create Account .\nLog in again before retrying this request.',
             ctx: context);
       }
     } catch (e) {

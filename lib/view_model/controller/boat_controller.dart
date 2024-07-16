@@ -42,7 +42,9 @@ class BoatChatCtrl extends GetxController {
     formateDate(DateTime.now());
     try {
       final model = GenerativeModel(model: 'gemini-pro', apiKey: key);
-      final content = [Content.text(valueText)];
+      final content = [
+        Content.text(valueText),
+      ];
       final response = await model.generateContent(content);
       log(response.text ?? '');
       log('$currentDate  $currentTime  $id');
