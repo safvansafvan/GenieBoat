@@ -140,7 +140,7 @@ class BoatChatDataWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                dataSet.image != ''
+                dataSet.image != '' && dataSet.image != null
                     ? Container(
                         height: 50,
                         width: 50,
@@ -151,7 +151,6 @@ class BoatChatDataWidget extends StatelessWidget {
                         child: CachedNetworkImage(
                           fit: BoxFit.cover,
                           imageUrl: dataSet.image ?? '',
-                          // "https://firebasestorage.googleapis.com/v0/b/boat-app-d5438.appspot.com/o/chat_img%2F2OH94h4S8lMqy6W621LyEQTRd9g1?alt=media&token=e2414b6b-769e-4d7a-b882-b0839c2c661c",
                           placeholder: (context, url) =>
                               const CircularProgressIndicator(),
                           errorWidget: (context, url, error) =>

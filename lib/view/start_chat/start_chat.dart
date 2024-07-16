@@ -39,10 +39,12 @@ class StartChatingView extends StatelessWidget {
                       builder: (context, snapshot) {
                         final now = snapshot.data;
                         final timeString =
-                            '${now?.hour}:${now?.minute}:${now?.second}';
+                            '${now?.hour ?? '00'}:${now?.minute ?? 00}:${now?.second ?? 00}';
                         return Text(
                           timeString,
                           style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
                               color: Theme.of(context)
                                   .colorScheme
                                   .primary
@@ -58,7 +60,7 @@ class StartChatingView extends StatelessWidget {
                               .primary
                               .withOpacity(.8),
                           fontWeight: FontWeight.w500,
-                          size: 20),
+                          size: 22),
                     ),
                   ],
                 ),
