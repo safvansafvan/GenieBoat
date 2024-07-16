@@ -9,6 +9,7 @@ class GlobleController extends GetxController {
   void onInit() {
     bool value = StorageUtil.readData('theme_mode') ?? false;
     toggleTheme(value);
+
     super.onInit();
   }
 
