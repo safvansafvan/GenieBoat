@@ -2,6 +2,7 @@ import 'package:chatboat/view/widgets/celebration.dart';
 import 'package:chatboat/view/widgets/message_sender.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 
 class StartChatingView extends StatelessWidget {
@@ -31,50 +32,78 @@ class StartChatingView extends StatelessWidget {
               padding: const EdgeInsets.only(top: 30, right: 40),
               child: Align(
                 alignment: Alignment.centerRight,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    StreamBuilder(
-                      stream: getTimeStream(),
-                      builder: (context, snapshot) {
-                        final now = snapshot.data;
-                        final timeString =
-                            '${now?.hour ?? '00'}:${now?.minute ?? 00}:${now?.second ?? 00}';
-                        return Text(
-                          timeString,
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                child: AnimationLimiter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: AnimationConfiguration.toStaggeredList(
+                      duration: const Duration(milliseconds: 1000),
+                      childAnimationBuilder: (widget) => SlideAnimation(
+                        curve: Curves.ease,
+                        verticalOffset: 100.0,
+                        child: FadeInAnimation(
+                          child: widget,
+                        ),
+                      ),
+                      children: [
+                        StreamBuilder(
+                          stream: getTimeStream(),
+                          builder: (context, snapshot) {
+                            final now = snapshot.data;
+                            final timeString =
+                                '${now?.hour ?? '00'}:${now?.minute ?? 00}:${now?.second ?? 00}';
+                            return Text(
+                              timeString,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(.7)),
+                            );
+                          },
+                        ),
+                        Text(
+                          buildText(),
+                          style: CustomFunctions.style(
                               color: Theme.of(context)
                                   .colorScheme
                                   .primary
-                                  .withOpacity(.7)),
-                        );
-                      },
+                                  .withOpacity(.8),
+                              fontWeight: FontWeight.w500,
+                              size: 22),
+                        ),
+                      ],
                     ),
-                    Text(
-                      buildText(),
-                      style: CustomFunctions.style(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(.8),
-                          fontWeight: FontWeight.w500,
-                          size: 22),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
             const Spacer(),
-            Image.asset('assets/gif/boat-unscreen.gif',
-                height: 200, width: 200, fit: BoxFit.cover),
-            Text(
-              'How Can I Help You Today',
-              style: CustomFunctions.style(
-                  fontWeight: FontWeight.bold,
-                  size: 18,
-                  color: Theme.of(context).colorScheme.primary),
+            AnimationLimiter(
+              child: Column(
+                children: AnimationConfiguration.toStaggeredList(
+                  duration: const Duration(milliseconds: 1000),
+                  childAnimationBuilder: (widget) => SlideAnimation(
+                    curve: Curves.ease,
+                    verticalOffset: 100.0,
+                    child: FadeInAnimation(
+                      child: widget,
+                    ),
+                  ),
+                  children: [
+                    Image.asset('assets/gif/boat-unscreen.gif',
+                        height: 200, width: 200, fit: BoxFit.cover),
+                    Text(
+                      'How Can I Help You Today',
+                      style: CustomFunctions.style(
+                          fontWeight: FontWeight.bold,
+                          size: 18,
+                          color: Theme.of(context).colorScheme.primary),
+                    ),
+                  ],
+                ),
+              ),
             ),
             const Spacer(),
             const Padding(

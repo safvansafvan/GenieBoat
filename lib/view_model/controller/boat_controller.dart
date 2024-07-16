@@ -110,7 +110,7 @@ class BoatChatCtrl extends GetxController {
       });
       if (allHistory.isEmpty) {
         bodyCurrentInd = 0;
-
+        update();
         boatSnackBar(
             text: 'Success',
             message: 'All Historys Deleted',
