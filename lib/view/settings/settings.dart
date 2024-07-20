@@ -2,7 +2,6 @@ import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatboat/view/profile/profile_view.dart';
 import 'package:chatboat/view/settings/view/about_us.dart';
-import 'package:chatboat/view/settings/view/privacy_policy.dart';
 import 'package:chatboat/view/settings/widget/clear_dialog.dart';
 import 'package:chatboat/view/settings/widget/delete_dialog.dart';
 import 'package:chatboat/view/widgets/bottom_sheet.dart';
@@ -17,6 +16,7 @@ import 'package:chatboat/view_model/core/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 settingsDialog(BuildContext context) {
   final gc = Get.find<GlobleController>();
@@ -100,11 +100,9 @@ settingsDialog(BuildContext context) {
                         }),
                         ListTile(
                           minVerticalPadding: 0,
-                          onTap: () {
-                            Get.off(() => const PrivacyAndPolicy(),
-                                curve: Curves.easeInOut,
-                                duration: const Duration(milliseconds: 400),
-                                transition: Transition.zoom);
+                          onTap: () async {
+                            await redirectToWeb(Uri.parse(
+                                'https://www.freeprivacypolicy.com/live/6cbac68c-deb7-4ce2-a8fe-c97589872f83'));
                           },
                           title: Text(
                             'Privacy & Policy',
@@ -119,7 +117,7 @@ settingsDialog(BuildContext context) {
                         ListTile(
                           minVerticalPadding: 0,
                           onTap: () {
-                            Get.off(() => const AboutUs(),
+                            Get.to(() => const AboutUs(),
                                 curve: Curves.easeInOut,
                                 duration: const Duration(milliseconds: 400),
                                 transition: Transition.zoom);
@@ -236,4 +234,10 @@ settingsDialog(BuildContext context) {
       );
     },
   );
+}
+
+Future<void> redirectToWeb(Uri uri) async {
+  if (!await launchUrl(uri)) {
+    throw Exception('Could not launch $uri');
+  }
 }

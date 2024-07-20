@@ -16,9 +16,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 
 class LoginController extends GetxController {
-  TextEditingController emailCtrl = TextEditingController(text: 'j@gmail.com');
+  TextEditingController emailCtrl = TextEditingController();
   TextEditingController forgotEmailCtrl = TextEditingController();
-  TextEditingController passworldCtrl = TextEditingController(text: '12345678');
+  TextEditingController passworldCtrl = TextEditingController();
   TextEditingController userNameCtrl = TextEditingController();
   TextEditingController numberCtrl = TextEditingController();
   TextEditingController otpCtrl = TextEditingController();

@@ -92,6 +92,11 @@ class BoatChatCtrl extends GetxController {
     }
   }
 
+  void loadingNewState() {
+    isLoadingNew = false;
+    update();
+  }
+
   Future<void> getHistoryFirestore() async {
     try {
       allHistory = await FireStoreRes().getHistoryFromFireStore();

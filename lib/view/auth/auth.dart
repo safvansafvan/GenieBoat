@@ -1,5 +1,4 @@
 import 'package:chatboat/view/auth/forgot_password.dart';
-import 'package:chatboat/view/auth/phone_auth.dart';
 import 'package:chatboat/view/home/home.dart';
 import 'package:chatboat/view/widgets/button_loading.dart';
 import 'package:chatboat/view/widgets/login_text_field.dart';
@@ -195,13 +194,13 @@ class LoginView extends StatelessWidget {
                                         },
                                       ),
                                     ),
-                                    FlutterSocialButton(
-                                      buttonType: ButtonType.phone,
-                                      mini: true,
-                                      onTap: () {
-                                        phoneAuth(context);
-                                      },
-                                    ),
+                                    // FlutterSocialButton(
+                                    //   buttonType: ButtonType.phone,
+                                    //   mini: true,
+                                    //   onTap: () {
+                                    //     phoneAuth(context);
+                                    //   },
+                                    // ),
                                   ],
                                 )
                               ],

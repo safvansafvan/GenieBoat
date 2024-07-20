@@ -9,9 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UpdateButton extends StatelessWidget {
-  const UpdateButton({super.key, this.isWeb = false});
+  const UpdateButton({super.key, this.isWeb = false, required this.formKey});
 
   final bool isWeb;
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,9 @@ class UpdateButton extends StatelessWidget {
                         pCtrl.initNumber != pCtrl.numberController.text ||
                         pCtrl.selectedProfileImg != null)
                     ? () async {
-                        await pCtrl.editProfileValues(context);
+                        if (formKey.currentState!.validate()) {
+                          await pCtrl.editProfileValues(context);
+                        }
                       }
                     : () {
                         boatSnackBar(

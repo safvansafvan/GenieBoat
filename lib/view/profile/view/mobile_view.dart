@@ -15,6 +15,7 @@ class MobileViewProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final pc = Get.find<ProfileCtrl>();
     return Scaffold(
       appBar: AppBar(title: const Text('Profile')),
@@ -70,29 +71,30 @@ class MobileViewProfile extends StatelessWidget {
                       },
                     ),
                     AppSizes.height20,
-                    BoatTextField(
-                        controller: pc.nameController,
-                        label: 'Name',
-                        isName: true),
-                    BoatTextField(
-                        controller: pc.emailController,
-                        label: 'Email',
-                        isEmail: true),
-                    BoatTextField(
-                        controller: pc.numberController,
-                        label: 'Number',
-                        isNumber: true),
-                    BoatTextField(
-                      controller: pc.createdCtrl,
-                      label: 'Created Date',
+                    Form(
+                      child: Column(
+                        children: [
+                          BoatTextField(
+                              controller: pc.nameController,
+                              label: 'Name',
+                              isName: true),
+                          BoatTextField(
+                              controller: pc.emailController,
+                              label: 'Email',
+                              isEmail: true),
+                          BoatTextField(
+                              controller: pc.numberController,
+                              label: 'Number',
+                              isNumber: true),
+                        ],
+                      ),
                     ),
                     if (pc.updatedCtrl.text.isNotEmpty)
-                      BoatTextField(
-                        controller: pc.updatedCtrl,
-                        label: 'Updated Date',
+                      Text(
+                        "Last Updated : ${pc.updatedCtrl.text}",
                       ),
                     const SizedBox(height: 20),
-                    const UpdateButton(),
+                    UpdateButton(formKey: formKey),
                   ],
                 ),
               ),

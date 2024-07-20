@@ -1,6 +1,8 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:chatboat/view_model/controller/boat_controller.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AnimatedTextKitWidget extends StatelessWidget {
   const AnimatedTextKitWidget({super.key, required this.textV});
@@ -9,6 +11,10 @@ class AnimatedTextKitWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedTextKit(
+      isRepeatingAnimation: false,
+      onFinished: () {
+        Get.find<BoatChatCtrl>().loadingNewState();
+      },
       animatedTexts: [
         TypewriterAnimatedText(textV,
             textStyle: CustomFunctions.style(

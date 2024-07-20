@@ -17,6 +17,7 @@ class WebViewProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pc = Get.find<ProfileCtrl>();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
       body: BoatAnimate(
         child: Center(
@@ -24,14 +25,6 @@ class WebViewProfile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'PROFILE',
-                style: CustomFunctions.style(
-                  fontWeight: FontWeight.w600,
-                  size: 25,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
               Card(
                 child: Container(
                   height: context.height * 0.6,
@@ -69,38 +62,40 @@ class WebViewProfile extends StatelessWidget {
                         );
                       }),
                       Expanded(
-                          child: Column(
-                        children: [
-                          AppSizes.height20,
-                          BoatTextField(
-                              controller: pc.nameController,
-                              label: 'Name',
-                              isName: true),
-                          BoatTextField(
-                              controller: pc.emailController,
-                              label: 'Email',
-                              isEmail: true),
-                          BoatTextField(
-                              controller: pc.numberController,
-                              label: 'Number',
-                              isNumber: true),
-                          BoatTextField(
-                            controller: pc.createdCtrl,
-                            label: 'Created Date',
-                          ),
-                          if (pc.updatedCtrl.text.isNotEmpty)
+                          child: Form(
+                        key: formKey,
+                        child: Column(
+                          children: [
+                            AppSizes.height20,
                             BoatTextField(
-                              controller: pc.updatedCtrl,
-                              label: 'Updated Date',
-                            ),
-                          const Spacer(),
-                          const UpdateButton(isWeb: true)
-                        ],
+                                controller: pc.nameController,
+                                label: 'Name',
+                                isName: true),
+                            BoatTextField(
+                                controller: pc.emailController,
+                                label: 'Email',
+                                isEmail: true),
+                            BoatTextField(
+                                controller: pc.numberController,
+                                label: 'Number',
+                                isNumber: true),
+                            const Spacer(),
+                            UpdateButton(isWeb: true, formKey: formKey)
+                          ],
+                        ),
                       ))
                     ],
                   ),
                 ),
-              )
+              ),
+              if (pc.updatedCtrl.text.isNotEmpty)
+                Text(
+                  "Last Updated : ${pc.updatedCtrl.text}",
+                  style: CustomFunctions.style(
+                      fontWeight: FontWeight.w500,
+                      size: 14,
+                      color: Colors.grey[500]),
+                ),
             ],
           ),
         ),

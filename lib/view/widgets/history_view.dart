@@ -20,6 +20,9 @@ class HistoryView extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: ListTile(
+                onTap: () {
+                  fctrl.bodyCurrentIndState(1);
+                },
                 minVerticalPadding: 0,
                 contentPadding:
                     EdgeInsets.symmetric(horizontal: paddingLeft, vertical: 0),

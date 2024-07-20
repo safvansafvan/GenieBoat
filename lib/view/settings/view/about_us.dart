@@ -9,7 +9,9 @@ class AboutUs extends StatelessWidget {
     return Scaffold(
       appBar: context.isPhone
           ? AppBar(
-              title: const Text('About Us'),
+              leading: IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(Icons.arrow_back_ios_new_rounded)),
             )
           : null,
       body: const Center(

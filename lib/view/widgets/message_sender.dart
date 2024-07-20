@@ -106,7 +106,7 @@ class GenieMessageSender extends StatelessWidget {
             maxLines: null,
             style: CustomFunctions.style(
                 fontWeight: FontWeight.w500,
-                size: 14,
+                size: 16,
                 color: AppColors.blackColor),
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.only(left: 20),
