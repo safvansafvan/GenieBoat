@@ -1,4 +1,3 @@
-import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:chatboat/view_model/controller/login_ctrl.dart';
@@ -134,30 +133,6 @@ class BoatTextFormFieldLogin extends StatelessWidget {
         icon: Icon(
             loginCtrl.obscurePassword ? Icons.visibility_off : Icons.visibility,
             color: AppColors.greyColor),
-      );
-    } else if (isNumber == true && loginCtrl.isVerifyLoading == false) {
-      return TextButton(
-        onPressed: () async {
-          if (loginCtrl.numberCtrl.text.isEmpty) {
-            return boatSnackBar(
-                text: 'Error', message: 'Enter Phone Number', ctx: ctx);
-          }
-          await loginCtrl.verifyPhoneNum(ctx);
-        },
-        child: Text(
-          'Verify',
-          style: CustomFunctions.style(
-              fontWeight: FontWeight.w500, size: 14, color: AppColors.redColor),
-        ),
-      );
-    } else if (loginCtrl.isVerifyLoading == true && isNumber == true) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-        child: SizedBox(
-          width: 30,
-          height: 30,
-          child: CircularProgressIndicator(strokeWidth: 1.5),
-        ),
       );
     }
   }

@@ -18,7 +18,14 @@ class MobileViewProfile extends StatelessWidget {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final pc = Get.find<ProfileCtrl>();
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+        ),
+      ),
       body: Card(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Container(

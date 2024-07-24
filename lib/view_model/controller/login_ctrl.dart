@@ -10,7 +10,6 @@ import 'package:chatboat/view_model/firebase_service/firestore_user_res.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
@@ -43,54 +42,7 @@ class LoginController extends GetxController {
     userNameCtrl.clear();
   }
 
-//*************************** phone auth view ********************************************************************
-  String countryCode = '+91';
-  String verifyId = '';
-  bool isVerifyLoading = false;
-
-  Future<void> verifyPhoneNum(context) async {
-    isVerifyLoading = true;
-    update();
-    log(numberCtrl.text, name: isVerifyLoading.toString());
-    try {
-      verifyId = await AuthServices.verifyPhoneNumService(
-          countryCode, numberCtrl.text);
-    } catch (e) {
-      log(e.toString());
-    } finally {
-      isVerifyLoading = false;
-      update();
-    }
-  }
-
-  bool isOtpVerification = false;
   FirebaseAuth auth = FirebaseAuth.instance;
-  Future<void> handlePhoneOtpVerification(context) async {
-    isOtpVerification = true;
-    update();
-    String code = otpCtrl.text;
-    log(verifyId, name: 'verification id');
-    log(code, name: 'code');
-    try {
-      PhoneAuthCredential credential =
-          PhoneAuthProvider.credential(verificationId: verifyId, smsCode: code);
-      await auth.signInWithCredential(credential).then((value) async =>
-          await Get.off(() => const HomeView())!
-              .then((value) => clearController()));
-    } catch (e) {
-      log(e.toString());
-      return boatSnackBar(message: 'Invalid Otp', text: 'Failed', ctx: context);
-    }
-    isOtpVerification = false;
-    update();
-  }
-
-  void clearController() {
-    numberCtrl.clear();
-    otpCtrl.clear();
-  }
-  // -end
-
   Future<void> signInWithGoogle({required BuildContext context}) async {
     User? user;
     final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -110,6 +62,16 @@ class LoginController extends GetxController {
 
         user = userCredential.user;
         if (user != null) {
+          await UserFirestoreRes().addUserToFirestore(
+            model: UserModel(
+                email: user.email,
+                name: user.displayName,
+                uid: user.uid,
+                datetime: DateFormat.yMMMMEEEEd().format(DateTime.now()),
+                url: user.photoURL,
+                lastUpdated: '',
+                number: user.phoneNumber),
+          );
           Get.off(() => const HomeView(),
               curve: Curves.easeInOut,
               duration: const Duration(milliseconds: 400),
@@ -118,7 +80,7 @@ class LoginController extends GetxController {
           boatSnackBar(
               text: 'Error', message: 'Something Went Wrong', ctx: context);
         }
-      } on FirebaseAuthException catch (e) {
+      } catch (e) {
         log(e.toString());
       }
     } else {
@@ -146,8 +108,8 @@ class LoginController extends GetxController {
     try {
       await FirebaseAuth.instance.signOut();
       await auth.signOut();
-      // final googleSignIn = GoogleSignIn();
-      // await googleSignIn.signOut();
+      final googleSignIn = GoogleSignIn();
+      await googleSignIn.signOut();
       await Get.offAll(() => const LoginView(),
           curve: Curves.easeInOut,
           duration: const Duration(milliseconds: 400),
@@ -239,18 +201,6 @@ class LoginController extends GetxController {
     } finally {
       isForgotLoading = false;
       update();
-    }
-  }
-
-  Future<void> facebookAuth() async {
-    try {
-      final LoginResult result = await FacebookAuth.instance.login();
-      final OAuthCredential facebookAuthCredential =
-          FacebookAuthProvider.credential(result.accessToken!.token);
-      FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-      await Get.off(() => const HomeView());
-    } catch (e) {
-      log(e.toString());
     }
   }
 

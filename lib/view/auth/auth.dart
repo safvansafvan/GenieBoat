@@ -9,7 +9,6 @@ import 'package:chatboat/view_model/core/durations.dart';
 import 'package:chatboat/view_model/controller/login_ctrl.dart';
 import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 
@@ -172,36 +171,30 @@ class LoginView extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    FlutterSocialButton(
-                                      buttonType: ButtonType.google,
-                                      mini: true,
-                                      onTap: () async {
-                                        await loginCtrl.signInWithGoogle(
-                                            context: context);
-                                      },
+                                InkWell(
+                                  onTap: () async {
+                                    await loginCtrl.signInWithGoogle(
+                                        context: context);
+                                  },
+                                  child: Container(
+                                    width: 200,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: AppColors.bgColor),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset('assets/images/google.png',
+                                            height: 30),
+                                        const SizedBox(width: 10),
+                                        const Text('Continue With Google')
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: context.isPhone ? 10 : 0),
-                                      child: FlutterSocialButton(
-                                        buttonType: ButtonType.facebook,
-                                        mini: true,
-                                        onTap: () async {
-                                          await loginCtrl.facebookAuth();
-                                        },
-                                      ),
-                                    ),
-                                    // FlutterSocialButton(
-                                    //   buttonType: ButtonType.phone,
-                                    //   mini: true,
-                                    //   onTap: () {
-                                    //     phoneAuth(context);
-                                    //   },
-                                    // ),
-                                  ],
+                                  ),
                                 )
                               ],
                             ),
