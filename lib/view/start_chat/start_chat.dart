@@ -1,4 +1,3 @@
-import 'package:chatboat/view/widgets/celebration.dart';
 import 'package:chatboat/view/widgets/message_sender.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:flutter/material.dart';
@@ -25,13 +24,12 @@ class StartChatingView extends StatelessWidget {
                     bottomLeft: Radius.circular(15))
                 : null),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (!context.isPhone) celebrationKit(),
             Padding(
               padding: const EdgeInsets.only(top: 30, right: 40),
               child: Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.topRight,
                 child: AnimationLimiter(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -70,7 +68,7 @@ class StartChatingView extends StatelessWidget {
                                   .colorScheme
                                   .primary
                                   .withOpacity(.8),
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               size: 22),
                         ),
                       ],
@@ -79,7 +77,6 @@ class StartChatingView extends StatelessWidget {
                 ),
               ),
             ),
-            const Spacer(),
             AnimationLimiter(
               child: Column(
                 children: AnimationConfiguration.toStaggeredList(
@@ -105,11 +102,7 @@ class StartChatingView extends StatelessWidget {
                 ),
               ),
             ),
-            const Spacer(),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 0),
-              child: GenieMessageSender(),
-            ),
+            const GenieMessageSender(),
           ],
         ),
       ),

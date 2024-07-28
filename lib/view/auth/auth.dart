@@ -31,14 +31,7 @@ class LoginView extends StatelessWidget {
               ),
               fit: BoxFit.cover,
               filterQuality: FilterQuality.high,
-            )
-                // gradient: LinearGradient(
-                //   colors: [
-                //     Color.fromARGB(231, 33, 149, 243),
-                //     Color.fromARGB(231, 104, 58, 183)
-                //   ],
-                // ),
-                ),
+            )),
           ),
           Align(
             alignment: Alignment.center,
@@ -249,7 +242,7 @@ class LoginView extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                            )
+                            ),
                     ],
                   ),
                 );
@@ -281,7 +274,9 @@ class LoginView extends StatelessWidget {
               ?.then((value) => ctrl.clearControllers());
         } else {
           boatSnackBar(
-              message: 'Something Went Wrong', text: 'Failed', ctx: context);
+              message: 'Login credential is incorrect',
+              text: 'Failed',
+              ctx: context);
         }
       }
     }

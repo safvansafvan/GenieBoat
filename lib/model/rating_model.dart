@@ -1,6 +1,6 @@
 class RatingModel {
   String? id;
-  double? ratingCount;
+  int? ratingCount;
   String? message;
   String? date;
 

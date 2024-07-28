@@ -21,6 +21,7 @@ class BoatAppBar extends StatelessWidget {
             leading: context.width < 747
                 ? IconButton(
                     onPressed: () {
+                      chatCtrl.questionFocous.unfocus();
                       scaffoldKey.currentState?.openDrawer();
                     },
                     icon: const Icon(Icons.menu),

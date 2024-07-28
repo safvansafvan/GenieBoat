@@ -141,7 +141,7 @@ class LoginController extends GetxController {
       );
       clearControllers();
       boatSnackBar(
-          message: 'SignUp Successfully',
+          message: 'New Account Created',
           text: 'Succeed',
           isSuccess: true,
           ctx: ctx);
@@ -166,7 +166,7 @@ class LoginController extends GetxController {
       passworldCtrl.clear();
       emailCtrl.clear();
       boatSnackBar(
-          message: 'Login SuccessFully',
+          message: 'Login Successfull',
           text: 'Succeed',
           isSuccess: true,
           ctx: ctx);

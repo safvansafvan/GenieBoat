@@ -46,11 +46,11 @@ class _SplashViewState extends State<SplashView> {
                     padding: const EdgeInsets.only(bottom: 20),
                     child: AnimatedTextKit(
                       animatedTexts: [
-                        WavyAnimatedText(
-                          'Chat Boat',
+                        ScaleAnimatedText(
+                          'Genie Boat',
                           textStyle: CustomFunctions.style(
                               fontWeight: FontWeight.w600,
-                              size: 28,
+                              size: 26,
                               color: AppColors.whiteColor),
                         ),
                       ],

@@ -12,7 +12,7 @@ import 'package:uuid/uuid.dart';
 class RatingController extends GetxController {
   TextEditingController ratingText = TextEditingController();
   String currentDate = '';
-  double starRatedCount = 2.0;
+  int starRatedCount = 2;
   var uuid = const Uuid();
   bool isRatingHelperText = false;
   RatingModel? ratingModel;
@@ -34,7 +34,7 @@ class RatingController extends GetxController {
   }
 
   void starRatedCountState(double count) {
-    starRatedCount = count;
+    starRatedCount = count.toInt();
     log('STAR RATED COUNT $starRatedCount');
     update();
   }
@@ -57,12 +57,14 @@ class RatingController extends GetxController {
       Get.back();
       Get.back();
       gctrl.controllerTopCenter.play();
+      getUserRatingData();
       gctrl.chatHelperState();
       boatSnackBar(
           text: 'Suceed',
           isSuccess: true,
           ctx: context,
           message: 'Thanks For Your Rating');
+      gctrl.controllerTopCenter.play();
     } catch (e) {
       log(e.toString());
     }

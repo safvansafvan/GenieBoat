@@ -29,6 +29,7 @@ class _HomeViewState extends State<HomeView>
   final bc = Get.find<BoatChatCtrl>();
   final pc = Get.find<ProfileCtrl>();
   final rating = Get.find<RatingController>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -52,7 +53,6 @@ class _HomeViewState extends State<HomeView>
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: scaffoldKey,
@@ -61,23 +61,33 @@ class _HomeViewState extends State<HomeView>
       body: GetBuilder<BoatChatCtrl>(
         builder: (ctrl) {
           return Padding(
-            padding: EdgeInsets.all(context.isPhone ? 0.0 : 10.0),
-            child: Column(
-              children: [
-                if (context.isPhone) celebrationKit(),
-                if (context.isPhone)
-                  BoatAppBar(scaffoldKey: scaffoldKey, chatCtrl: ctrl),
-                Expanded(
-                  child: Row(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Padding(
+              padding: EdgeInsets.all(context.isPhone ? 0.0 : 10.0),
+              child: Stack(
+                children: [
+                  Column(
                     children: [
-                      if (context.width > 748) const CustomLeftNavigation(),
-                      centerViewHandling(ctrl),
-                      if (context.width > 968 && ctrl.allHistory.isNotEmpty)
-                        const GenieHistory(),
+                      if (context.isPhone)
+                        BoatAppBar(scaffoldKey: scaffoldKey, chatCtrl: ctrl),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            if (context.width > 748)
+                              const CustomLeftNavigation(),
+                            centerViewHandling(ctrl),
+                            if (context.width > 968 &&
+                                ctrl.allHistory.isNotEmpty)
+                              const GenieHistory(),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ],
+                  celebrationKit(),
+                ],
+              ),
             ),
           );
         },

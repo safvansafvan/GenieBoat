@@ -1,7 +1,6 @@
 import 'package:chatboat/view/widgets/choose_image_source.dart';
 import 'package:chatboat/view/widgets/msg_toast.dart';
 import 'package:chatboat/view_model/controller/boat_controller.dart';
-import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:chatboat/view_model/core/sizes.dart';
@@ -34,6 +33,7 @@ class GenieMessageSender extends StatelessWidget {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {
+          chatCtrl.questionFocous.unfocus();
           chooseImageSource(context: context);
         },
         child: Stack(
@@ -87,44 +87,37 @@ class GenieMessageSender extends StatelessWidget {
   }
 
   Widget _buildMessageInput(BoatChatCtrl chatCtrl, BuildContext context) {
-    final FocusNode focusNode = FocusNode();
-
     return Expanded(
       child: Padding(
         padding: EdgeInsets.symmetric(
             vertical: 5, horizontal: context.isPhone ? 5 : 10),
-        child: GetBuilder<GlobleController>(builder: (ctrl) {
-          return TextField(
-            onTap: () {
-              FocusScope.of(context).requestFocus(focusNode);
-            },
-            focusNode: focusNode,
-            keyboardType: TextInputType.name,
-            cursorColor: AppColors.blackColor,
-            controller: chatCtrl.questionCtrl,
-            maxLength: null,
-            maxLines: null,
-            style: CustomFunctions.style(
+        child: TextField(
+          focusNode: chatCtrl.questionFocous,
+          keyboardType: TextInputType.name,
+          cursorColor: AppColors.blackColor,
+          controller: chatCtrl.questionCtrl,
+          maxLength: null,
+          maxLines: null,
+          style: CustomFunctions.style(
+              fontWeight: FontWeight.w500,
+              size: 16,
+              color: AppColors.blackColor),
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.only(left: 20),
+            hintStyle: CustomFunctions.style(
                 fontWeight: FontWeight.w500,
-                size: 16,
+                size: 14,
                 color: AppColors.blackColor),
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(left: 20),
-              hintStyle: CustomFunctions.style(
-                  fontWeight: FontWeight.w500,
-                  size: 14,
-                  color: AppColors.blackColor),
-              hintText: 'Message ChatGenie....',
-              fillColor: Theme.of(context).colorScheme.inversePrimary,
-              enabled: true,
-              filled: true,
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: AppSizes.radius10, borderSide: BorderSide.none),
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: AppSizes.radius10, borderSide: BorderSide.none),
-            ),
-          );
-        }),
+            hintText: 'Message ChatGenie....',
+            fillColor: Theme.of(context).colorScheme.inversePrimary,
+            enabled: true,
+            filled: true,
+            enabledBorder: OutlineInputBorder(
+                borderRadius: AppSizes.radius10, borderSide: BorderSide.none),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: AppSizes.radius10, borderSide: BorderSide.none),
+          ),
+        ),
       ),
     );
   }
@@ -136,8 +129,9 @@ class GenieMessageSender extends StatelessWidget {
         onTap: () async {
           if (chatCtrl.questionCtrl.text.isEmpty) {
             return boatSnackBar(
-                text: 'Error', message: 'Enter Messages', ctx: context);
+                text: 'Error', message: 'Type Questions', ctx: context);
           }
+          chatCtrl.questionFocous.unfocus();
           await chatCtrl.boatChatHandling(context);
         },
         child: Container(

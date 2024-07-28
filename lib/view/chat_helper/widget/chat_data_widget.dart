@@ -9,6 +9,7 @@ import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class BoatChatDataWidget extends StatelessWidget {
@@ -32,6 +33,7 @@ class BoatChatDataWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
           borderRadius: AppSizes.radius10,
+          border: Border.all(color: AppColors.borderGrey),
           gradient: RadialGradient(
             center: Alignment.topLeft,
             radius: 1.5,
@@ -89,22 +91,28 @@ class BoatChatDataWidget extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.copy,
-                          color: AppColors.whiteColor,
-                          size: 15,
-                        ),
-                        AppSizes.width10,
-                        Text(
-                          'Copy Text',
-                          style: CustomFunctions.style(
-                              fontWeight: FontWeight.w400,
-                              size: 12,
-                              color: AppColors.whiteColor),
-                        )
-                      ],
+                    child: InkWell(
+                      onTap: () {
+                        Clipboard.setData(
+                            ClipboardData(text: dataSet.ans ?? ''));
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.copy,
+                            color: AppColors.whiteColor,
+                            size: 15,
+                          ),
+                          AppSizes.width10,
+                          Text(
+                            'Copy Text',
+                            style: CustomFunctions.style(
+                                fontWeight: FontWeight.w400,
+                                size: 12,
+                                color: AppColors.whiteColor),
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ],
@@ -128,7 +136,7 @@ class BoatChatDataWidget extends StatelessWidget {
                     ),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
+                      child: SelectableText(
                         dataSet.qus ?? '',
                         textAlign: TextAlign.start,
                         style: CustomFunctions.style(
@@ -162,7 +170,7 @@ class BoatChatDataWidget extends StatelessWidget {
             ),
             isLastIndex && ctrl.isLoadingNew
                 ? AnimatedTextKitWidget(textV: dataSet.ans ?? "")
-                : Text(
+                : SelectableText(
                     dataSet.ans ?? "",
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,

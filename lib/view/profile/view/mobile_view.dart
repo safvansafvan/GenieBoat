@@ -4,6 +4,7 @@ import 'package:chatboat/view/widgets/boat_text_field.dart';
 import 'package:chatboat/view/widgets/choose_image_source.dart';
 import 'package:chatboat/view_model/controller/profile_controller.dart';
 import 'package:chatboat/view_model/core/colors.dart';
+import 'package:chatboat/view_model/core/custom_function.dart';
 import 'package:chatboat/view_model/core/durations.dart';
 import 'package:chatboat/view_model/core/sizes.dart';
 import 'package:flutter/material.dart';
@@ -99,6 +100,10 @@ class MobileViewProfile extends StatelessWidget {
                     if (pc.updatedCtrl.text.isNotEmpty)
                       Text(
                         "Last Updated : ${pc.updatedCtrl.text}",
+                        style: CustomFunctions.style(
+                            fontWeight: FontWeight.w500,
+                            size: 14,
+                            color: AppColors.greyColor),
                       ),
                     const SizedBox(height: 20),
                     UpdateButton(formKey: formKey),

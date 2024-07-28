@@ -15,7 +15,7 @@ Widget celebrationKit() {
       maxBlastForce: 3,
       minBlastForce: 2,
       emissionFrequency: 0.03,
-      numberOfParticles: 15,
+      numberOfParticles: 10,
     ),
   );
 }

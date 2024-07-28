@@ -1,3 +1,4 @@
+import 'package:chatboat/view_model/controller/globel_ctrl.dart';
 import 'package:chatboat/view_model/controller/rating_controller.dart';
 import 'package:chatboat/view_model/core/colors.dart';
 import 'package:chatboat/view_model/core/custom_function.dart';
@@ -9,6 +10,7 @@ import 'package:get/get.dart';
 ratingBottomSheet(
     BuildContext context, AnimationController animationController) {
   return showModalBottomSheet(
+    isScrollControlled: true,
     backgroundColor: AppColors.whiteColor,
     barrierColor: Colors.transparent,
     shape: RoundedRectangleBorder(borderRadius: AppSizes.radius10),
@@ -18,17 +20,36 @@ ratingBottomSheet(
     builder: (context) {
       return GetBuilder<RatingController>(builder: (ratingCtrl) {
         return Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(10.0).copyWith(bottom: 20),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.close, color: AppColors.black87)),
+              ),
               ratingCtrl.isRated
                   ? Center(
-                      child: Text(
-                        'Already Rated Our Application At ${ratingCtrl.ratingModel?.date}',
-                        style: CustomFunctions.style(
-                          fontWeight: FontWeight.w600,
-                          size: 18,
+                      child: InkWell(
+                        onTap: () {
+                          Get.find<GlobleController>()
+                              .controllerTopCenter
+                              .play();
+                          Get.back();
+                          Get.back();
+                          Get.back();
+                        },
+                        child: Text(
+                          "Thank you for submitting your rating! Your feedback is invaluable to us and helps us continually improve our services. We appreciate your time and effort in sharing your thoughts with us. If you have any further comments or suggestions, please don't hesitate to reach out. Your input makes a difference!",
+                          style: CustomFunctions.style(
+                            fontWeight: FontWeight.w500,
+                            size: 16,
+                          ),
                         ),
                       ),
                     )
@@ -54,7 +75,7 @@ ratingBottomSheet(
                                   Theme.of(context).colorScheme.primary,
                               style: CustomFunctions.style(
                                   fontWeight: FontWeight.w500,
-                                  size: 14,
+                                  size: 16,
                                   color: Theme.of(context).colorScheme.primary),
                               decoration: InputDecoration(
                                 enabledBorder: InputBorder.none,
@@ -109,7 +130,7 @@ ratingBottomSheet(
                           },
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 10),
+                          padding: const EdgeInsets.only(top: 24),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
@@ -129,7 +150,7 @@ ratingBottomSheet(
                             },
                             child: const Padding(
                               padding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 14),
+                                  vertical: 10, horizontal: 100),
                               child: Text('Submit'),
                             ),
                           ),
