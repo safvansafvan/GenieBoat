@@ -56,7 +56,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCFLv-3HtHfk86DpSmZYBAyngEDYiWkupo',
-    appId: '1:874085453445:android:83a5da00b7f80d00d623ec',
+    appId: '1:874085453445:android:d0666f19df7bda51d623ec',
     messagingSenderId: '874085453445',
     projectId: 'boat-app-d5438',
     databaseURL: 'https://boat-app-d5438-default-rtdb.firebaseio.com',
@@ -70,6 +70,8 @@ class DefaultFirebaseOptions {
     projectId: 'boat-app-d5438',
     databaseURL: 'https://boat-app-d5438-default-rtdb.firebaseio.com',
     storageBucket: 'boat-app-d5438.appspot.com',
+    androidClientId: '874085453445-gt92hob5vu4vo5hmm773juaa769mcrb2.apps.googleusercontent.com',
+    iosClientId: '874085453445-rohshhska7j2ibs6tg4r19uuao5edf4k.apps.googleusercontent.com',
     iosBundleId: 'com.example.chatboat',
   );
 

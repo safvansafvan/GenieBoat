@@ -1,16 +1,1 @@
-{
-  "hosting": {
-    "public": "build/web",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
-}
+{"hosting":{"public":"build/web","ignore":["firebase.json","**/.*","**/node_modules/**"],"rewrites":[{"source":"**","destination":"/index.html"}]},"flutter":{"platforms":{"android":{"default":{"projectId":"boat-app-d5438","appId":"1:874085453445:android:d0666f19df7bda51d623ec","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"boat-app-d5438","appId":"1:874085453445:ios:d1b2e726b329d286d623ec","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"boat-app-d5438","configurations":{"android":"1:874085453445:android:d0666f19df7bda51d623ec","ios":"1:874085453445:ios:d1b2e726b329d286d623ec","web":"1:874085453445:web:091810211c18bf6bd623ec"}}}}}}

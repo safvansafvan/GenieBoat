@@ -6,14 +6,19 @@
     "storage_bucket": "boat-app-d5438.appspot.com"
   },
   "client": [
-    {/Users/credr/Downloads/google-services.json
+    {
       "client_info": {
-        "mobilesdk_app_id": "1:874085453445:android:e636691860854c3ad623ec",
+        "mobilesdk_app_id": "1:874085453445:android:d0666f19df7bda51d623ec",
         "android_client_info": {
-          "package_name": "com.boat.chatboat"
+          "package_name": "com.safvan.chatboat"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "874085453445-4r0e4i4ntkdmug0em294a09hivcomufk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCFLv-3HtHfk86DpSmZYBAyngEDYiWkupo"
@@ -21,7 +26,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874085453445-4r0e4i4ntkdmug0em294a09hivcomufk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "874085453445-l9bhbbr3g8sa6td5rubabu4hhkemm9b7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chatboat.RunnerTests"
+              }
+            }
+          ]
         }
       }
     }
